@@ -137,22 +137,16 @@ window.MCP_RACK = {
     }
   ],
 
-  /* Servers by other people that I run alongside mine. Seeded 2026-09-05 from the ones actually wired
-     into my tools; prune to the ones that earn their slot. */
+  /* Servers by other people that I run alongside mine: one card per server actually wired into my
+     tools on the date above, nothing aspirational. Every URL checked on 2026-09-05. */
   rack: [
-    { name: "GitHub MCP Server", by: "GitHub", kind: "official", blurb: "Issues, pull requests, code search and Actions from inside the agent. The one every workflow starts with.", url: "https://github.com/github/github-mcp-server" },
-    { name: "Playwright MCP", by: "Microsoft", kind: "official", blurb: "Real browser automation through the accessibility tree, so agents click what they can read.", url: "https://github.com/microsoft/playwright-mcp" },
-    { name: "Context7", by: "Upstash", kind: "community", blurb: "Version-accurate library documentation pulled into context on demand. Stops agents guessing at APIs.", url: "https://github.com/upstash/context7" },
-    { name: "Reference servers", by: "Model Context Protocol", kind: "official", blurb: "Filesystem, fetch, memory and the rest of the canon. Read them before writing one.", url: "https://github.com/modelcontextprotocol/servers" },
-    { name: "Notion MCP Server", by: "Notion", kind: "official", blurb: "Pages and databases as tools. Where durable notes go when they leave the chat.", url: "https://github.com/makenotion/notion-mcp-server" },
     { name: "Figma MCP Server", by: "Figma", kind: "official", blurb: "Design context, variables and screenshots straight from the file. Design to code in both directions.", url: "https://developers.figma.com/docs/figma-mcp-server/" },
-    { name: "Blender MCP", by: "Siddharth Ahuja", kind: "community", blurb: "The reference for driving a creative tool from an agent, and the pattern gimp-agent-mcp follows. 27k stars.", url: "https://github.com/ahujasid/blender-mcp" },
-    { name: "GIMP MCP", by: "maorcc", kind: "community", blurb: "The other maintained GIMP server: 56 hand-written tools, GPL-3.0. Worth knowing what it does differently.", url: "https://github.com/maorcc/gimp-mcp" },
+    { name: "Notion MCP", by: "Notion", kind: "official", blurb: "Pages and databases as tools. Where durable notes go when they leave the chat.", url: "https://developers.notion.com/docs/mcp" },
+    { name: "Canva MCP", by: "Canva", kind: "official", blurb: "Designs, brand templates and exports as tools. Social cards without opening the editor.", url: "https://www.canva.dev/docs/mcp/" },
     { name: "PixelLab MCP", by: "PixelLab", kind: "official", blurb: "Pixel-art characters, tilesets and animations generated as tools. Game assets without leaving the editor.", url: "https://github.com/pixellab-code/pixellab-mcp" },
-    { name: "CoinGecko MCP", by: "CoinGecko", kind: "official", blurb: "Prices, market caps and on-chain pools without an API key. The free tier of a crypto intelligence stack.", url: "https://docs.coingecko.com/reference/mcp-server" },
-    { name: "OpenSea MCP", by: "OpenSea", kind: "official", blurb: "Collection stats and NFT market data, read-only. Gaming NFTs are a third of the volume.", url: "https://docs.opensea.io/docs/mcp" },
     { name: "HubSpot MCP", by: "HubSpot", kind: "official", blurb: "CRM objects, campaigns and content analytics as tools. The sales side of the rack.", url: "https://developers.hubspot.com/mcp" },
     { name: "Asana MCP", by: "Asana", kind: "official", blurb: "Projects and tasks as tools, so status updates write themselves.", url: "https://developers.asana.com/docs/using-asanas-model-control-protocol-mcp-server" },
-    { name: "AgentQL MCP", by: "TinyFish", kind: "official", blurb: "Structured data from any web page by describing what you want, not where it is.", url: "https://github.com/tinyfish-io/agentql-mcp" }
+    { name: "Fireflies MCP", by: "Fireflies.ai", kind: "official", blurb: "Meeting transcripts, summaries and action items as tools. Every call becomes searchable context.", url: "https://docs.fireflies.ai/getting-started/mcp-configuration" },
+    { name: "TinyFish", by: "TinyFish", kind: "official", blurb: "Web search, page fetch and browser automation for agents. The eyes on the open web.", url: "https://docs.tinyfish.ai/" }
   ]
 };

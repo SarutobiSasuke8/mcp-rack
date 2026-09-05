@@ -47,7 +47,7 @@ window.MCP_RACK = {
 };
 ```
 
-Add a unit, bump `updated`, commit. The rack list is curated by hand and started as a seed: prune it to the servers you actually run.
+Add a unit, bump `updated`, commit. The rack list is curated by hand: one card per server actually wired into my tools, nothing aspirational.
 
 ## Running it
 
@@ -64,3 +64,7 @@ npx -y serve . -l 8123
 3. The included workflow deploys on every push to `main`.
 
 A custom domain works the usual way: add a `CNAME` file and the DNS record.
+
+## Licence
+
+MIT. See `LICENSE`. The server descriptions and the curated list are mine; the code is yours to reuse.
