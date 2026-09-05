@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCP Rack · servers by SarutobiSasuke8</title>
+<meta name="description" content="Every MCP server SarutobiSasuke8 has published, with package, transport, licence and official-registry status, plus the servers he runs alongside them.">
+<meta property="og:title" content="MCP Rack · servers by SarutobiSasuke8">
+<meta property="og:description" content="Every MCP server SarutobiSasuke8 has published, with package, transport, licence and official-registry status, plus the servers he runs alongside them.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0d0c0a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d0c0a'/%3E%3Crect x='4' y='4' width='24' height='24' fill='%23d8ff3f'/%3E%3Crect x='9' y='9' width='14' height='3' fill='%230d0c0a'/%3E%3Crect x='9' y='15' width='14' height='3' fill='%230d0c0a'/%3E%3Crect x='9' y='21' width='8' height='3' fill='%230d0c0a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<a class="skip" href="#board-title">Skip to the board</a>
+<div class="wrap">
+
+  <header class="mast">
+    <div class="mast__lead">
+      <h1 class="mast__word"><span>MCP</span><em>Rack</em></h1>
+      <p class="mast__sub">Model Context Protocol servers by <a href="https://github.com/SarutobiSasuke8">SarutobiSasuke8</a>. Built for Claude Code, Codex, Cursor and anything else that speaks stdio.</p>
+    </div>
+    <div class="mast__meta" aria-label="Board status">
+      <div class="clock" id="clock" aria-hidden="true">00:00:00</div>
+      <div><b id="count-all">0</b> units on the rack &middot; <b id="count-reg">0</b> in the official registry</div>
+      <div>board updated <b id="updated">&nbsp;</b></div>
+    </div>
+  </header>
+
+  <div class="ticker" aria-hidden="true"><div class="ticker__track" id="ticker"></div></div>
+
+  <section aria-labelledby="board-title">
+    <h2 id="board-title" class="visually-hidden">Servers</h2>
+
+    <div class="controls">
+      <div class="chips" role="group" aria-label="Filter by stack">
+        <button class="chip" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" data-filter="typescript" aria-pressed="false">TypeScript</button>
+        <button class="chip" data-filter="python" aria-pressed="false">Python</button>
+        <button class="chip" data-filter="go" aria-pressed="false">Go</button>
+        <button class="chip" data-filter="registry" aria-pressed="false">In registry</button>
+      </div>
+      <label class="search">
+        <span class="visually-hidden">Search servers</span>
+        <input id="q" type="search" placeholder="search the rack" autocomplete="off" spellcheck="false">
+        <kbd aria-hidden="true">/</kbd>
+      </label>
+      <span class="shown"><b id="count-shown">0</b> shown</span>
+    </div>
+
+    <div class="board__head" aria-hidden="true">
+      <span>№</span><span>Unit</span><span>Stack</span><span>Transport</span><span>Registry</span><span>Status</span><span>Package</span>
+    </div>
+    <ol class="board" id="board" aria-live="polite"></ol>
+  </section>
+
+  <section class="rack" aria-labelledby="rack-title">
+    <div class="rack__head">
+      <h2 id="rack-title">Also on the rack</h2>
+      <p class="rack__intro">Servers built by other people that I run alongside mine. Curated by hand, not a directory: if it is here, it earned its slot.</p>
+    </div>
+    <div class="cards" id="rack"></div>
+  </section>
+
+  <footer class="foot">
+    <div>
+      <div class="foot__k">Install any unit</div>
+      <pre id="install-examples"></pre>
+    </div>
+    <nav class="foot__links" aria-label="Links">
+      <a href="https://github.com/SarutobiSasuke8?tab=repositories&amp;q=mcp&amp;sort=updated">All repositories</a>
+      <a href="https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.SarutobiSasuke8">Official registry entries</a>
+      <a href="https://pypi.org/user/SarutobiSasuke8/">PyPI</a>
+      <a href="https://www.npmjs.com/search?q=%40sarutobi-sasuke">npm</a>
+      <a href="https://x.com/Sarut0biSasuke">X</a>
+    </nav>
+    <p class="colophon">Set in Fraunces and IBM Plex Mono. No framework, no tracker, one data file. Edit <code>data/servers.js</code> to change the board.</p>
+  </footer>
+
+</div>
+<script src="data/servers.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
