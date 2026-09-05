@@ -1,5 +1,7 @@
 # MCP Rack
 
+Live at https://sarutobisasuke8.github.io/mcp-rack/
+
 A one-page board of every MCP server I have published, with its package, transport, licence and official-registry status, plus a hand-curated rack of servers built by other people that I run alongside mine.
 
 It is a portfolio surface, not a directory. It links out to the repos and to the [official MCP Registry](https://registry.modelcontextprotocol.io); it does not try to index the ecosystem.
