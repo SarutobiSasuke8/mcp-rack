@@ -6,6 +6,9 @@ The Rack R: an R-shaped chassis with two open server bays. The angled right leg 
 ## Positioning
 Independent MCP tools, curated picks and practical notes. A selection with a named maintainer. Never imply certification, partner status or comprehensive coverage.
 
+## Brand use
+MCP Rack, the Rack R symbol, wordmarks and identity assets identify Alexei Udall's project. They are not licensed by the repository's MIT source-code licence. See [TRADEMARKS.md](TRADEMARKS.md) and [CONTENT-LICENSE.md](CONTENT-LICENSE.md) for the reuse boundary.
+
 ## System
 - Wordmark: MCP Rack, always two words and this capitalization. Geist at weight 620 in the site.
 - Mark: public/brand/mcp-rack-mark.svg; light-on-dark variant beside it.

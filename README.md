@@ -59,9 +59,11 @@ Push to `main`. The workflow runs the style gate, the type check and the build, 
 
 To serve from a custom domain, set two repository variables (`Settings`, `Secrets and variables`, `Actions`, `Variables`): `SITE_URL` to the origin (for example `https://mcp.alexeiudall.com`) and `SITE_BASE` to `/`. Add the domain under `Settings`, `Pages`, and a `CNAME` DNS record pointing at `sarutobisasuke8.github.io`.
 
-## Licence
+## Licence, content and brand
 
-MIT. See `LICENSE`. The server descriptions and the curated list are mine; the code is yours to reuse.
+Source code is MIT licensed. See [LICENSE](LICENSE).
+
+The MCP Rack name, Rack R symbol and associated brand assets are reserved. See [TRADEMARKS.md](TRADEMARKS.md). Articles, editorial copy, curated selections and original visual assets have separate reuse terms in [CONTENT-LICENSE.md](CONTENT-LICENSE.md).
 
 
 ## 2026-09-07 website sweep
