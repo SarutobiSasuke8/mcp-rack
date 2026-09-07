@@ -2,69 +2,70 @@
 
 Live at https://sarutobisasuke8.github.io/mcp-rack/
 
-A one-page board of every MCP server I have published, with its package, transport, licence and official-registry status, plus a hand-curated rack of servers built by other people that I run alongside mine.
+One page for every MCP server I have published, with its package, transport, licence and official-registry status; a curated rack of the servers I run alongside them; and release notes written here first.
 
-It is a portfolio surface, not a directory. It links out to the repos and to the [official MCP Registry](https://registry.modelcontextprotocol.io); it does not try to index the ecosystem.
+It is a portfolio surface, not a directory. It links out to the repositories and to the [official MCP Registry](https://registry.modelcontextprotocol.io) rather than trying to index everything.
 
-## Structure
+## Stack
+
+Astro 7, static output, no client framework, no tracking. Geist and Geist Mono self-hosted through Fontsource. Content collections for servers, the rack and posts. RSS, sitemap, `llms.txt`, `servers.json` and JSON-LD on every page. Deployed to GitHub Pages by the workflow in `.github/workflows/pages.yml`.
 
 ```
-index.html          the page
-assets/styles.css   the look: warm black, bone type, one acid accent, split-flap reveals
-assets/app.js       renders the board from the data file; filters, search, copy buttons, JSON-LD
-data/servers.js     the only file you edit
-.github/workflows/pages.yml   deploys to GitHub Pages on push to main
+src/content/servers.json     the board: one object per published server
+src/content/rack.json        the rack: one card per server actually in use
+src/content/posts/*.md       release notes, field notes, build logs
+src/lib/site.ts              names, links, base-path helper
+src/components/              Header, Footer, ServerRow, RackCard, PostCard, ShareLinks
+src/layouts/                 BaseLayout (head, SEO, theme, scripts), PostLayout
+src/pages/                   routes, plus rss.xml, servers.json and llms.txt endpoints
+scripts/check-style.mjs      the style gate: em dashes and marketing filler fail the build
+scripts/generate-og.mjs      Open Graph images, generated before each build
 ```
 
-No framework, no build step, no tracker. Fonts come from Google Fonts (Fraunces and IBM Plex Mono) with local fallbacks.
-
-## Editing the board
-
-Everything on the page comes from `data/servers.js`, which sets `window.MCP_RACK`:
-
-```js
-window.MCP_RACK = {
-  updated: "2026-09-05",
-  owner: { name: "SarutobiSasuke8", url: "https://github.com/SarutobiSasuke8" },
-  servers: [
-    {
-      name: "gimp-agent-mcp",
-      tagline: "One line on what it does.",
-      lang: "Python",                    // Python | TypeScript | Go (drives the filter chips)
-      transport: "stdio",
-      package: { kind: "pypi", name: "gimp-agent-mcp", version: "0.2.4" },   // or null
-      registry: "io.github.SarutobiSasuke8/gimp-agent-mcp",                  // or null
-      status: "beta",                    // beta | alpha | preview | experimental
-      license: "Apache-2.0",
-      repo: "https://github.com/SarutobiSasuke8/gimp-agent-mcp",
-      install: "claude mcp add gimp -- uvx gimp-agent-mcp serve",           // optional; adds a copy button
-      tags: ["gimp", "images"]           // optional; searched
-    }
-  ],
-  rack: [
-    { name: "GitHub MCP Server", by: "GitHub", kind: "official", blurb: "Why it earned its slot.", url: "https://github.com/github/github-mcp-server" }
-  ]
-};
-```
-
-Add a unit, bump `updated`, commit. The rack list is curated by hand: one card per server actually wired into my tools, nothing aspirational.
-
-## Running it
-
-Open `index.html` in a browser, or serve the folder:
+## Working on it
 
 ```bash
-npx -y serve . -l 8123
+npm install
+npm run dev        # http://localhost:4321/mcp-rack
+npm run verify     # style gate, type check, build
 ```
+
+### Add a server
+
+Add an object to `src/content/servers.json`. The schema in `src/content.config.ts` is the contract: `slug`, `name`, `tagline` (under 180 characters), `summary`, `highlights`, `lang`, `transport`, `package` (or `null`), `registry` (or `null`), `status`, `license`, `repo`, `docs`, `install` (or `null`), `tags`, `order`. The server page, the board row, the footer link, the OG image, `servers.json` and `llms.txt` all follow from it.
+
+### Write a release note
+
+Create `src/content/posts/<slug>.md` with frontmatter:
+
+```yaml
+title: "gimp-agent-mcp 0.3: macOS and Linux"
+description: "One or two sentences. Under 200 characters."
+pubDate: 2026-10-01
+category: Release notes        # Release notes | Field notes | Build log
+server: gimp-agent-mcp         # optional; links the post to its server page
+version: "0.3.0"               # optional
+```
+
+Reading time is computed from the body. Setting `draft: true` keeps a post out of the build.
+
+### The rack
+
+One card per server actually wired into my tools. Add a card to `src/content/rack.json` when a server earns its slot; remove it when it stops being used.
 
 ## Deploying
 
-1. Create a public repository (for example `mcp-rack`) and push this folder to `main`.
-2. In the repository settings, Pages, set Source to GitHub Actions.
-3. The included workflow deploys on every push to `main`.
+Push to `main`. The workflow runs the style gate, the type check and the build, then publishes `dist/` to GitHub Pages.
 
-A custom domain works the usual way: add a `CNAME` file and the DNS record.
+To serve from a custom domain, set two repository variables (`Settings`, `Secrets and variables`, `Actions`, `Variables`): `SITE_URL` to the origin (for example `https://mcp.alexeiudall.com`) and `SITE_BASE` to `/`. Add the domain under `Settings`, `Pages`, and a `CNAME` DNS record pointing at `sarutobisasuke8.github.io`.
 
 ## Licence
 
 MIT. See `LICENSE`. The server descriptions and the curated list are mine; the code is yours to reuse.
+
+
+## 2026-09-07 website sweep
+
+The current site adds curated positioning, a journal with topic filters, maker suggestions, listing standards, and agent interfaces. Production defaults target **https://mcprack.dev/**. Earlier GitHub Pages URL and subpath instructions above describe the previous deployment. Follow [LAUNCH.md](LAUNCH.md) for the current launch checklist. No deployment or DNS changes were made by the sweep.
+
+Machine interfaces: /catalog.json, /catalog.schema.json, /servers.json, /llms.txt, /llms-full.txt, /servers/{slug}.md, /blog/{slug}.md, and /rss.xml. Metadata comes from the same collections as HTML pages. Build timestamps are not review dates. New journal categories include Guides and Perspective. Draft articles are excluded from public endpoints.
