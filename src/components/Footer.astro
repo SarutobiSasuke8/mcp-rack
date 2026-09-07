@@ -17,13 +17,13 @@ const assistants = [
 ];
 
 const elsewhere = [
-  { label: 'GitHub', href: SITE.owner.github },
-  { label: 'PyPI', href: SITE.owner.pypi },
-  { label: 'npm', href: SITE.owner.npm },
-  { label: 'Official MCP Registry', href: SITE.owner.registry },
-  { label: 'X', href: SITE.owner.x },
-  { label: 'LinkedIn', href: SITE.owner.linkedin },
-  { label: 'alexeiudall.com', href: SITE.owner.url },
+  { label: 'GitHub', icon: 'github', href: SITE.owner.github },
+  { label: 'PyPI', icon: 'pypi', href: SITE.owner.pypi },
+  { label: 'npm', icon: 'npm', href: SITE.owner.npm },
+  { label: 'Official MCP Registry', icon: 'modelcontextprotocol', href: SITE.owner.registry },
+  { label: 'X', icon: 'twitter-x', href: SITE.owner.x },
+  { label: 'LinkedIn', icon: 'linkedin', href: SITE.owner.linkedin },
+  { label: 'alexeiudall.com', icon: 'globe', href: SITE.owner.url },
 ];
 ---
 
@@ -64,7 +64,7 @@ const elsewhere = [
         <h2 class="footer-heading" id="footer-elsewhere">Elsewhere</h2>
         <ul>
           {elsewhere.map((l) => (
-            <li><a href={l.href} rel="me noopener" target="_blank">{l.label}</a></li>
+            <li><a class="social-link" href={l.href} rel="me noopener" target="_blank"><img src={href(`/socials/${l.icon}.svg`)} width="20" height="20" alt="" loading="lazy" /><span>{l.label}</span></a></li>
           ))}
         </ul>
       </nav>
@@ -139,6 +139,9 @@ const elsewhere = [
   .footer-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
   .footer-col a { color: var(--ink-2); font-size: var(--fs-small); text-decoration: none; }
   .footer-col a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); }
+  .footer-col .social-link { display:inline-flex;align-items:center;gap:10px;min-height:44px; }
+  .social-link img { width:20px;height:20px;object-fit:contain;flex-shrink:0; }
+  :global(:root[data-theme="dark"]) .social-link img { filter:invert(1); }
   .footer-more { font-weight: 540; }
 
   .footer-ai {
