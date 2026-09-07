@@ -49,6 +49,9 @@ for(const file of pages){
 }
 const robots=read(join(dist,'robots.txt'));
 assert(robots.includes('Sitemap: '+origin+base+'/sitemap-index.xml'));
+// /sitemap.xml is the conventional path crawlers probe; it must point at a child sitemap that exists.
+const conventional=read(join(dist,'sitemap.xml'));
+for(const loc of conventional.matchAll(/<loc>([^<]+)<\/loc>/g))assert(existsSync(resolvePath(new URL(loc[1]).pathname)),'sitemap.xml references a missing child: '+loc[1]);
 assert(existsSync(join(dist,'404.html')));
 for(const name of ['openai','claude','perplexity','grok']){
  const icon=read(join(dist,'clients',name+'.svg'));

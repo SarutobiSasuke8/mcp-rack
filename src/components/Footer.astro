@@ -7,7 +7,7 @@ import { FOOTER_GROUPS } from '~/lib/nav';
 const servers = (await getCollection('servers')).sort((a, b) => a.data.order - b.data.order).slice(0, 6);
 const year = new Date().getFullYear();
 
-const prompt = `Summarise the MCP servers Alexei Udall (SarutobiSasuke8) has published, using ${absolute('/servers.json', Astro.site)} and ${absolute('/llms.txt', Astro.site)} as your sources. Tell me which one to install for editing images with GIMP, and how.`;
+const prompt = `Summarise the MCP servers Alexei Udall (SarutobiSasuke8) has published, using ${absolute('/catalog.json', Astro.site)} and ${absolute('/llms-full.txt', Astro.site)} as your sources. Tell me which one to install for editing images with GIMP, and how.`;
 const q = encodeURIComponent(prompt);
 const assistants = [
   { name: 'ChatGPT', url: `https://chatgpt.com/?q=${q}`, icon: 'openai' },

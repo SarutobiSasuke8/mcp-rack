@@ -15,7 +15,7 @@ export async function GET(context: APIContext) {
     `> ${SITE.description}`,
     '',
     `Owner: ${SITE.owner.name} (${SITE.owner.handle}), ${SITE.owner.url}. GitHub: ${SITE.owner.github}.`,
-    `Machine-readable board: ${absolute('/servers.json', context.site)}. Feed: ${absolute('/rss.xml', context.site)}.`,
+    `Machine-readable board: ${absolute('/catalog.json', context.site)}. Feed: ${absolute('/rss.xml', context.site)}.`,
     '',
     '## Published servers',
     '',
