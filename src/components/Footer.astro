@@ -1,0 +1,175 @@
+---
+import BrandMark from '~/components/BrandMark.astro';
+import { getCollection } from 'astro:content';
+import { SITE, href, absolute } from '~/lib/site';
+import { FOOTER_GROUPS } from '~/lib/nav';
+
+const servers = (await getCollection('servers')).sort((a, b) => a.data.order - b.data.order).slice(0, 6);
+const year = new Date().getFullYear();
+
+const prompt = `Summarise the MCP servers Alexei Udall (SarutobiSasuke8) has published, using ${absolute('/servers.json', Astro.site)} and ${absolute('/llms.txt', Astro.site)} as your sources. Tell me which one to install for editing images with GIMP, and how.`;
+const q = encodeURIComponent(prompt);
+const assistants = [
+  { name: 'ChatGPT', url: `https://chatgpt.com/?q=${q}`, icon: 'openai' },
+  { name: 'Claude', url: `https://claude.ai/new?q=${q}`, icon: 'claude' },
+  { name: 'Perplexity', url: `https://www.perplexity.ai/search?q=${q}`, icon: 'perplexity' },
+  { name: 'Grok', url: `https://grok.com/?q=${q}`, icon: 'grok' },
+];
+
+const elsewhere = [
+  { label: 'GitHub', href: SITE.owner.github },
+  { label: 'PyPI', href: SITE.owner.pypi },
+  { label: 'npm', href: SITE.owner.npm },
+  { label: 'Official MCP Registry', href: SITE.owner.registry },
+  { label: 'X', href: SITE.owner.x },
+  { label: 'LinkedIn', href: SITE.owner.linkedin },
+  { label: 'alexeiudall.com', href: SITE.owner.url },
+];
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="footer-wordmark" href={href('/')} aria-label="MCP Rack, home"><span class="brand-symbol"><BrandMark size={38}/></span>MCP <span>Rack</span></a>
+        <p class="footer-tagline">{SITE.tagline}</p>
+        <p class="footer-by">
+          Built and maintained by <a href={SITE.owner.url} rel="me">{SITE.owner.name}</a>. Source on
+          <a href={SITE.repo} rel="noopener" target="_blank">GitHub</a>, MIT licensed.
+        </p>
+      </div>
+
+      <nav class="footer-col" aria-labelledby="footer-servers">
+        <h2 class="footer-heading" id="footer-servers">Servers</h2>
+        <ul>
+          {servers.map((s) => (
+            <li><a href={href(`/servers/${s.data.slug}`)}>{s.data.name}</a></li>
+          ))}
+          <li><a href={href('/servers')} class="footer-more">All servers</a></li>
+        </ul>
+      </nav>
+
+      {FOOTER_GROUPS.map((group) => (
+        <nav class="footer-col" aria-labelledby={`footer-${group.heading.toLowerCase()}`}>
+          <h2 class="footer-heading" id={`footer-${group.heading.toLowerCase()}`}>{group.heading}</h2>
+          <ul>
+            {group.links.map((l) => (
+              <li><a href={href(l.href)}>{l.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+
+      <nav class="footer-col" aria-labelledby="footer-elsewhere">
+        <h2 class="footer-heading" id="footer-elsewhere">Elsewhere</h2>
+        <ul>
+          {elsewhere.map((l) => (
+            <li><a href={l.href} rel="me noopener" target="_blank">{l.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-ai">
+      <div class="footer-ai-copy">
+        <p class="footer-heading">Ask an assistant about this rack</p>
+        <p>Ask about the collection in your preferred client. You can also copy the prompt and paste it yourself.</p>
+        <button class="copy-btn prompt-copy" type="button" data-copy={prompt} aria-label="Copy MCP Rack assistant prompt"><span data-copy-label aria-live="polite">Copy prompt</span></button>
+        <details class="prompt-details"><summary>View prompt</summary><p>{prompt}</p></details>
+      </div>
+      <ul class="footer-ai-links" aria-label="Ask an AI assistant">
+        {assistants.map((a) => (
+          <li>
+            <a href={a.url} target="_blank" rel="noopener" aria-label={`Ask ${a.name} about MCP Rack`} data-ai-provider={a.name.toLowerCase()}>
+              <img class="client-logo" src={href('/clients/' + a.icon + '.svg')} width="24" height="24" alt="" loading="lazy" />
+              <span class="footer-ai-name">{a.name}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="client-attribution">Client logos belong to their respective owners. Links do not imply affiliation or endorsement.</p>
+    </div>
+
+    <hr />
+
+    <div class="footer-bottom">
+      <p>&copy; {year} {SITE.owner.name}. Independent, open source, carefully selected.</p>
+      <p class="mono">Built for people and their agents.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 96px;
+    padding: 72px 0 40px;
+    border-top: 1px solid var(--line);
+    background:
+      radial-gradient(60rem 30rem at 0% 0%, var(--accent-soft), transparent 60%),
+      linear-gradient(180deg, var(--paper), var(--paper-2));
+  }
+  .footer-grid {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 1fr;
+    padding-bottom: 56px;
+  }
+  @media (min-width: 640px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1024px) { .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 48px; } }
+
+  .footer-wordmark {
+    display: inline-flex; gap: 0.16em;
+    font-weight: 620; letter-spacing: -0.02em; font-size: 1.25rem;
+    color: var(--ink); text-decoration: none;
+  }
+  .footer-wordmark { align-items:center;gap:5px; }
+  .footer-wordmark span { color: var(--ink); font-weight: 620; }
+  .footer-wordmark .brand-symbol { color:var(--accent);margin-right:8px; }
+  .footer-tagline { margin: 14px 0 0; color: var(--ink-2); max-width: 36ch; text-wrap: pretty; }
+  .footer-by { margin: 12px 0 0; font-size: var(--fs-small); color: var(--ink-3); max-width: 40ch; }
+  .footer-by a { color: var(--ink-2); }
+
+  .footer-heading {
+    margin: 0 0 14px;
+    font-family: var(--font-mono); font-size: var(--fs-micro);
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+  }
+  .footer-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+  .footer-col a { color: var(--ink-2); font-size: var(--fs-small); text-decoration: none; }
+  .footer-col a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); }
+  .footer-more { font-weight: 540; }
+
+  .footer-ai {
+    display: grid; gap: 20px; align-items: center;
+    padding: 24px 0 40px;
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 768px) { .footer-ai { grid-template-columns: 1fr auto; } }
+  .footer-ai-copy p { margin: 0; }
+  .footer-ai-copy p:last-child { color: var(--ink-3); font-size: var(--fs-small); max-width: 44ch; }
+  .footer-ai-copy .footer-heading { margin-bottom: 6px; }
+  .footer-ai-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .footer-ai-links a {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 16px; border-radius: var(--radius-pill);
+    border: 1px solid var(--line-strong); background: var(--paper);
+    color: var(--ink-2); font-size: var(--fs-small); text-decoration: none;
+    transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  .footer-ai-links a:hover { border-color: var(--accent); color: var(--ink); transform: translateY(-1px); }
+  .client-logo { width:24px;height:24px;object-fit:contain; }
+  :global(:root[data-theme="dark"]) .client-logo { filter:invert(1); }
+  .prompt-copy { margin-top:12px;min-height:36px; }
+  .prompt-details { margin-top:12px;font-size:12px;color:var(--ink-2); }
+  .prompt-details summary { cursor:pointer;text-underline-offset:3px;text-decoration:underline; }
+  .prompt-details p { margin-top:12px!important;overflow-wrap:anywhere;user-select:text; }
+  .client-attribution { grid-column:1/-1;margin:0;font-size:11px;color:var(--ink-3); }
+
+  .footer-bottom {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px;
+    padding-top: 24px; font-size: var(--fs-micro); color: var(--ink-3);
+  }
+  .footer-bottom p { margin: 0; }
+</style>

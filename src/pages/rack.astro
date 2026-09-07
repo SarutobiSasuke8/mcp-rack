@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import RackCard from '~/components/RackCard.astro';
+import { breadcrumbSchema } from '~/lib/seo';
+
+const rack = await getCollection('rack');
+---
+
+<BaseLayout title="The rack" description="The MCP servers built by other people that Alexei Udall runs alongside his own: one card per server actually wired into his tools, with what each one is used for." jsonLd={breadcrumbSchema([{ name: 'Rack', path: '/rack' }], Astro.site)}>
+  <section class="container page-head">
+    <p class="kicker">Also on the rack</p>
+    <h1 class="t-h1">Servers by other people that I run alongside mine</h1>
+    <p class="t-lead">One card per server actually wired into my tools, with what I use it for. This is not a directory. The official MCP Registry and the aggregators that read it do that job; this page is the short list I would give a colleague.</p>
+  </section>
+  <section class="container">
+    <div class="rack-grid stagger">
+      {rack.map((r) => <RackCard item={r.data} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { padding: 56px 0 32px; }
+  @media (min-width: 1024px) { .page-head { padding: 88px 0 40px; } }
+  .page-head .t-lead { margin-top: 18px; max-width: 62ch; }
+  .rack-grid { display: grid; gap: 16px; padding-bottom: 24px; }
+  @media (min-width: 640px) { .rack-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .rack-grid { grid-template-columns: repeat(3, 1fr); } }
+</style>

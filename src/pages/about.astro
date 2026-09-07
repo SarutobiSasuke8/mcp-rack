@@ -1,0 +1,50 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE, href } from '~/lib/site';
+import { breadcrumbSchema } from '~/lib/seo';
+---
+
+<BaseLayout title="About" description="What MCP Rack is, who builds the servers on it, and the rule that keeps the rack honest." jsonLd={breadcrumbSchema([{ name: 'About', path: '/about' }], Astro.site)}>
+  <section class="container page-head">
+    <div class="prose-wrap">
+      <p class="kicker">About</p>
+      <h1 class="t-h1">A considered collection, with a person behind it.</h1>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="prose-wrap prose">
+      <p>
+        I am <a href={SITE.owner.url}>Alexei Udall</a>. I run marketing and business development for AI companies by day, and I build Model Context Protocol servers because the tools I want an agent to use do not always exist yet. GIMP is the clearest case: every image tool an agent could reach gave it pixels back and nothing else, so I built one that gives it layers, measurements and a render after every step.
+      </p>
+      <p>
+        MCP Rack is the board for that work. Each server has its own page with the package, the transport, the licence, whether it is in the official MCP Registry, and a one-line install. The journal adds practical guides, field notes and release notes, with direct sources where the details matter.
+      </p>
+
+      <h2>The rule for the rack</h2>
+      <p>
+        The <a href={href('/rack')}>rack</a> lists servers built by other people. It is not a directory and it does not try to be one: the official registry and the aggregators that read it already do that. A server earns a card by being wired into my tools and used. If I stop using it, the card goes.
+      </p>
+
+      <h2>Machine-readable</h2>
+      <p>
+        Agents get the same information people do. <a href={href('/servers.json')}><code>servers.json</code></a> carries every server on the board with its install command. <a href={href('/llms.txt')}><code>llms.txt</code></a> summarises the site for assistants. The <a href={href('/agents')}>agent guide</a> documents the full catalog, schema and Markdown interfaces. Every published post is in the <a href={href('/rss.xml')}>RSS feed</a>, and every page carries structured data.
+      </p>
+
+      <h2>How this site is built</h2>
+      <p>
+        Astro, static output, no framework on the client, no tracking. Fonts are self-hosted. The build fails on em dashes and marketing filler, which is the same gate the astraeus.ie site runs. Source is on <a href={SITE.repo}>GitHub</a> under the MIT licence.
+      </p>
+
+      <h2>Get in touch</h2>
+      <p>
+        <a href={SITE.owner.github}>GitHub</a> for issues and pull requests on any server. <a href={SITE.owner.x}>X</a> or <a href={SITE.owner.linkedin}>LinkedIn</a> for everything else.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { padding: 56px 0 24px; }
+  @media (min-width: 1024px) { .page-head { padding: 88px 0 32px; } }
+</style>

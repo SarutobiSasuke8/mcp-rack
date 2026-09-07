@@ -1,0 +1,79 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { href } from '~/lib/site';
+
+interface Props {
+  server: CollectionEntry<'servers'>['data'];
+  index?: number;
+}
+const { server: s, index } = Astro.props;
+const langClass = `chip-${s.lang.toLowerCase()}`;
+const search = [s.name, s.tagline, s.lang, s.transport, s.license, s.package?.name ?? '', ...s.tags].join(' ').toLowerCase();
+---
+
+<li class="unit reveal" data-lang={s.lang.toLowerCase()} data-registry={s.registry ? 'yes' : 'no'} data-search={search}>
+  <div class="unit-main">
+    {typeof index === 'number' && <span class="unit-index mono">{String(index + 1).padStart(2, '0')}</span>}
+    <div>
+      <h3 class="unit-name"><a href={href(`/servers/${s.slug}`)}>{s.name}</a></h3>
+      <p class="unit-tag">{s.tagline}</p>
+    </div>
+  </div>
+
+  <div class="unit-meta">
+    <span class:list={['chip', langClass]}>{s.lang}</span>
+    <span class="chip">{s.transport}</span>
+    <span class:list={['status', `status-${s.status}`]}>{s.status}</span>
+    <span class:list={['reg', { 'reg-on': !!s.registry }]} title={s.registry ?? 'Not in the official registry yet'}>
+      <i class="reg-dot"></i>{s.registry ? 'In registry' : 'Not listed yet'}
+    </span>
+  </div>
+
+  <div class="unit-pkg">
+    {s.package ? (
+      <span class="pkg mono">
+        <span class="pkg-kind">{s.package.kind}</span>
+        <span class="pkg-name">{s.package.name}</span>
+        {s.package.version && <span class="pkg-ver">{s.package.version}</span>}
+      </span>
+    ) : (
+      <span class="pkg pkg-none mono">source only</span>
+    )}
+    {s.install && (
+      <button class="copy-btn" type="button" data-copy={s.install} title={s.install} aria-label={`Copy install command for ${s.name}`}>
+        <span data-copy-label>Copy install</span>
+      </button>
+    )}
+  </div>
+</li>
+
+<style>
+  .unit {
+    display: grid;
+    gap: 14px 24px;
+    grid-template-columns: 1fr;
+    padding: 22px 16px;
+    margin-inline: -16px;
+    border-top: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: background var(--dur) var(--ease);
+  }
+  .unit:last-child { border-bottom: 1px solid var(--line); }
+  .unit:hover { background: color-mix(in srgb, var(--ink) 3%, transparent); }
+  @media (min-width: 900px) {
+    .unit { grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+  }
+  .unit-main { display: flex; gap: 16px; min-width: 0; }
+  .unit-index { color: var(--ink-4); font-size: var(--fs-micro); padding-top: 6px; width: 22px; flex: none; }
+  .unit-name { margin: 0; font-size: 1.125rem; font-weight: 560; letter-spacing: -0.012em; line-height: 1.3; }
+  .unit-name a { text-decoration: none; color: var(--ink); background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 100% / 0 2px; transition: background-size var(--dur) var(--ease); }
+  .unit:hover .unit-name a, .unit-name a:focus-visible { background-size: 100% 2px; }
+  .unit-tag { margin: 4px 0 0; color: var(--ink-2); font-size: var(--fs-small); max-width: 60ch; text-wrap: pretty; }
+  .unit-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  .unit-pkg { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; }
+  .pkg { display: inline-flex; align-items: baseline; gap: 8px; font-size: var(--fs-small); min-width: 0; }
+  .pkg-kind { color: var(--ink-4); font-size: var(--fs-micro); }
+  .pkg-name { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pkg-ver { color: var(--ink-3); font-size: var(--fs-micro); }
+  .pkg-none { color: var(--ink-4); font-style: italic; font-size: var(--fs-small); }
+</style>

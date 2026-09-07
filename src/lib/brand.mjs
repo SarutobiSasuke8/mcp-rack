@@ -1,0 +1,2 @@
+// Original MCP Rack identity. Shared by the UI and generated social artwork.
+export const RACK_MARK_PATH="M5 3H25L33 11V22L26 28L34 37H24L16 28H13V37H5V3ZM13 10V14H25V10H13ZM13 19V23H25V19H13Z";

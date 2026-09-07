@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { href } from '~/lib/site';
+import { formatDate, isoDate, readingTime } from '~/lib/format';
+
+interface Props { post: CollectionEntry<'posts'>; featured?: boolean; }
+const { post, featured = false } = Astro.props;
+const { data } = post;
+---
+
+<a class:list={['card post-card reveal', { 'is-featured': featured }]} href={href(`/blog/${post.id}`)}>
+  <p class="post-kicker">
+    <span class="post-cat">{data.category}</span>
+    {data.server && <span class="post-server mono">{data.server}{data.version ? ` ${data.version}` : ''}</span>}
+  </p>
+  <h3 class="post-title">{data.title}</h3>
+  <p class="post-desc">{data.description}</p>
+  <p class="post-meta mono">
+    <time datetime={isoDate(data.pubDate)}>{formatDate(data.pubDate)}</time>
+    <span aria-hidden="true">&middot;</span>
+    <span>{readingTime(post.body)}</span>
+  </p>
+</a>
+
+<style>
+  .post-card { display: grid; gap: 10px; align-content: start; }
+  .post-kicker { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 0; font-size: var(--fs-micro); }
+  .post-cat { font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+  .post-server { color: var(--ink-3); }
+  .post-title { margin: 2px 0 0; font-size: 1.25rem; font-weight: 560; letter-spacing: -0.016em; line-height: 1.25; text-wrap: balance; }
+  .is-featured .post-title { font-size: var(--fs-h2); }
+  .post-desc { margin: 0; color: var(--ink-2); font-size: var(--fs-small); text-wrap: pretty; }
+  .is-featured .post-desc { font-size: var(--fs-body); max-width: 60ch; }
+  .post-meta { margin: 6px 0 0; display: flex; gap: 10px; font-size: var(--fs-micro); color: var(--ink-3); }
+</style>

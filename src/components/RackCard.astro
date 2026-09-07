@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { item: CollectionEntry<'rack'>['data']; }
+const { item } = Astro.props;
+---
+
+<a class="card rack-card reveal" href={item.url} target="_blank" rel="noopener">
+  <div class="rack-top">
+    <span class="chip">{item.kind}</span>
+    <span class="rack-arrow" aria-hidden="true">&#8599;</span>
+  </div>
+  <h3 class="rack-name">{item.name}</h3>
+  <p class="rack-by">by {item.by}</p>
+  <p class="rack-blurb">{item.blurb}</p>
+  <p class="rack-use"><span class="mono">Used for</span> {item.useCase}</p>
+</a>
+
+<style>
+  .rack-card { display: grid; gap: 8px; align-content: start; }
+  .rack-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .rack-arrow { color: var(--ink-4); transition: color var(--dur) var(--ease), transform var(--dur) var(--ease); }
+  .rack-card:hover .rack-arrow { color: var(--accent); transform: translate(2px, -2px); }
+  .rack-name { margin: 0; font-size: 1.125rem; font-weight: 560; letter-spacing: -0.012em; }
+  .rack-by { margin: 0; font-size: var(--fs-micro); color: var(--ink-3); }
+  .rack-blurb { margin: 4px 0 0; color: var(--ink-2); font-size: var(--fs-small); text-wrap: pretty; }
+  .rack-use { margin: 8px 0 0; font-size: var(--fs-micro); color: var(--ink-3); border-top: 1px solid var(--line); padding-top: 10px; }
+  .rack-use .mono { color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-right: 6px; }
+</style>

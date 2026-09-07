@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PostCard from '~/components/PostCard.astro';
+import { href } from '~/lib/site';
+const posts=(await getCollection('posts',({data})=>!data.draft)).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
+const categories=[...new Set(posts.map(p=>p.data.category))];
+---
+<BaseLayout title="Journal" description="Practical MCP guides, field notes and release notes. How to choose servers, connect them and understand their limits.">
+<section class="container page-head"><p class="kicker">The MCP Rack journal</p><h1 class="t-h1">Useful notes.<br />From the workbench.</h1><p class="t-lead">Guides for getting started, perspectives on choosing well, and release notes from the tools taking shape here.</p><a class="text-link" href={href('/rss.xml')}>Follow via RSS ↗</a></section>
+<section class="container"><div class="journal-filters" role="group" aria-label="Filter articles"><button type="button" data-category="all" aria-pressed="true">All articles</button>{categories.map(c=><button type="button" data-category={c} aria-pressed="false">{c}</button>)}</div><p class="mono t-small t-muted" role="status" aria-live="polite" data-post-count>{posts.length} articles</p><div class="posts-grid">{posts.map(p=><div data-post-category={p.data.category}><PostCard post={p}/></div>)}</div></section>
+</BaseLayout>
+<style>.page-head{padding-block:75px 45px}.page-head .t-lead{margin:24px 0;max-width:58ch}.posts-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.journal-filters{display:flex;gap:8px;flex-wrap:wrap}.journal-filters button{border:1px solid var(--line-strong);padding:11px 17px;min-height:44px;border-radius:4px;background:transparent;cursor:pointer;font-size:13px}.journal-filters button[aria-pressed=true]{background:var(--ink);color:var(--paper)}@media(max-width:900px){.posts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.posts-grid{grid-template-columns:1fr}}</style>
+<script>
+const buttons=document.querySelectorAll<HTMLButtonElement>('[data-category]');
+buttons.forEach(button=>button.addEventListener('click',()=>{const category=button.dataset.category;let count=0;buttons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.querySelectorAll<HTMLElement>('[data-post-category]').forEach(post=>{post.hidden=category!=='all'&&post.dataset.postCategory!==category;if(!post.hidden)count++;});const status=document.querySelector('[data-post-count]');if(status)status.textContent=count+' '+(count===1?'article':'articles');}));
+</script>

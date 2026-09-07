@@ -1,0 +1,22 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { href } from '~/lib/site';
+---
+
+<BaseLayout title="Not found" description="That page is not on the rack." noIndex>
+  <section class="container nf">
+    <p class="kicker">404</p>
+    <h1 class="t-h1">That page is not on the rack.</h1>
+    <p class="t-lead">The address may have changed, or it never existed. The board and the release notes are one click away.</p>
+    <div class="nf-actions">
+      <a class="btn btn-primary" href={href('/servers')}>Browse the servers</a>
+      <a class="btn btn-ghost" href={href('/')}>Home</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf { padding: 96px 0; max-width: 60ch; }
+  .nf .t-lead { margin-top: 18px; }
+  .nf-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+</style>

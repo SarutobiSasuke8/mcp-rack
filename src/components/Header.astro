@@ -1,0 +1,223 @@
+---
+import BrandMark from '~/components/BrandMark.astro';
+import { PRIMARY_NAV, isCurrent } from '~/lib/nav';
+import { SITE, BASE, href } from '~/lib/site';
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header" data-header>
+  <div class="container">
+    <div class="pill">
+      <a class="wordmark" href={href('/')} aria-label={`${SITE.name}, home`}>
+        <span class="brand-symbol"><BrandMark size={32}/></span>
+        <span class="wordmark-text">MCP <span class="wordmark-accent">Rack</span></span>
+      </a>
+
+      <nav class="pill-nav" aria-label="Primary">
+        {PRIMARY_NAV.map((item) => {
+          const current = isCurrent(item.href, pathname, BASE);
+          return (
+            <a href={href(item.href)} class:list={['pill-link', { 'is-current': current }]} aria-current={current ? 'page' : undefined}>
+              {item.label}
+            </a>
+          );
+        })}
+      </nav>
+
+      <div class="pill-actions">
+        <a class="btn btn-ghost btn-sm github-btn" href={SITE.owner.github} rel="me noopener" target="_blank">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.1c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>GitHub</span>
+        </a>
+
+        <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-label="Switch colour theme" title="Switch colour theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+        </button>
+
+        <button class="icon-btn burger" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
+    <nav class="container mobile-nav-inner" aria-label="Primary, mobile">
+      {PRIMARY_NAV.map((item) => {
+        const current = isCurrent(item.href, pathname, BASE);
+        return (
+          <a href={href(item.href)} class:list={['mobile-link', { 'is-current': current }]} aria-current={current ? 'page' : undefined}>
+            {item.label}
+          </a>
+        );
+      })}
+      <a class="mobile-link" href={SITE.owner.github} rel="me noopener" target="_blank">GitHub</a>
+      <a class="mobile-link" href={href('/rss.xml')}>RSS</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    padding: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    pointer-events: none;
+  }
+  .site-header .container { pointer-events: auto; }
+
+  .pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 0;
+    border-radius: 0;
+    background: var(--glass);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    border: 0;
+    box-shadow: none;
+    transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .site-header.is-scrolled .pill {
+    background: var(--glass-strong);
+    box-shadow: none;
+  }
+
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 620;
+    letter-spacing: -0.02em;
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+  .mark { width: 22px; height: 22px; fill: var(--accent); flex: none; }
+  .wordmark-text { display: inline-flex; gap: 0.16em; }
+  .wordmark-accent { color: var(--ink); font-weight: 620; }
+  .brand-symbol { color:var(--accent);display:inline-flex;margin-right:2px; }
+
+  .pill-nav { display: none; align-items: center; gap: 2px; }
+  .pill-link {
+    position: relative;
+    padding: 9px 13px;
+    border-radius: 0;
+    font-size: var(--fs-small);
+    font-weight: 500;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+  }
+  .pill-link:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  .pill-link.is-current { color: var(--ink); }
+  .pill-link.is-current::after {
+    content: "";
+    position: absolute;
+    left: 13px; right: 13px; bottom: 4px;
+    height: 2px; border-radius: 2px;
+    background: var(--accent);
+  }
+
+  .pill-actions { display: flex; align-items: center; gap: 6px; }
+  .github-btn { display: none; }
+  .icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: transparent; border: 1px solid transparent; cursor: pointer;
+    color: var(--ink-2);
+    transition: background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .icon-btn:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); color: var(--ink); }
+  .icon-moon { display: none; }
+  :global(:root[data-theme="dark"]) .icon-sun { display: none; }
+  :global(:root[data-theme="dark"]) .icon-moon { display: block; }
+
+  .burger { flex-direction: column; gap: 5px; }
+  .burger-line { width: 18px; height: 1.6px; background: currentColor; border-radius: 2px; transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease); }
+  .burger[aria-expanded="true"] .burger-line:first-child { transform: translateY(3.3px) rotate(45deg); }
+  .burger[aria-expanded="true"] .burger-line:last-child { transform: translateY(-3.3px) rotate(-45deg); }
+
+  .mobile-nav {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--paper);
+    padding-top: 84px;
+    pointer-events: auto;
+    overflow-y: auto;
+  }
+  .mobile-nav[hidden] { display: none; }
+  .mobile-nav-inner { display: grid; gap: 4px; padding-block: 20px 40px; }
+  .mobile-link {
+    padding: 14px 8px;
+    font-size: 1.5rem;
+    font-weight: 540;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-link.is-current, .mobile-link:hover { color: var(--ink); }
+
+  @media (min-width: 900px) {
+    .pill-nav { display: flex; }
+    .github-btn { display: inline-flex; }
+    .burger { display: none; }
+    .mobile-nav { display: none !important; }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  if (header && !header.dataset.bound) {
+    header.dataset.bound = '1';
+
+    // Scrolled state.
+    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Theme toggle.
+    const toggle = header.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+    toggle?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch {}
+    });
+
+    // Mobile menu.
+    const burger = header.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+    const panel = header.querySelector<HTMLElement>('[data-mobile-nav]');
+    const setOpen = (open: boolean) => {
+      if (!burger || !panel) return;
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      panel.hidden = !open;
+      document.querySelectorAll<HTMLElement>('main,footer').forEach(el=>{el.inert=open;});
+      if(open)panel.querySelector<HTMLAnchorElement>('a')?.focus();
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+    burger?.addEventListener('click', () => setOpen(burger.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && burger?.getAttribute('aria-expanded') === 'true') { setOpen(false); burger.focus(); } });
+    header.addEventListener('keydown',(event)=>{
+      if(event.key!=='Tab'||panel?.hidden)return;
+      const focusable=Array.from(header.querySelectorAll<HTMLElement>('a,button')).filter(el=>el.getClientRects().length>0);
+      const first=focusable[0],last=focusable[focusable.length-1];
+      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}
+      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
+    });
+    panel?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    matchMedia('(min-width: 900px)').addEventListener('change', (e) => { if (e.matches) setOpen(false); });
+  }
+</script>

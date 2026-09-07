@@ -1,0 +1,5 @@
+import {getCollection} from 'astro:content';
+import type {APIContext} from 'astro';
+import {absolute} from '~/lib/site';
+export async function getStaticPaths(){return(await getCollection('servers')).map(({data:s})=>({params:{slug:s.slug},props:{server:s}}));}
+export function GET({props,site}:APIContext){const s=props.server;const lines=['# '+s.name,'',s.tagline,'',s.summary,'','Source: '+s.repo,'Docs: '+(s.docs??s.repo),'Listing: '+absolute('/servers/'+s.slug,site),'Status: '+s.status,'Transport: '+s.transport,'License: '+s.license,'Package: '+(s.package?s.package.name+' '+(s.package.version??''):'Source only'),'','## Highlights','',...s.highlights.map((h:string)=>'- '+h),'','## Setup','',s.install?'Claude Code command:\n\n    '+s.install:'No install command recorded; consult the repository.','','Check prerequisites, permissions and current versions. Inclusion is not an independent security audit.'];return new Response(lines.join('\n'),{headers:{'Content-Type':'text/markdown; charset=utf-8'}});}

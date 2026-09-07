@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mcprack.dev/catalog.schema.json",
+  "title": "MCP Rack catalog v1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "generatedAt",
+    "generatedAtMeaning",
+    "name",
+    "description",
+    "website",
+    "editorialPolicy",
+    "provenance",
+    "servers",
+    "curated",
+    "articles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "generatedAtMeaning": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string",
+      "format": "uri"
+    },
+    "editorialPolicy": {
+      "type": "string",
+      "format": "uri"
+    },
+    "provenance": {
+      "type": "string"
+    },
+    "servers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "slug",
+          "name",
+          "listingType",
+          "softwareType",
+          "url",
+          "markdownUrl",
+          "reviewedAt",
+          "repo",
+          "docs",
+          "transport",
+          "status",
+          "package",
+          "install",
+          "license",
+          "tags"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "listingType": {
+            "const": "owner-built"
+          },
+          "softwareType": {
+            "enum": [
+              "mcp-server",
+              "companion-tool"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "markdownUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "reviewedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "repo": {
+            "type": "string",
+            "format": "uri"
+          },
+          "docs": {
+            "type": "string",
+            "format": "uri"
+          },
+          "transport": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "alpha",
+              "beta",
+              "preview",
+              "experimental"
+            ]
+          },
+          "package": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "install": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "license": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "curated": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "slug",
+          "name",
+          "by",
+          "url",
+          "useCase",
+          "listingType",
+          "reviewedAt",
+          "independentAudit"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "by": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "useCase": {
+            "type": "string"
+          },
+          "listingType": {
+            "const": "curated"
+          },
+          "reviewedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "independentAudit": {
+            "const": false
+          }
+        }
+      }
+    },
+    "articles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "slug",
+          "title",
+          "url",
+          "markdownUrl",
+          "pubDate",
+          "category"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "markdownUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pubDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

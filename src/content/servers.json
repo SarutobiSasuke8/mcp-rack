@@ -1,0 +1,295 @@
+[
+  {
+    "id": "gimp-agent-mcp",
+    "slug": "gimp-agent-mcp",
+    "name": "gimp-agent-mcp",
+    "tagline": "The whole of GIMP 3 for AI agents: every PDB procedure and GEGL filter, renders, pixel measurement, recipes. Windows-first.",
+    "summary": "An MCP server that hands AI agents the whole of GIMP 3 rather than a hand-picked slice. Every one of GIMP's roughly 1,000 Procedure Database functions and 207 GEGL filters is reachable through runtime introspection, so nothing goes stale when GIMP updates. The agent can see its work: a PNG render after each step, before/after/diff comparisons, and pixel measurement instead of guessing. Recipes turn repeatable jobs (stickers, icon sets, watermarks, contact sheets, social cards from a layout manifest) into one call, and a batch runner applies them to whole folders.",
+    "highlights": [
+      "Tools, reusable recipes and bundled skills for layered assets, sprite sheets and batch jobs",
+      "Runtime introspection of the PDB and GEGL, with typed argument descriptions and enum choices read from GIMP at call time",
+      "Render, measure, snapshot and compare so the agent verifies each edit before moving on",
+      "Non-destructive layer effects, selections, masks, text, vector paths and AI subject cut-outs",
+      "Works inside the GIMP window you already have open: Filters, Development, Start Agent Bridge"
+    ],
+    "lang": "Python",
+    "transport": "stdio",
+    "package": {
+      "kind": "pypi",
+      "name": "gimp-agent-mcp",
+      "version": "0.3.0"
+    },
+    "registry": "io.github.SarutobiSasuke8/gimp-agent-mcp",
+    "status": "beta",
+    "license": "Apache-2.0",
+    "repo": "https://github.com/SarutobiSasuke8/gimp-agent-mcp",
+    "docs": "https://github.com/SarutobiSasuke8/gimp-agent-mcp#readme",
+    "install": "claude mcp add gimp -- uvx gimp-agent-mcp serve",
+    "tags": [
+      "gimp",
+      "images",
+      "gegl",
+      "design",
+      "windows"
+    ],
+    "order": 1
+  },
+  {
+    "id": "jobscout-mcp",
+    "slug": "jobscout-mcp",
+    "name": "jobscout-mcp",
+    "tagline": "Privacy-first job discovery across sources: normalisation, deduplication and provenance for every listing.",
+    "summary": "A multi-source job discovery engine exposed as MCP tools. It searches several boards, normalises each listing into one record, deduplicates across sources on a shared key space, and keeps provenance so an agent can say where a role came from. It deliberately stops at discovery: the judgement about whether a role fits belongs to the person, or to a private layer that never leaves their machine.",
+    "highlights": [
+      "Several providers behind one normalised record",
+      "Deterministic deduplication with provenance on every listing",
+      "AI and Web3 taxonomy for the lanes the author actually works in",
+      "Listed in the official MCP Registry and published on npm"
+    ],
+    "lang": "TypeScript",
+    "transport": "stdio",
+    "package": {
+      "kind": "npm",
+      "name": "@sarutobi-sasuke/jobscout-mcp",
+      "version": "0.2.1"
+    },
+    "registry": "io.github.SarutobiSasuke8/jobscout-mcp",
+    "status": "beta",
+    "license": "Apache-2.0",
+    "repo": "https://github.com/SarutobiSasuke8/jobscout-mcp",
+    "docs": "https://github.com/SarutobiSasuke8/jobscout-mcp#readme",
+    "install": "claude mcp add jobscout -- npx -y @sarutobi-sasuke/jobscout-mcp",
+    "tags": [
+      "jobs",
+      "careers",
+      "search"
+    ],
+    "order": 2
+  },
+  {
+    "id": "website-content-mcp",
+    "slug": "website-content-mcp",
+    "name": "website-content-mcp",
+    "tagline": "A site-scoped content gateway: the pages, structure and text of a website in a form agents can reason over.",
+    "summary": "Exposes a website's content to agents as structured, read-only tools: page inventory, headings, body text and metadata, scoped to sites the operator owns. It is the open-source foundation for managed web intelligence work, and runs live as read-only endpoints for the author's own sites.",
+    "highlights": [
+      "Read-only by design, scoped per site",
+      "Structured page, heading and metadata output rather than raw HTML",
+      "Published on npm; runs as hosted endpoints for owned sites"
+    ],
+    "lang": "TypeScript",
+    "transport": "stdio",
+    "package": {
+      "kind": "npm",
+      "name": "@sarutobi-sasuke/website-content-mcp",
+      "version": "0.3.1"
+    },
+    "registry": null,
+    "status": "beta",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/website-content-mcp",
+    "docs": "https://github.com/SarutobiSasuke8/website-content-mcp#readme",
+    "install": "claude mcp add website-content -- npx -y @sarutobi-sasuke/website-content-mcp",
+    "tags": [
+      "web",
+      "content",
+      "seo",
+      "sites"
+    ],
+    "order": 3
+  },
+  {
+    "id": "agent-handoff-mcp",
+    "slug": "agent-handoff-mcp",
+    "name": "agent-handoff-mcp",
+    "tagline": "Local-first, bounded, auditable handoffs between AI agents. A coordination primitive, not a message bus.",
+    "summary": "A vendor-neutral way for one agent to hand work to another with a record of what was handed over, to whom, and what happened next. Handoffs are bounded messages with lifecycle state; a handoff can reference a repository or vault artefact without gaining any authority to read or change it.",
+    "highlights": [
+      "Lifecycle state and receipts for every handoff",
+      "Works across Claude, Codex and any stdio MCP client",
+      "Content-free evidence path: identities and artefacts are referenced, never copied"
+    ],
+    "lang": "TypeScript",
+    "transport": "stdio",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "Apache-2.0",
+    "repo": "https://github.com/SarutobiSasuke8/agent-handoff-mcp",
+    "docs": null,
+    "install": null,
+    "tags": [
+      "agents",
+      "coordination",
+      "handoff"
+    ],
+    "order": 4
+  },
+  {
+    "id": "credential-broker-mcp",
+    "slug": "credential-broker-mcp",
+    "name": "credential-broker-mcp",
+    "tagline": "Agents use gated APIs through scoped, audited requests without ever seeing the secret.",
+    "summary": "A policy-gated broker that lets an agent exercise a credential without holding it. The agent asks for an operation; the broker checks scope and policy, performs the call, logs it, and returns the result. Secrets stay on the operator's side.",
+    "highlights": [
+      "Scoped grants per agent and per operation",
+      "Every request audited",
+      "Local-first; no secret ever enters an agent's context"
+    ],
+    "lang": "TypeScript",
+    "transport": "stdio",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "Apache-2.0",
+    "repo": "https://github.com/SarutobiSasuke8/credential-broker-mcp",
+    "docs": null,
+    "install": null,
+    "tags": [
+      "security",
+      "secrets",
+      "credentials"
+    ],
+    "order": 5
+  },
+  {
+    "id": "obsidian-github-mcp",
+    "slug": "obsidian-github-mcp",
+    "name": "obsidian-github-mcp",
+    "tagline": "Permissioned proposal gateway for Obsidian vaults stored on GitHub: agents propose, humans merge.",
+    "summary": "Agents do not write into the vault. They open proposals against the GitHub repository that backs it, within the paths and rules the operator allows, and a human merges. White-label, so any vault-in-GitHub setup can use it.",
+    "highlights": [
+      "Proposal-first: every change is a reviewable pull request",
+      "Path and rule permissions per agent",
+      "Works with any Obsidian vault kept in a GitHub repository"
+    ],
+    "lang": "TypeScript",
+    "transport": "stdio",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "Apache-2.0",
+    "repo": "https://github.com/SarutobiSasuke8/obsidian-github-mcp",
+    "docs": null,
+    "install": null,
+    "tags": [
+      "obsidian",
+      "github",
+      "knowledge",
+      "vault"
+    ],
+    "order": 6
+  },
+  {
+    "id": "source-pack-mcp",
+    "slug": "source-pack-mcp",
+    "name": "source-pack-mcp",
+    "tagline": "Structured research source packs: facts, quotes, numbers, primary links and a coverage map, with provenance.",
+    "summary": "Turns a research question into a source pack an agent or a person can check: the facts found, the quotes and numbers with their primary links, and a coverage map of what was and was not found. Built for research that has to survive a second reader.",
+    "highlights": [
+      "Facts, quotes and numbers each carry a primary link",
+      "Coverage map shows the gaps as well as the finds",
+      "Fetcher hardened against server-side request forgery"
+    ],
+    "lang": "TypeScript",
+    "transport": "stdio",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/source-pack-mcp",
+    "docs": null,
+    "install": null,
+    "tags": [
+      "research",
+      "sources",
+      "provenance"
+    ],
+    "order": 7
+  },
+  {
+    "id": "meeting-context-router",
+    "slug": "meeting-context-router",
+    "name": "meeting-context-router",
+    "tagline": "Proposal-first routing from meeting tools into governed CRM and knowledge-system updates.",
+    "summary": "Takes the output of meeting tools (transcripts, summaries, action items) and routes it as proposals into the CRM and knowledge systems that should hold it, rather than writing directly. A bounded stdio MCP surface sits on top so agents can ask what a meeting changed.",
+    "highlights": [
+      "Proposal-first: nothing is written to a system of record without review",
+      "Bounded tool surface for agents",
+      "Designed around Fireflies-style meeting exports"
+    ],
+    "lang": "TypeScript",
+    "transport": "stdio",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "Apache-2.0",
+    "repo": "https://github.com/SarutobiSasuke8/meeting-context-router",
+    "docs": null,
+    "install": null,
+    "tags": [
+      "meetings",
+      "crm",
+      "routing"
+    ],
+    "order": 8
+  },
+  {
+    "id": "mcp-dashboard",
+    "slug": "mcp-dashboard",
+    "name": "mcp-dashboard",
+    "tagline": "Cost and benefit dashboard for your MCP toolbox across Claude Code, Codex, Gemini CLI and Cursor.",
+    "summary": "A local dashboard that reads the MCP configuration of the agent clients on your machine and shows what each server costs you in RAM and context tokens against how much you actually use it, with working on/off switches. Not an MCP server itself: a control surface for the fleet.",
+    "highlights": [
+      "Reads Claude Code, Codex, Gemini CLI and Cursor configurations",
+      "RAM, context tokens and real usage per server",
+      "On/off switches that write back safely"
+    ],
+    "lang": "Python",
+    "transport": "local web UI",
+    "package": {
+      "kind": "pypi",
+      "name": "mcp-dashboard",
+      "version": "1.0.0"
+    },
+    "registry": null,
+    "status": "preview",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/mcp-dashboard",
+    "docs": "https://github.com/SarutobiSasuke8/mcp-dashboard#readme",
+    "install": null,
+    "tags": [
+      "observability",
+      "tooling",
+      "cost"
+    ],
+    "order": 9
+  },
+  {
+    "id": "sports-oracle-teneo-agent",
+    "slug": "sports-oracle-teneo-agent",
+    "name": "sports-oracle-teneo-agent",
+    "tagline": "Teneo agent wrapping the Sports Oracle API: live NBA, NHL, MLB, NFL, F1, soccer, tennis and MMA data for agents.",
+    "summary": "An experimental agent that exposes live sports data through both a REST interface and an MCP transport, built to explore how a data provider looks from inside an agent network.",
+    "highlights": [
+      "REST and MCP transports on the same data",
+      "Eight sports covered",
+      "Experimental; requires a separately configured provider API credential"
+    ],
+    "lang": "Go",
+    "transport": "REST + MCP",
+    "package": null,
+    "registry": null,
+    "status": "experimental",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/sports-oracle-teneo-agent",
+    "docs": null,
+    "install": null,
+    "tags": [
+      "sports",
+      "data",
+      "teneo"
+    ],
+    "order": 10
+  }
+]

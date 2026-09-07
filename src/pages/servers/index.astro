@@ -1,0 +1,126 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import ServerRow from '~/components/ServerRow.astro';
+import { itemListSchema, breadcrumbSchema } from '~/lib/seo';
+
+const servers = (await getCollection('servers')).sort((a, b) => a.data.order - b.data.order);
+const langs = [...new Set(servers.map((s) => s.data.lang))];
+const jsonLd = [itemListSchema(servers.map((s) => s.data), Astro.site), breadcrumbSchema([{ name: 'Servers', path: '/servers' }], Astro.site)];
+---
+
+<BaseLayout title="Servers" description="Every MCP server Alexei Udall has published: stack, transport, package, licence and official-registry status, with a one-line install for the packaged ones." jsonLd={jsonLd}>
+  <section class="container page-head">
+    <p class="kicker">The board</p>
+    <h1 class="t-h1">Servers & companion tools</h1>
+    <p class="t-lead">{servers.length} projects. Filter by stack, or search by name, package or what it does. The install command copies straight into Claude Code.</p>
+  </section>
+
+  <section class="container" aria-labelledby="board-title">
+    <h2 class="visually-hidden" id="board-title">Server list</h2>
+    <div class="controls" data-board-controls>
+      <div class="chips" role="group" aria-label="Filter by stack">
+        <button class="filter" type="button" data-filter="all" aria-pressed="true">All</button>
+        {langs.map((l) => <button class="filter" type="button" data-filter={l.toLowerCase()} aria-pressed="false">{l}</button>)}
+        <button class="filter" type="button" data-filter="registry" aria-pressed="false">In registry</button>
+      </div>
+      <label class="search">
+        <span class="visually-hidden">Search servers</span>
+        <input type="search" placeholder="Search the board" autocomplete="off" spellcheck="false" data-search-input />
+        <kbd aria-hidden="true">/</kbd>
+      </label>
+      <p class="count mono" role="status" aria-live="polite"><span data-count>{servers.length}</span> shown</p>
+    </div>
+
+    <ol class="board stagger" data-board>
+      {servers.map((s, i) => <ServerRow server={s.data} index={i} />)}
+    </ol>
+    <div class="empty" data-empty hidden>
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M19.5 19.5 15 15" /></svg>
+      <p>Nothing on the board matches that. Try a different word.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { padding: 56px 0 32px; }
+  @media (min-width: 1024px) { .page-head { padding: 88px 0 40px; } }
+  .page-head .t-lead { margin-top: 18px; max-width: 60ch; }
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 8px 0 20px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filter {
+    padding: 8px 14px; border-radius: var(--radius-pill);
+    border: 1px solid var(--line-strong); background: transparent; color: var(--ink-2);
+    font-size: var(--fs-micro); font-family: var(--font-mono); letter-spacing: 0.04em; cursor: pointer;
+    transition: background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .filter:hover { border-color: var(--ink); color: var(--ink); }
+  .filter[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .search { display: flex; align-items: center; gap: 8px; margin-left: auto; padding: 6px 4px; border-bottom: 1px solid var(--line-strong); }
+  .search:focus-within { border-color: var(--accent); }
+  .search input { border: 0; background: none; outline: none; min-width: 220px; font: inherit; color: var(--ink); }
+  .search input::placeholder { color: var(--ink-4); }
+  .search kbd { font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--ink-4); border: 1px solid var(--line-strong); border-radius: 4px; padding: 1px 6px; }
+  .count { margin: 0; font-size: var(--fs-micro); color: var(--ink-3); }
+  .board { list-style: none; margin: 0; padding: 0; }
+  .empty {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    padding: 56px 20px; margin-top: -1px;
+    color: var(--ink-3); text-align: center;
+    border: 1px dashed var(--line-strong); border-radius: var(--radius-lg);
+  }
+  .empty svg { color: var(--ink-4); }
+  .empty p { margin: 0; font-size: var(--fs-small); }
+  @media (max-width: 640px) { .search { margin-left: 0; width: 100%; } .search input { flex: 1; min-width: 0; } }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-board-controls]');
+  const board = document.querySelector<HTMLElement>('[data-board]');
+  if (root && board && !root.dataset.bound) {
+    root.dataset.bound = '1';
+    const units = Array.from(board.querySelectorAll<HTMLElement>('.unit'));
+    const input = root.querySelector<HTMLInputElement>('[data-search-input]')!;
+    const count = root.querySelector<HTMLElement>('[data-count]')!;
+    const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+    let filter = 'all';
+    const params=new URLSearchParams(location.search);
+    let q=(params.get('q')??'').trim().toLowerCase();
+    input.value=params.get('q')??'';
+    const requested=params.get('filter');
+    if(requested&&Array.from(root.querySelectorAll<HTMLButtonElement>('[data-filter]')).some(b=>b.dataset.filter===requested))filter=requested;
+
+    const apply = () => {
+      let shown = 0;
+      for (const u of units) {
+        const byFilter = filter === 'all' || (filter === 'registry' ? u.dataset.registry === 'yes' : u.dataset.lang === filter);
+        const byQuery = !q || (u.dataset.search ?? '').includes(q);
+        const visible = byFilter && byQuery;
+        u.hidden = !visible;
+        if (visible) shown++;
+      }
+      count.textContent = String(shown);
+      empty.hidden = shown !== 0;
+      const url=new URL(location.href);
+      if(q)url.searchParams.set('q',input.value.trim());else url.searchParams.delete('q');
+      if(filter!=='all')url.searchParams.set('filter',filter);else url.searchParams.delete('filter');
+      history.replaceState(null,'',url);
+      root.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===filter)));
+    };
+
+    root.querySelectorAll<HTMLButtonElement>('.filter').forEach((b) =>
+      b.addEventListener('click', () => {
+        root.querySelectorAll('.filter').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+        b.setAttribute('aria-pressed', 'true');
+        filter = b.dataset.filter ?? 'all';
+        apply();
+      }),
+    );
+    apply();
+    input.addEventListener('input', () => { q = input.value.trim().toLowerCase(); apply(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && !(document.activeElement instanceof HTMLElement && (document.activeElement.matches('input,textarea,select') || document.activeElement.isContentEditable)) && !e.metaKey && !e.ctrlKey) { e.preventDefault(); input.focus(); }
+      if (e.key === 'Escape' && document.activeElement === input) { input.value = ''; q = ''; apply(); input.blur(); }
+    });
+  }
+</script>

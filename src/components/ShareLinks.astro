@@ -1,0 +1,26 @@
+---
+interface Props { url: string; title: string; }
+const { url, title } = Astro.props;
+const x = `https://x.com/intent/post?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+const linkedin = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+---
+
+<div class="share" aria-label="Share this post">
+  <span class="share-label mono">Share</span>
+  <a class="share-link" href={x} target="_blank" rel="noopener">X</a>
+  <a class="share-link" href={linkedin} target="_blank" rel="noopener">LinkedIn</a>
+  <button class="share-link copy" type="button" data-copy={url}><span data-copy-label>Copy link</span></button>
+</div>
+
+<style>
+  .share { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .share-label { font-size: var(--fs-micro); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
+  .share-link {
+    display: inline-flex; align-items: center;
+    padding: 7px 12px; border-radius: var(--radius-pill);
+    border: 1px solid var(--line-strong); background: transparent;
+    font-size: var(--fs-micro); color: var(--ink-2); text-decoration: none; cursor: pointer;
+    transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease), background var(--dur) var(--ease);
+  }
+  .share-link:hover, .share-link[data-done="true"] { border-color: var(--ink); color: var(--ink); }
+</style>

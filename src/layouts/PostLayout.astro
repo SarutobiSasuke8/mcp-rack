@@ -1,0 +1,99 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import ShareLinks from '~/components/ShareLinks.astro';
+import { SITE, href, absolute } from '~/lib/site';
+import { formatDate, isoDate, readingTime } from '~/lib/format';
+import { articleSchema, breadcrumbSchema } from '~/lib/seo';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  prev?: CollectionEntry<'posts'>;
+  next?: CollectionEntry<'posts'>;
+  server?: CollectionEntry<'servers'>;
+}
+const { post, prev, next, server } = Astro.props;
+const { data } = post;
+const url = absolute(`/blog/${post.id}`, Astro.site);
+const ogImage = data.ogImage ?? `/og/post-${post.id}.png`;
+const jsonLd = [
+  articleSchema({ slug: post.id, title: data.title, description: data.description, pubDate: data.pubDate, updatedDate: data.updatedDate, image: ogImage }, Astro.site),
+  breadcrumbSchema([{ name: 'Release notes', path: '/blog' }, { name: data.title, path: `/blog/${post.id}` }], Astro.site),
+];
+---
+
+<BaseLayout title={data.title} description={data.description} ogType="article" ogImage={ogImage} jsonLd={jsonLd}>
+  <article class="post">
+    <header class="container post-header">
+      <div class="prose-wrap">
+        <p class="kicker">{data.category}{data.server ? ` · ${data.server}${data.version ? ` ${data.version}` : ''}` : ''}</p>
+        <h1 class="t-h1">{data.title}</h1>
+        <p class="t-lead">{data.description}</p>
+        <p class="post-meta mono">
+          <span>By <a href={SITE.owner.url} rel="author">{SITE.owner.name}</a></span>
+          <span aria-hidden="true">&middot;</span>
+          <time datetime={isoDate(data.pubDate)}>{formatDate(data.pubDate)}</time>
+          {data.updatedDate && (<><span aria-hidden="true">&middot;</span><span>Updated <time datetime={isoDate(data.updatedDate)}>{formatDate(data.updatedDate)}</time></span></>)}
+          <span aria-hidden="true">&middot;</span>
+          <span>{readingTime(post.body)}</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="prose-wrap prose post-body">
+        <slot />
+      </div>
+
+      <div class="prose-wrap post-foot">
+        <ShareLinks url={url} title={data.title} />
+
+        {server && (
+          <aside class="card post-server-card">
+            <p class="kicker" style="margin-bottom: 8px">This release</p>
+            <h2 class="t-h3">{server.data.name}</h2>
+            <p class="t-small t-muted">{server.data.tagline}</p>
+            {server.data.install && (
+              <div class="install" style="margin-top: 14px">
+                <code>{server.data.install}</code>
+                <button class="copy-btn" type="button" data-copy={server.data.install} aria-label="Copy install command"><span data-copy-label>Copy</span></button>
+              </div>
+            )}
+            <p class="t-small" style="margin: 14px 0 0">
+              <a href={href(`/servers/${server.data.slug}`)}>Server page</a>
+              <span aria-hidden="true"> &middot; </span>
+              <a href={server.data.repo} target="_blank" rel="noopener">Repository</a>
+            </p>
+          </aside>
+        )}
+
+        <nav class="post-nav" aria-label="Neighbouring posts">
+          {prev ? (
+            <a class="post-nav-link" href={href(`/blog/${prev.id}`)}><span class="mono">Newer</span><span>{prev.data.title}</span></a>
+          ) : <span />}
+          {next ? (
+            <a class="post-nav-link is-next" href={href(`/blog/${next.id}`)}><span class="mono">Older</span><span>{next.data.title}</span></a>
+          ) : <span />}
+        </nav>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-header { padding: 56px 0 40px; }
+  @media (min-width: 1024px) { .post-header { padding: 88px 0 56px; } }
+  .post-header .t-lead { margin-top: 18px; }
+  .post-meta { margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 10px; font-size: var(--fs-micro); color: var(--ink-3); }
+  .post-meta a { color: var(--ink-2); }
+  .post-body { padding-bottom: 8px; }
+  .post-foot { display: grid; gap: 32px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .post-server-card h2 { margin: 0 0 6px; }
+  .post-server-card p { margin: 0; }
+  .post-nav { display: grid; gap: 12px; }
+  @media (min-width: 640px) { .post-nav { grid-template-columns: 1fr 1fr; } }
+  .post-nav-link { display: grid; gap: 6px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); font-size: var(--fs-small); font-weight: 540; transition: border-color var(--dur) var(--ease); }
+  .post-nav-link:hover { border-color: var(--accent); }
+  .post-nav-link .mono { font-size: var(--fs-micro); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); font-weight: 400; }
+  .post-nav-link.is-next { text-align: right; }
+</style>

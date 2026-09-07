@@ -1,0 +1,117 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PostCard from '~/components/PostCard.astro';
+import { href } from '~/lib/site';
+import { softwareSchema, breadcrumbSchema } from '~/lib/seo';
+
+export async function getStaticPaths() {
+  const servers = await getCollection('servers');
+  return servers.map((server) => ({ params: { slug: server.data.slug }, props: { server } }));
+}
+
+const { server } = Astro.props;
+const s = server.data;
+const posts = (await getCollection('posts', ({ data }) => !data.draft && data.server === s.slug)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const registryUrl = s.registry ? `https://registry.modelcontextprotocol.io/v0.1/servers/${encodeURIComponent(s.registry)}/versions/latest` : null;
+const packageUrl = s.package ? (s.package.kind === 'pypi' ? `https://pypi.org/project/${s.package.name}/` : `https://www.npmjs.com/package/${s.package.name}`) : null;
+const jsonLd = [softwareSchema(s, Astro.site), breadcrumbSchema([{ name: 'Servers', path: '/servers' }, { name: s.name, path: `/servers/${s.slug}` }], Astro.site)];
+const facts: { k: string; v: string; link?: string }[] = [
+  { k: 'Stack', v: s.lang },
+  { k: 'Transport', v: s.transport },
+  { k: 'Package', v: s.package ? `${s.package.name}${s.package.version ? ` ${s.package.version}` : ''} (${s.package.kind})` : 'Source only', link: packageUrl ?? undefined },
+  { k: 'Official registry', v: s.registry ?? 'Not listed yet', link: registryUrl ?? undefined },
+  { k: 'Licence', v: s.license },
+  { k: 'Status', v: s.status },
+];
+---
+
+<BaseLayout title={s.name} description={s.tagline} ogImage={`/og/server-${s.slug}.png`} jsonLd={jsonLd}>
+  <section class="container page-head">
+    <p class="kicker"><a href={href('/servers')}>Servers</a> / {s.name}</p>
+    <h1 class="t-h1 mono-title">{s.name}</h1>
+    <p class="t-lead">{s.tagline}</p>
+    <div class="head-meta">
+      <span class:list={['chip', `chip-${s.lang.toLowerCase()}`]}>{s.lang}</span>
+      <span class="chip">{s.transport}</span>
+      <span class:list={['status', `status-${s.status}`]}>{s.status}</span>
+      <span class:list={['reg', { 'reg-on': !!s.registry }]}><i class="reg-dot"></i>{s.registry ? 'In the official registry' : 'Not in the registry yet'}</span>
+    </div>
+  </section>
+
+  <section class="container detail">
+    <div class="detail-main">
+      {s.install && (
+        <div class="install-block">
+          <p class="kicker" style="margin-bottom: 10px">Install in Claude Code</p>
+          <div class="install">
+            <code>{s.install}</code>
+            <button class="copy-btn" type="button" data-copy={s.install} aria-label={`Copy install command for ${s.name}`}><span data-copy-label>Copy</span></button>
+          </div>
+          <p class="t-small t-muted" style="margin: 10px 0 0">For other stdio clients, use the process and arguments after --. Follow the source documentation for runtimes, credentials and application setup.</p>
+        </div>
+      )}
+
+      <div class="prose">
+        <p class="t-small t-muted">Owner-built project. Status is maintainer-reported; inclusion is not an independent audit. Version information may lag upstream releases. <a href={href('/standards')}>Listing standards</a> · <a href={href('/servers/' + s.slug + '.md')}>Read as Markdown</a></p>
+        <p>{s.summary}</p>
+        {s.highlights.length > 0 && (
+          <>
+            <h2>What it does</h2>
+            <ul>{s.highlights.map((h) => <li>{h}</li>)}</ul>
+          </>
+        )}
+      </div>
+
+      {posts.length > 0 && (
+        <div class="related">
+          <p class="kicker">Release notes for {s.name}</p>
+          <div class="related-grid">{posts.map((p) => <PostCard post={p} />)}</div>
+        </div>
+      )}
+    </div>
+
+    <aside class="detail-side">
+      <div class="card">
+        <dl class="facts">
+          {facts.map((f) => (
+            <div>
+              <dt>{f.k}</dt>
+              <dd>{f.link ? <a href={f.link} target="_blank" rel="noopener">{f.v}</a> : f.v}</dd>
+            </div>
+          ))}
+        </dl>
+        <div class="links">
+          <a class="btn btn-primary btn-sm" href={s.repo} target="_blank" rel="noopener">Repository <span class="arrow" aria-hidden="true">&rarr;</span></a>
+          {s.docs && <a class="btn btn-ghost btn-sm" href={s.docs} target="_blank" rel="noopener">Documentation</a>}
+        </div>
+        {s.tags.length > 0 && <p class="tags mono">{s.tags.join(' · ')}</p>}
+      </div>
+    </aside>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { padding: 56px 0 24px; }
+  @media (min-width: 1024px) { .page-head { padding: 88px 0 32px; } }
+  .page-head .kicker a { color: inherit; text-decoration: none; }
+  .page-head .kicker a:hover { text-decoration: underline; }
+  .mono-title { font-family: var(--font-mono); font-weight: 560; letter-spacing: -0.03em; }
+  .page-head .t-lead { margin-top: 18px; max-width: 62ch; }
+  .head-meta { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin-top: 22px; }
+
+  .detail { display: grid; gap: 40px; padding-bottom: 40px; }
+  @media (min-width: 1024px) { .detail { grid-template-columns: minmax(0, 1.6fr) minmax(300px, 0.8fr); gap: 64px; align-items: start; } .detail-side { position: sticky; top: 92px; } }
+  .install-block { margin-bottom: 36px; }
+  .related { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .related-grid { display: grid; gap: 16px; }
+  @media (min-width: 640px) { .related-grid { grid-template-columns: 1fr 1fr; } }
+
+  .facts { margin: 0; display: grid; gap: 14px; }
+  .facts div { display: grid; gap: 3px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .facts dt { font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+  .facts dd { margin: 0; font-size: var(--fs-small); overflow-wrap: anywhere; }
+  .facts dd a { color: var(--ink); }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .tags { margin: 16px 0 0; font-size: var(--fs-micro); color: var(--ink-3); }
+</style>
