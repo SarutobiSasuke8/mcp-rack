@@ -65,9 +65,21 @@ const pathname = Astro.url.pathname;
     position: sticky;
     top: 0;
     z-index: var(--z-header);
-    padding: 0;
+    padding: env(safe-area-inset-top, 0px) 0 0;
     background: var(--paper);
     border-bottom: 1px solid var(--line);
+    pointer-events: none;
+  }
+  /* Paint a paper block above the header so scrolled content never shows through the
+     status-bar strip when mobile Safari collapses its toolbar. */
+  .site-header::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 100vh;
+    background: var(--paper);
     pointer-events: none;
   }
   .site-header .container { pointer-events: auto; }
