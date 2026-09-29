@@ -3,21 +3,22 @@
     "id": "gimp-agent-mcp",
     "slug": "gimp-agent-mcp",
     "name": "gimp-agent-mcp",
-    "tagline": "The whole of GIMP 3 for AI agents: every PDB procedure and GEGL filter, renders, pixel measurement, recipes. Windows-first.",
-    "summary": "An MCP server that hands AI agents the whole of GIMP 3 rather than a hand-picked slice. Every one of GIMP's roughly 1,000 Procedure Database functions and 207 GEGL filters is reachable through runtime introspection, so nothing goes stale when GIMP updates. The agent can see its work: a PNG render after each step, before/after/diff comparisons, and pixel measurement instead of guessing. Recipes turn repeatable jobs (stickers, icon sets, watermarks, contact sheets, social cards from a layout manifest) into one call, and a batch runner applies them to whole folders.",
+    "tagline": "The whole of GIMP 3 for AI agents: everyday edits, one undo step, pixel checks, and recipes. Tested on Windows, Linux and macOS.",
+    "summary": "An MCP server that hands AI agents the whole of GIMP 3 rather than a hand-picked slice. Every one of GIMP's roughly 1,000 Procedure Database functions and 207 GEGL filters is reachable through runtime introspection, so nothing goes stale when GIMP updates. The agent can see its work: a PNG render after each step, before/after/diff comparisons, and pixel measurement instead of guessing. Recipes turn repeatable jobs (stickers, icon sets, watermarks, contact sheets, social cards from a layout manifest) into one call, and a batch runner applies them to whole folders. Version 0.5.0 groups a batch of edits into one undo step and is exercised against real GIMP on Windows, Linux and macOS.",
     "highlights": [
       "Tools, reusable recipes and bundled skills for layered assets, sprite sheets and batch jobs",
       "Runtime introspection of the PDB and GEGL, with typed argument descriptions and enum choices read from GIMP at call time",
       "Render, measure, snapshot and compare so the agent verifies each edit before moving on",
       "Non-destructive layer effects, selections, masks, text, vector paths and AI subject cut-outs",
-      "Works inside the GIMP window you already have open: Filters, Development, Start Agent Bridge"
+      "Works inside the GIMP window you already have open: Filters, Development, Start Agent Bridge",
+      "One Ctrl+Z reverts a whole gimp_edit_batch turn, proven on live GIMP for Windows, Linux and macOS."
     ],
     "lang": "Python",
     "transport": "stdio",
     "package": {
       "kind": "pypi",
       "name": "gimp-agent-mcp",
-      "version": "0.3.0"
+      "version": "0.5.0"
     },
     "registry": "io.github.SarutobiSasuke8/gimp-agent-mcp",
     "status": "beta",
@@ -30,7 +31,9 @@
       "images",
       "gegl",
       "design",
-      "windows"
+      "windows",
+      "macos",
+      "linux"
     ],
     "order": 1
   },
