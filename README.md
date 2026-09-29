@@ -1,6 +1,6 @@
 # MCP Rack
 
-Live at https://sarutobisasuke8.github.io/mcp-rack/
+Live at https://mcprack.dev/
 
 One page for every MCP server I have published, with its package, transport, licence and official-registry status; a curated rack of the servers I run alongside them; and release notes written here first.
 
@@ -39,12 +39,12 @@ Add an object to `src/content/servers.json`. The schema in `src/content.config.t
 Create `src/content/posts/<slug>.md` with frontmatter:
 
 ```yaml
-title: "gimp-agent-mcp 0.3: macOS and Linux"
+title: "gimp-agent-mcp 0.5: one undo step, three platforms"
 description: "One or two sentences. Under 200 characters."
-pubDate: 2026-10-01
-category: Release notes        # Release notes | Field notes | Build log
+pubDate: 2026-09-08
+category: Release notes        # Release notes | Field notes | Build log | Guides | Perspective
 server: gimp-agent-mcp         # optional; links the post to its server page
-version: "0.3.0"               # optional
+version: "0.5.0"               # optional
 ```
 
 Reading time is computed from the body. Setting `draft: true` keeps a post out of the build.
@@ -68,6 +68,6 @@ The MCP Rack name, Rack R symbol and associated brand assets are reserved. See [
 
 ## 2026-09-07 website sweep
 
-The current site adds curated positioning, a journal with topic filters, maker suggestions, listing standards, and agent interfaces. Production defaults target **https://mcprack.dev/**. Earlier GitHub Pages URL and subpath instructions above describe the previous deployment. Follow [LAUNCH.md](LAUNCH.md) for the current launch checklist. No deployment or DNS changes were made by the sweep.
+The current site adds curated positioning, a journal with topic filters, maker suggestions, listing standards, and agent interfaces. Production defaults target **https://mcprack.dev/**. Earlier GitHub Pages URL and subpath instructions above describe the previous deployment. Follow [LAUNCH.md](LAUNCH.md) for the current launch checklist. The custom domain is live: https://sarutobisasuke8.github.io/mcp-rack/ redirects to https://mcprack.dev/.
 
 Machine interfaces: /catalog.json, /catalog.schema.json, /servers.json, /llms.txt, /llms-full.txt, /servers/{slug}.md, /blog/{slug}.md, and /rss.xml. Metadata comes from the same collections as HTML pages. Build timestamps are not review dates. New journal categories include Guides and Perspective. Draft articles are excluded from public endpoints.
