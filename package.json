@@ -16,7 +16,8 @@
     "style": "node scripts/check-style.mjs",
     "fonts": "node scripts/copy-fonts.mjs",
     "og": "node scripts/generate-og.mjs",
-    "verify": "npm run style && npm run check && npm run build",
+    "test": "node --experimental-strip-types --test scripts/maturity.test.mjs",
+    "verify": "npm test && npm run style && npm run check && npm run build",
     "check:output": "node scripts/check-output.mjs"
   },
   "dependencies": {

@@ -35,7 +35,15 @@
       "macos",
       "linux"
     ],
-    "order": 1
+    "order": 1,
+    "reviewedAt": "2026-10-01",
+    "review": {
+      "kind": "metadata",
+      "summary": "Package and release documentation checked at 0.5.0. Cross-platform GIMP checks are recorded upstream; this review did not repeat visible-window or fresh-install tests.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/gimp-agent-mcp/tree/843b667"
+      ]
+    }
   },
   {
     "id": "jobscout-mcp",
@@ -67,7 +75,15 @@
       "careers",
       "search"
     ],
-    "order": 2
+    "order": 2,
+    "reviewedAt": "2026-10-01",
+    "review": {
+      "kind": "metadata",
+      "summary": "Published package remains 0.2.1. Main includes unreleased We Work Remotely and RemoteOK adapters. Provider reliability and installation evidence are still needed before a stable release.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/jobscout-mcp/tree/5941653"
+      ]
+    }
   },
   {
     "id": "website-content-mcp",
@@ -81,7 +97,7 @@
       "Published on npm; runs as hosted endpoints for owned sites"
     ],
     "lang": "TypeScript",
-    "transport": "stdio",
+    "transport": "stdio + Streamable HTTP",
     "package": {
       "kind": "npm",
       "name": "@sarutobi-sasuke/website-content-mcp",
@@ -92,14 +108,23 @@
     "license": "MIT",
     "repo": "https://github.com/SarutobiSasuke8/website-content-mcp",
     "docs": "https://github.com/SarutobiSasuke8/website-content-mcp#readme",
-    "install": "claude mcp add website-content -- npx -y @sarutobi-sasuke/website-content-mcp",
+    "install": "claude mcp add website-content --env SITE_BASE_URL=https://example.com -- npx -y --package @sarutobi-sasuke/website-content-mcp website-content-stdio",
+    "limitations": ["Replace https://example.com in the install command with the public site you want to expose. Other clients must also set SITE_BASE_URL in the server environment."],
     "tags": [
       "web",
       "content",
       "seo",
       "sites"
     ],
-    "order": 3
+    "order": 3,
+    "reviewedAt": "2026-10-01",
+    "review": {
+      "kind": "metadata",
+      "summary": "Published package remains 0.3.1. The proposed 0.4.0 hardening is in a separate pull request and is not included in the published package.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/website-content-mcp/tree/71381d3"
+      ]
+    }
   },
   {
     "id": "agent-handoff-mcp",
@@ -113,7 +138,7 @@
       "Content-free evidence path: identities and artefacts are referenced, never copied"
     ],
     "lang": "TypeScript",
-    "transport": "stdio",
+    "transport": "stdio + Streamable HTTP",
     "package": null,
     "registry": null,
     "status": "alpha",
@@ -126,7 +151,15 @@
       "coordination",
       "handoff"
     ],
-    "order": 4
+    "order": 4,
+    "reviewedAt": "2026-10-01",
+    "review": {
+      "kind": "metadata",
+      "summary": "The source changelog records policy, revocation and packaged-transport fixes. A first tagged package and operational proof are still required for promotion.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/agent-handoff-mcp/tree/3156e28"
+      ]
+    }
   },
   {
     "id": "credential-broker-mcp",
@@ -153,21 +186,29 @@
       "secrets",
       "credentials"
     ],
-    "order": 5
+    "order": 5,
+    "reviewedAt": "2026-10-01",
+    "review": {
+      "kind": "metadata",
+      "summary": "The source records policy v2 and secret-handling fixes plus a Windows key manager. This metadata review does not establish security readiness or a published release.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/credential-broker-mcp/tree/b903c1f"
+      ]
+    }
   },
   {
     "id": "obsidian-github-mcp",
     "slug": "obsidian-github-mcp",
     "name": "obsidian-github-mcp",
     "tagline": "Permissioned proposal gateway for Obsidian vaults stored on GitHub: agents propose, humans merge.",
-    "summary": "Agents do not write into the vault. They open proposals against the GitHub repository that backs it, within the paths and rules the operator allows, and a human merges. White-label, so any vault-in-GitHub setup can use it.",
+    "summary": "Agents propose bounded changes on isolated GitHub branches within the paths and rules the operator allows. A human reviews and merges through the repository workflow. The gateway can be configured for different Obsidian vaults kept in GitHub.",
     "highlights": [
-      "Proposal-first: every change is a reviewable pull request",
+      "Proposal branches keep suggested changes separate from the protected vault branch",
       "Path and rule permissions per agent",
       "Works with any Obsidian vault kept in a GitHub repository"
     ],
     "lang": "TypeScript",
-    "transport": "stdio",
+    "transport": "Streamable HTTP",
     "package": null,
     "registry": null,
     "status": "alpha",
@@ -181,21 +222,29 @@
       "knowledge",
       "vault"
     ],
-    "order": 6
+    "order": 6,
+    "reviewedAt": "2026-10-01",
+    "review": {
+      "kind": "metadata",
+      "summary": "Release preparation is on main, with no first tag recorded at review. A disposable proposal workflow and denied-write evidence remain promotion requirements.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/obsidian-github-mcp/tree/b8336f8"
+      ]
+    }
   },
   {
     "id": "source-pack-mcp",
     "slug": "source-pack-mcp",
     "name": "source-pack-mcp",
     "tagline": "Structured research source packs: facts, quotes, numbers, primary links and a coverage map, with provenance.",
-    "summary": "Turns a research question into a source pack an agent or a person can check: the facts found, the quotes and numbers with their primary links, and a coverage map of what was and was not found. Built for research that has to survive a second reader.",
+    "summary": "Turns fetched public pages into a source pack: candidate facts, quotations, numbers and links, with a coverage map and extraction limits. A recorded source and retrieval date show where evidence came from; they do not establish that a claim is true.",
     "highlights": [
-      "Facts, quotes and numbers each carry a primary link",
+      "Extracted facts, quotes and numbers retain their source links",
       "Coverage map shows the gaps as well as the finds",
       "Fetcher hardened against server-side request forgery"
     ],
     "lang": "TypeScript",
-    "transport": "stdio",
+    "transport": "stdio + Streamable HTTP",
     "package": null,
     "registry": null,
     "status": "alpha",
@@ -208,7 +257,15 @@
       "sources",
       "provenance"
     ],
-    "order": 7
+    "order": 7,
+    "reviewedAt": "2026-10-01",
+    "review": {
+      "kind": "metadata",
+      "summary": "The README distinguishes fetched candidate evidence from verified truth. Source installation and SSRF checks are documented; a versioned package and extraction benchmark are still needed.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/source-pack-mcp/tree/591df84"
+      ]
+    }
   },
   {
     "id": "meeting-context-router",
@@ -235,7 +292,15 @@
       "crm",
       "routing"
     ],
-    "order": 8
+    "order": 8,
+    "reviewedAt": "2026-10-01",
+    "review": {
+      "kind": "metadata",
+      "summary": "The roadmap records a proposal queue, delivery retries and retention controls. A real reviewed meeting-to-destination workflow remains unproven in this review.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/meeting-context-router/tree/ae15472"
+      ]
+    }
   },
   {
     "id": "mcp-dashboard",
@@ -266,7 +331,15 @@
       "tooling",
       "cost"
     ],
-    "order": 9
+    "order": 9,
+    "reviewedAt": "2026-10-01",
+    "review": {
+      "kind": "metadata",
+      "summary": "Version 1.0.0 is published. The roadmap still contains release-candidate wording and incomplete real-machine and usage gates, so the preview label is retained.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/mcp-dashboard/tree/0bad690"
+      ]
+    }
   },
   {
     "id": "sports-oracle-teneo-agent",
@@ -326,7 +399,14 @@
     "repo": null,
     "docs": "https://mcprack.dev/servers/telegram-personal-proxy.md",
     "install": null,
-    "tags": ["telegram", "folders", "outreach", "follow-ups", "local", "private-preview"],
+    "tags": [
+      "telegram",
+      "folders",
+      "outreach",
+      "follow-ups",
+      "local",
+      "private-preview"
+    ],
     "order": 11
   }
 ]

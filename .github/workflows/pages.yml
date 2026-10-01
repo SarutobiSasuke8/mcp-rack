@@ -24,6 +24,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Maturity contract tests
+        run: npm test
       - name: Style gate
         run: npm run style
       - name: Type check
