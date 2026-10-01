@@ -19,7 +19,7 @@ const jsonLd = [softwareSchema(s, Astro.site), breadcrumbSchema([{ name: 'Server
 const facts: { k: string; v: string; link?: string }[] = [
   { k: 'Stack', v: s.lang },
   { k: 'Transport', v: s.transport },
-  { k: 'Package', v: s.package ? `${s.package.name}${s.package.version ? ` ${s.package.version}` : ''} (${s.package.kind})` : 'Source only', link: packageUrl ?? undefined },
+  { k: 'Package', v: s.package ? `${s.package.name}${s.package.version ? ` ${s.package.version}` : ''} (${s.package.kind})` : s.repo ? 'Source only' : 'Not publicly available', link: packageUrl ?? undefined },
   { k: 'Official registry', v: s.registry ?? 'Not listed yet', link: registryUrl ?? undefined },
   { k: 'Licence', v: s.license },
   { k: 'Status', v: s.status },
@@ -55,12 +55,15 @@ const facts: { k: string; v: string; link?: string }[] = [
       <div class="prose">
         <p class="t-small t-muted">Owner-built project. Status is maintainer-reported; inclusion is not an independent audit. Version information may lag upstream releases. <a href={href('/standards')}>Listing standards</a> · <a href={href('/servers/' + s.slug + '.md')}>Read as Markdown</a></p>
         <p>{s.summary}</p>
+        {s.availability && (<><h2>Availability</h2><p>{s.availability}</p></>)}
         {s.highlights.length > 0 && (
           <>
             <h2>What it does</h2>
             <ul>{s.highlights.map((h) => <li>{h}</li>)}</ul>
           </>
         )}
+        {s.limitations.length > 0 && (<><h2>Current limitations</h2><ul>{s.limitations.map((item) => <li>{item}</li>)}</ul></>)}
+        {s.interestUrl && (<><h2>Interested in trying it?</h2><p>Tell me how you use Telegram and where follow-ups get difficult. This is an expression of interest, with no release date or access promise.</p><p><a class="btn btn-primary btn-sm" href={s.interestUrl} target="_blank" rel="noopener">Contact Alexei on LinkedIn ↗</a></p></>)}
       </div>
 
       {posts.length > 0 && (
@@ -82,7 +85,7 @@ const facts: { k: string; v: string; link?: string }[] = [
           ))}
         </dl>
         <div class="links">
-          <a class="btn btn-primary btn-sm" href={s.repo} target="_blank" rel="noopener">Repository <span class="arrow" aria-hidden="true">&rarr;</span></a>
+          {s.repo && <a class="btn btn-primary btn-sm" href={s.repo} target="_blank" rel="noopener">Repository <span class="arrow" aria-hidden="true">&rarr;</span></a>}
           {s.docs && <a class="btn btn-ghost btn-sm" href={s.docs} target="_blank" rel="noopener">Documentation</a>}
         </div>
         {s.tags.length > 0 && <p class="tags mono">{s.tags.join(' · ')}</p>}

@@ -96,7 +96,7 @@
             ]
           },
           "repo": {
-            "type": "string",
+            "type": ["string", "null"],
             "format": "uri"
           },
           "docs": {
@@ -106,6 +106,9 @@
           "transport": {
             "type": "string"
           },
+          "availability": { "type": ["string", "null"] },
+          "limitations": { "type": "array", "items": { "type": "string" } },
+          "interestUrl": { "type": ["string", "null"], "format": "uri" },
           "status": {
             "enum": [
               "alpha",

@@ -61,8 +61,7 @@ const jsonLd = [
             )}
             <p class="t-small" style="margin: 14px 0 0">
               <a href={href(`/servers/${server.data.slug}`)}>Server page</a>
-              <span aria-hidden="true"> &middot; </span>
-              <a href={server.data.repo} target="_blank" rel="noopener">Repository</a>
+              {server.data.repo && <><span aria-hidden="true"> &middot; </span><a href={server.data.repo} target="_blank" rel="noopener">Repository</a></>}
             </p>
           </aside>
         )}

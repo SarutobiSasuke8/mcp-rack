@@ -37,7 +37,7 @@ const search = [s.name, s.tagline, s.lang, s.transport, s.license, s.package?.na
         {s.package.version && <span class="pkg-ver">{s.package.version}</span>}
       </span>
     ) : (
-      <span class="pkg pkg-none mono">source only</span>
+      <span class="pkg pkg-none mono">{s.repo ? 'source only' : 'private preview'}</span>
     )}
     {s.install && (
       <button class="copy-btn" type="button" data-copy={s.install} title={s.install} aria-label={`Copy install command for ${s.name}`}>

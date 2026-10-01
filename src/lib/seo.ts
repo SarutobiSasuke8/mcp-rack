@@ -34,7 +34,7 @@ export interface ServerLike {
   tagline: string;
   lang: string;
   license: string;
-  repo: string;
+  repo: string | null;
   version?: string | null;
   package?: { kind: string; name: string; version?: string | null } | null;
 }
@@ -45,7 +45,7 @@ export function softwareSchema(server: ServerLike, siteUrl: URL | undefined): Js
     '@type': 'SoftwareSourceCode',
     name: server.name,
     description: server.tagline,
-    codeRepository: server.repo,
+    ...(server.repo ? { codeRepository: server.repo } : {}),
     programmingLanguage: server.lang,
     license: `https://spdx.org/licenses/${server.license}.html`,
     author: { '@type': 'Person', name: SITE.owner.name, url: SITE.owner.url },

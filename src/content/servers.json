@@ -294,5 +294,39 @@
       "teneo"
     ],
     "order": 10
+  },
+  {
+    "id": "telegram-personal-proxy",
+    "slug": "telegram-personal-proxy",
+    "name": "Unofficial Telegram Personal Proxy",
+    "tagline": "A local MCP tool for Telegram folders, reviewed outreach and follow-up tracking. Private preview in active development.",
+    "summary": "I built this for work spread across Telegram groups and folders. An agent can find the right chats, prepare outreach for review, record send results and surface follow-up candidates. It runs locally and is in daily personal use. The next step is to make the attention queue more accurate and the package easier for someone else to set up.",
+    "highlights": [
+      "Folder discovery, scoped conversation reads and message search",
+      "Exact recipient and message previews, human approval before sending, and durable delivery receipts",
+      "Outreach campaigns with reviewed batches, group contacts and reply checks",
+      "Follow-up candidates with collection coverage and freshness limits",
+      "Local dashboard and browser approvals alongside the MCP workflow"
+    ],
+    "availability": "Private preview. There is no public download, hosted service, paid plan or ChatGPT store listing yet. The source is not public. Customer onboarding and commercial access requirements are still being assessed.",
+    "limitations": [
+      "Group activity after a message is a follow-up signal, not proof that someone answered it. Reply-thread detection needs further work.",
+      "Collection is scoped and can be incomplete or stale. This is not a complete, continuous account monitor.",
+      "The current setup uses a personal Telegram cloud-chat session. Secret Chats are excluded.",
+      "Local session custody does not mean local AI processing: content returned to an AI client reaches that client.",
+      "A customer-ready install and ChatGPT connection are still being developed. Commercial AI use needs a resolved data-use and consent model."
+    ],
+    "interestUrl": "https://www.linkedin.com/in/alexeiudall/",
+    "lang": "TypeScript",
+    "transport": "local stdio",
+    "package": null,
+    "registry": null,
+    "status": "preview",
+    "license": "MIT",
+    "repo": null,
+    "docs": "https://mcprack.dev/servers/telegram-personal-proxy.md",
+    "install": null,
+    "tags": ["telegram", "folders", "outreach", "follow-ups", "local", "private-preview"],
+    "order": 11
   }
 ]
