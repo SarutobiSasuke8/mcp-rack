@@ -1,6 +1,7 @@
 import {getCollection} from 'astro:content';
 import type {APIContext} from 'astro';
 import {absolute} from '~/lib/site';
+import {reviewLines} from '~/lib/maturity';
 export async function getStaticPaths(){return(await getCollection('servers')).map(({data:s})=>({params:{slug:s.slug},props:{server:s}}));}
 export function GET({props,site}:APIContext){
   const s=props.server;
@@ -9,6 +10,9 @@ export function GET({props,site}:APIContext){
     'Docs: '+(s.docs??s.repo??'Not available'),
     'Listing: '+absolute('/servers/'+s.slug,site),
     'Status: '+s.status,'Transport: '+s.transport,'License: '+s.license,
+    ...reviewLines(s),
+    ...(s.supportedScope?['Supported scope: '+s.supportedScope]:[]),
+    ...(s.maturityEvidence?['Promotion evidence: '+s.maturityEvidence]:[]),
     'Package: '+(s.package?s.package.name+' '+(s.package.version??''):s.repo?'Source only':'Not publicly available'),
     ...(s.availability?['','## Availability','',s.availability]:[]),
     '','## Highlights','',...s.highlights.map((h:string)=>'- '+h),

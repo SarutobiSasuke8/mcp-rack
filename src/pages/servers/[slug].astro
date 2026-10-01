@@ -55,6 +55,15 @@ const facts: { k: string; v: string; link?: string }[] = [
       <div class="prose">
         <p class="t-small t-muted">Owner-built project. Status is maintainer-reported; inclusion is not an independent audit. Version information may lag upstream releases. <a href={href('/standards')}>Listing standards</a> · <a href={href('/servers/' + s.slug + '.md')}>Read as Markdown</a></p>
         <p>{s.summary}</p>
+        <h2>Review and maturity</h2>
+        {s.review && s.reviewedAt ? <>
+          <p><strong>{s.review.kind === 'runtime' ? 'Runtime review' : 'Metadata review'}</strong> · <time datetime={s.reviewedAt}>{s.reviewedAt}</time></p>
+          <p>{s.review.summary}</p>
+          <ul>{s.review.evidence.map((url, index) => <li><a href={url} target="_blank" rel="noopener">Source {index + 1}</a></li>)}</ul>
+        </> : <p>No dated review has been recorded for this listing.</p>}
+        {s.supportedScope && <p><strong>Supported scope:</strong> {s.supportedScope}</p>}
+        {s.maturityEvidence && <p><a href={s.maturityEvidence}>Read the promotion evidence</a></p>}
+        <p><a href={href('/standards') + '#status-labels'}>What the status labels mean</a></p>
         {s.availability && (<><h2>Availability</h2><p>{s.availability}</p></>)}
         {s.highlights.length > 0 && (
           <>

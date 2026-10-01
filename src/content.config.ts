@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { file, glob } from 'astro/loaders';
+import { maturityFields, reviewFields, validateMaturity, validateReview } from './lib/maturity';
 
 const packageSchema = z
   .object({
@@ -22,7 +23,7 @@ const servers = defineCollection({
     transport: z.string(),
     package: packageSchema,
     registry: z.string().nullable(),
-    status: z.enum(['beta', 'alpha', 'preview', 'experimental']),
+    ...maturityFields,
     license: z.string(),
     repo: z.url().nullable(),
     docs: z.url().nullable().optional(),
@@ -32,7 +33,7 @@ const servers = defineCollection({
     install: z.string().nullable(),
     tags: z.array(z.string()).default([]),
     order: z.number(),
-  }),
+  }).superRefine(validateMaturity),
 });
 
 const rack = defineCollection({
@@ -45,7 +46,9 @@ const rack = defineCollection({
     blurb: z.string(),
     url: z.url(),
     useCase: z.string(),
-  }),
+    selectionBasis: z.string().trim().min(1),
+    ...reviewFields,
+  }).superRefine(validateReview),
 });
 
 const posts = defineCollection({

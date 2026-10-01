@@ -8,7 +8,7 @@ interface Props {
 }
 const { server: s, index } = Astro.props;
 const langClass = `chip-${s.lang.toLowerCase()}`;
-const search = [s.name, s.tagline, s.lang, s.transport, s.license, s.package?.name ?? '', ...s.tags].join(' ').toLowerCase();
+const search = [s.name, s.tagline, s.status, s.lang, s.transport, s.license, s.package?.name ?? '', ...s.tags].join(' ').toLowerCase();
 ---
 
 <li class="unit reveal" data-lang={s.lang.toLowerCase()} data-registry={s.registry ? 'yes' : 'no'} data-search={search}>
