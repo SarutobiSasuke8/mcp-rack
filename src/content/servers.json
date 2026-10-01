@@ -408,5 +408,35 @@
       "private-preview"
     ],
     "order": 11
+  },
+  {
+    "id": "aseprite-agent-mcp",
+    "slug": "aseprite-agent-mcp",
+    "name": "Aseprite Agent MCP",
+    "tagline": "Local pixel-art authoring, animation checks and verified Phaser exports from editable Aseprite masters. Private alpha.",
+    "summary": "A local MCP server for creating and editing pixel art through Aseprite's CLI and Lua API. It keeps native masters, returns rendered previews, checks asset contracts and compares exported pixels with the reopened source. Built on an attributed MIT headless engine, it complements GIMP for sprite and animation work.",
+    "highlights": [
+      "Native documents, drawing, layers, cels, palettes, frames, tags and slices",
+      "Typed batch edits with preview feedback and contract checks for geometry, tags, palette and alpha",
+      "Phaser sheets, atlas metadata and frame timing checked against reopened native masters"
+    ],
+    "availability": "Private alpha. There is no public source repository, package download or hosted endpoint yet.",
+    "limitations": [
+      "Requires a separately installed Aseprite runtime with Lua support. No editor binary is included.",
+      "Synthetic pipeline checks do not establish artistic quality. An artist-reviewed directional cycle and real game asset workflow remain open gates.",
+      "Broader inherited-tool resource limits and dedicated resampling and fringe checks need further work.",
+      "The optional live-editor bridge is not implemented. Public release remains subject to source privacy and runtime distribution review."
+    ],
+    "lang": "Python",
+    "transport": "local stdio",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "MIT",
+    "repo": null,
+    "docs": "https://mcprack.dev/servers/aseprite-agent-mcp.md",
+    "install": null,
+    "tags": ["aseprite", "pixel-art", "animation", "game-dev", "local", "private-alpha"],
+    "order": 12
   }
 ]

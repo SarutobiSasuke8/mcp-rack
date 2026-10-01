@@ -9,6 +9,7 @@
 - [x] Record source-backed metadata reviews for 9 existing listings and specific selection reasons for curated picks.
 - [x] Correct Source Pack's evidence wording and the Obsidian proposal-branch description.
 - [x] Add negative tests for unsupported promotions and incomplete review metadata.
+- [x] Add Aseprite Agent MCP as a private alpha, with no public repository, download or install claim. Keep private runtime receipts out of public review metadata.
 - [ ] Deploy the reviewed sweep after CI passes.
 - [ ] Gather runtime and operational receipts for GIMP, Website Content and JobScout.
 - [ ] Reassess Handoff and Obsidian GitHub after their first packaged beta proofs.
