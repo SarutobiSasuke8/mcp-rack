@@ -2,6 +2,7 @@ import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 import { SITE, absolute } from '~/lib/site';
 import { isoDate } from '~/lib/format';
+import { reviewLines } from '~/lib/maturity';
 
 /** llms.txt: a plain-text map of the site for assistants and crawlers. */
 export async function GET(context: APIContext) {
@@ -23,7 +24,7 @@ export async function GET(context: APIContext) {
       const pkg = s.package ? `${s.package.kind}: ${s.package.name}${s.package.version ? ` ${s.package.version}` : ''}` : 'source only';
       const reg = s.registry ? `registry: ${s.registry}` : 'not in the official registry yet';
       const install = s.install ? ` Install: \`${s.install}\`.` : '';
-      return `- [${s.name}](${absolute(`/servers/${s.slug}`, context.site)}): ${s.tagline} ${s.lang}, ${s.transport}, ${s.license}, ${s.status}; ${pkg}; ${reg}.${install}`;
+      return `- [${s.name}](${absolute(`/servers/${s.slug}`, context.site)}): ${s.tagline} ${s.lang}, ${s.transport}, ${s.license}, ${s.status}; ${pkg}; ${reg}.${install} ${reviewLines(s).join(" ")}`;
     }),
     '',
     '## Servers by other people that the owner runs',

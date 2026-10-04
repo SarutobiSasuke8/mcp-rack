@@ -15,6 +15,9 @@ const resolvePath=pathname=>{
 };
 const catalog=JSON.parse(read(join(dist,'catalog.json')));
 const schema=JSON.parse(read(join(dist,'catalog.schema.json')));
+const sourceServers=JSON.parse(read(join(root,'src/content/servers.json')));
+const sourceRack=JSON.parse(read(join(root,'src/content/rack.json')));
+const legacy=JSON.parse(read(join(dist,'servers.json')));
 assert.equal(catalog.schemaVersion,schema.properties.schemaVersion.const);
 for(const key of schema.required)assert(key in catalog,'Missing catalog field '+key);
 assert.equal(catalog.website,origin+base+'/');
@@ -25,6 +28,24 @@ for(const [collection,kind]of [['servers','owner-built'],['curated','curated']])
   assert.equal(item.listingType,kind);
   assert(!slugs.has(item.slug),'Duplicate slug: '+item.slug);slugs.add(item.slug);
   assert(item.reviewedAt===null||Number.isFinite(Date.parse(item.reviewedAt)));
+  const source=(collection==='servers'?sourceServers:sourceRack).find(s=>s.slug===item.slug);
+  assert(source,'Missing source record: '+item.slug);
+  assert.equal(item.reviewedAt,source.reviewedAt??null,'Review date drift: '+item.slug);
+  assert.deepEqual(item.review,source.review??null,'Review evidence drift: '+item.slug);
+  if(collection==='servers'){
+   assert(schema.properties.servers.items.properties.status.enum.includes(item.status));
+   const markdown=read(resolvePath(new URL(item.markdownUrl).pathname));
+   const html=read(resolvePath(new URL(item.url).pathname));
+   assert(markdown.includes('Status: '+item.status));
+   assert(html.includes('status-'+item.status));
+   assert(html.includes('/standards/#status-labels"'),'Maturity anchor is malformed: '+item.slug);
+   assert.deepEqual(legacy.servers.find(s=>s.slug===item.slug)?.review,item.review);
+   if(item.reviewedAt){
+    assert(markdown.includes(item.reviewedAt)&&markdown.includes(item.review.kind));
+    assert(html.includes('datetime="'+item.reviewedAt+'"'));
+    assert(read(join(dist,'llms-full.txt')).includes(item.review.summary));
+   }
+  }else assert.equal(item.selectionBasis,source.selectionBasis);
  }
 }
 for(const item of [...catalog.servers,...catalog.articles]){

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://mcprack.dev/catalog.schema.json",
-  "title": "MCP Rack catalog v1",
+  "title": "MCP Rack catalog v1.1",
   "type": "object",
   "required": [
     "schemaVersion",
@@ -18,7 +18,7 @@
   ],
   "properties": {
     "schemaVersion": {
-      "const": "1.0.0"
+      "const": "1.1.0"
     },
     "generatedAt": {
       "type": "string",
@@ -63,7 +63,10 @@
           "package",
           "install",
           "license",
-          "tags"
+          "tags",
+          "review",
+          "supportedScope",
+          "maturityEvidence"
         ],
         "properties": {
           "slug": {
@@ -93,28 +96,52 @@
             "type": [
               "string",
               "null"
-            ]
+            ],
+            "format": "date"
           },
           "repo": {
-            "type": ["string", "null"],
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uri"
           },
           "docs": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uri"
           },
           "transport": {
             "type": "string"
           },
-          "availability": { "type": ["string", "null"] },
-          "limitations": { "type": "array", "items": { "type": "string" } },
-          "interestUrl": { "type": ["string", "null"], "format": "uri" },
+          "availability": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "interestUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
           "status": {
             "enum": [
               "alpha",
               "beta",
               "preview",
-              "experimental"
+              "experimental",
+              "stable"
             ]
           },
           "package": {
@@ -137,8 +164,82 @@
             "items": {
               "type": "string"
             }
+          },
+          "review": {
+            "$ref": "#/$defs/review"
+          },
+          "supportedScope": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "maturityEvidence": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "reviewedAt": {
+                  "type": "null"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "review": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "review": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "stable"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "reviewedAt": {
+                  "type": "string"
+                },
+                "review": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "runtime"
+                    }
+                  }
+                },
+                "supportedScope": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "maturityEvidence": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          }
+        ]
       }
     },
     "curated": {
@@ -153,7 +254,9 @@
           "useCase",
           "listingType",
           "reviewedAt",
-          "independentAudit"
+          "independentAudit",
+          "review",
+          "selectionBasis"
         ],
         "properties": {
           "slug": {
@@ -179,12 +282,45 @@
             "type": [
               "string",
               "null"
-            ]
+            ],
+            "format": "date"
           },
           "independentAudit": {
             "const": false
+          },
+          "review": {
+            "$ref": "#/$defs/review"
+          },
+          "selectionBasis": {
+            "type": "string",
+            "minLength": 1
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "reviewedAt": {
+                  "type": "null"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "review": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "review": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        ]
       }
     },
     "articles": {
@@ -220,6 +356,39 @@
           },
           "category": {
             "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "review": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "kind",
+        "summary",
+        "evidence"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "metadata",
+            "runtime"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "format": "uri"
           }
         }
       }

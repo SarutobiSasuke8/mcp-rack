@@ -49,7 +49,15 @@ version: "0.5.0"               # optional
 
 Reading time is computed from the body. Setting `draft: true` keeps a post out of the build.
 
-### The rack
+### Maturity and review evidence
+
+`status` supports experimental, alpha, preview, beta and stable. Review metadata is separate from the build timestamp: set `reviewedAt` (YYYY-MM-DD) together with `review` (`kind`, `summary`, `evidence` URLs), or leave both null. Metadata reviews check documentation and releases; runtime reviews name actual checks and environments.
+
+Stable requires a runtime review, `supportedScope` and a `maturityEvidence` URL pointing to a completed [promotion receipt](docs/PROMOTION_RECEIPT.md). The content validator rejects incomplete promotions. Existing beta labels remain maintainer snapshots until their evidence is reassessed. Catalogue schema 1.1.0 adds these fields and the stable enum; consumers that pin 1.0.0 must update their validator.
+
+Curated records have their own `selectionBasis`. Leave their review date unset until a real review takes place.
+
+### Curated records
 
 One card per server actually wired into my tools. Add a card to `src/content/rack.json` when a server earns its slot; remove it when it stops being used.
 

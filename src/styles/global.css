@@ -107,6 +107,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 .status { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: var(--fs-micro); letter-spacing: 0.06em; text-transform: uppercase; }
 .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 .status-beta { color: var(--ok); }
+.status-stable { color: var(--ok); font-weight: 650; }
 .status-alpha { color: var(--warn); }
 .status-preview { color: var(--accent); }
 .status-experimental { color: var(--ink-3); }
