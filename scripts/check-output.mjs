@@ -48,6 +48,22 @@ for(const [collection,kind]of [['servers','owner-built'],['curated','curated']])
   }else assert.equal(item.selectionBasis,source.selectionBasis);
  }
 }
+// Hosted endpoints: link only when live, say "coming soon" otherwise, and list hosted products only on /hosted.
+const hostedPage=read(resolvePath(base+'/hosted/'));
+const hostedServers=catalog.servers.filter(s=>s.hosted);
+for(const item of catalog.servers){
+ const source=sourceServers.find(s=>s.slug===item.slug);
+ assert.deepEqual(item.hosted,source.hosted??null,'Hosted drift: '+item.slug);
+ assert.deepEqual(legacy.servers.find(s=>s.slug===item.slug)?.hosted,item.hosted,'Hosted drift in servers.json: '+item.slug);
+ const html=read(resolvePath(new URL(item.url).pathname));
+ if(!item.hosted){assert(!html.includes('data-hosted='),'Unexpected hosted block: '+item.slug);continue;}
+ const linked=page=>page.includes('href="'+item.hosted.url+'"')||page.includes('href="'+item.hosted.url+'/"');
+ for(const [where,page] of [[item.slug,html],['/hosted',hostedPage]]){
+  if(item.hosted.live)assert(linked(page)&&page.includes('Use it hosted'),where+' must link the live hosted endpoint for '+item.slug);
+  else{assert(!linked(page),where+' links a hosted endpoint that is not live: '+item.slug);assert(page.includes('Coming soon'),where+' must say coming soon for '+item.slug);}
+ }
+}
+assert.equal((hostedPage.match(/data-hosted="/g)||[]).length,hostedServers.length,'/hosted must list every hosted product and nothing else');
 for(const item of [...catalog.servers,...catalog.articles]){
  assert(existsSync(resolvePath(new URL(item.markdownUrl).pathname)),'Missing Markdown: '+item.slug);
  assert(!item.draft,'Draft exposed: '+item.slug);

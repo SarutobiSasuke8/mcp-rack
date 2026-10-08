@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { href } from '~/lib/site';
+import { breadcrumbSchema } from '~/lib/seo';
+import { hostedKindLabel } from '~/lib/hosted';
+
+const hosted = (await getCollection('servers', ({ data }) => Boolean(data.hosted))).sort((a, b) => a.data.order - b.data.order);
+const liveCount = hosted.filter((s) => s.data.hosted?.live).length;
+---
+
+<BaseLayout title="Hosted" description="MCP Rack projects you will be able to use hosted, with no install: remote MCP endpoints and live demos. Each one says plainly whether it is live yet." jsonLd={breadcrumbSchema([{ name: 'Hosted', path: '/hosted' }], Astro.site)}>
+  <section class="container page-head">
+    <p class="kicker">Use it without installing</p>
+    <h1 class="t-h1">Hosted</h1>
+    <p class="t-lead">Some projects on the board will also run as a hosted endpoint or a live demo, so you can try them without a local install. {liveCount === 0 ? 'None is live yet. Each card below says "coming soon" until its endpoint answers, and only live endpoints are linked.' : 'Only live endpoints are linked. The rest say "coming soon".'}</p>
+  </section>
+
+  <section class="container" aria-labelledby="hosted-list-title">
+    <h2 class="visually-hidden" id="hosted-list-title">Hosted products</h2>
+    <div class="hosted-grid stagger">
+      {hosted.map(({ data: s }) => (
+        <article class="card hosted-card reveal" data-hosted={s.hosted!.live ? 'live' : 'soon'}>
+          <div class="hosted-top">
+            <span class="chip">{hostedKindLabel[s.hosted!.kind]}</span>
+            {s.hosted!.live ? <span class="live-chip mono">Live</span> : <span class="soon-chip mono">Coming soon</span>}
+          </div>
+          <h3 class="hosted-name">{s.hosted!.label}</h3>
+          <p class="hosted-from t-small t-muted">From <a href={href(`/servers/${s.slug}`)}>{s.name}</a> · <span class:list={['status', `status-${s.status}`]}>{s.status}</span></p>
+          <p class="hosted-tag">{s.tagline}</p>
+          <div class="hosted-actions">
+            {s.hosted!.live ? (
+              <a class="btn btn-primary btn-sm" href={s.hosted!.url} target="_blank" rel="noopener">Use it hosted <span aria-hidden="true">↗</span></a>
+            ) : (
+              <span class="t-small t-muted">Not live yet. No date or access promise.</span>
+            )}
+            <a class="btn btn-ghost btn-sm" href={href(`/servers/${s.slug}`)}>Listing and source</a>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="t-small t-muted hosted-note">Hosted endpoints run the same open-source projects listed on the board. Status labels follow the <a href={href('/standards')}>listing standards</a>; a hosted endpoint is not an independent audit. Agents can read the same data from <a href={href('/catalog.json')}>catalog.json</a>, where <code>hosted.live</code> is false until an endpoint is live.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { padding: 56px 0 32px; }
+  @media (min-width: 1024px) { .page-head { padding: 88px 0 40px; } }
+  .page-head .t-lead { margin-top: 18px; max-width: 62ch; }
+  .hosted-grid { display: grid; gap: 16px; padding-bottom: 16px; }
+  @media (min-width: 720px) { .hosted-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .hosted-card { display: grid; gap: 8px; align-content: start; }
+  .hosted-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .hosted-name { margin: 0; font-size: 1.25rem; font-weight: 560; letter-spacing: -0.012em; }
+  .hosted-from { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .hosted-tag { margin: 4px 0 0; color: var(--ink-2); font-size: var(--fs-small); text-wrap: pretty; }
+  .hosted-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .soon-chip, .live-chip { padding: 2px 8px; border: 1px solid var(--line-strong); border-radius: 999px; font-size: var(--fs-micro); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+  .live-chip { border-color: var(--accent); color: var(--accent); }
+  .hosted-note { max-width: 70ch; margin: 24px 0 8px; }
+</style>

@@ -76,6 +76,12 @@
       "search"
     ],
     "order": 2,
+    "hosted": {
+      "url": "https://jobscout.mcprack.dev",
+      "label": "JobScout hosted",
+      "kind": "remote-mcp",
+      "live": false
+    },
     "reviewedAt": "2026-10-01",
     "review": {
       "kind": "metadata",
@@ -152,6 +158,12 @@
       "handoff"
     ],
     "order": 4,
+    "hosted": {
+      "url": "https://handoff.astraeus.ie",
+      "label": "Handoff Board",
+      "kind": "demo",
+      "live": false
+    },
     "reviewedAt": "2026-10-01",
     "review": {
       "kind": "metadata",
@@ -438,5 +450,110 @@
     "install": null,
     "tags": ["aseprite", "pixel-art", "animation", "game-dev", "local", "private-alpha"],
     "order": 12
+  },
+  {
+    "id": "astraeus-postgres-mcp",
+    "slug": "astraeus-postgres-mcp",
+    "name": "astraeus-postgres-mcp",
+    "tagline": "Governed, read-only Postgres access for agents: table and column allowlists, row caps, PII masking and an audit log.",
+    "summary": "A local-first MCP server that lets an agent query Postgres through a policy layer instead of a raw connection string. It refuses to start without a policy file and a connection string. Each query must be one read-only, single-table SELECT: it is parsed with a real PostgreSQL parser, checked against the policy and regenerated from the validated syntax tree, so the text the agent sends is never executed as written. Every query runs in a read-only transaction with a statement timeout.",
+    "highlights": [
+      "Five tools: list_tables, describe_table, query, policy_info and ping",
+      "Table and column allowlists, a row cap, an optional per-table predicate and PII masking, all from one policy file",
+      "Queries are rebuilt from the validated syntax tree; unknown syntax is denied, not guessed at",
+      "Append-only JSONL audit log of every allow and deny, with literals normalised and connection strings never logged"
+    ],
+    "limitations": [
+      "Version 0.1.0 on main. Not published to npm and not tagged; install from source.",
+      "v0 rejects joins, subqueries, CTEs and UNION, and runs over stdio only.",
+      "Joins, named views, Streamable HTTP and audit rotation are in an open v1 pull request and are not on main yet.",
+      "The guard is a filter, not a sandbox. The database role and row-level security remain the real boundary."
+    ],
+    "lang": "TypeScript",
+    "transport": "stdio",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/astraeus-postgres-mcp",
+    "docs": "https://github.com/SarutobiSasuke8/astraeus-postgres-mcp#readme",
+    "install": null,
+    "tags": [
+      "postgres",
+      "database",
+      "governance",
+      "read-only",
+      "audit"
+    ],
+    "order": 13
+  },
+  {
+    "id": "mcp-host-gateway",
+    "slug": "mcp-host-gateway",
+    "name": "mcp-host-gateway",
+    "tagline": "A hosted MCP edge: bearer auth, per-plan tool grants and rate limits in front of Streamable HTTP MCP servers.",
+    "summary": "A small gateway that sits in front of product MCP servers so they can be offered hosted. A client connects over Streamable HTTP with a bearer token; the gateway verifies it, maps the caller to a plan, checks that the plan covers the upstream and the tool, applies a per-identity rate limit and forwards the JSON-RPC call. It carries no product logic of its own, and it fails closed at startup when its auth or upstream configuration is incomplete.",
+    "highlights": [
+      "Bearer JWT verification against the issuer's JWKS, or static tokens for development",
+      "Plan-based grants per upstream and per tool, with tools/list filtered to what the caller may use",
+      "Per-identity token-bucket rate limits with clear 401, 403 and 429 JSON-RPC errors",
+      "JSON-line logs with tokens and secret-shaped keys redacted; request bodies are never logged"
+    ],
+    "limitations": [
+      "Version 0.1.0 on main. Deploy-only: not published to npm, not tagged, and not running as a public service yet.",
+      "v0 keeps rate-limit state in one process and buffers SSE responses instead of streaming them.",
+      "A shared rate store, streaming relay, Docker image and audit log are in open pull requests and are not on main yet."
+    ],
+    "lang": "TypeScript",
+    "transport": "Streamable HTTP",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/mcp-host-gateway",
+    "docs": "https://github.com/SarutobiSasuke8/mcp-host-gateway#readme",
+    "install": null,
+    "tags": [
+      "gateway",
+      "auth",
+      "rate-limits",
+      "hosting",
+      "streamable-http"
+    ],
+    "order": 14
+  },
+  {
+    "id": "mcp-eval-harness",
+    "slug": "mcp-eval-harness",
+    "name": "mcp-eval-harness",
+    "tagline": "Contract tests for MCP servers: expected tools, schema checks and golden fixtures, with CLI exit codes that can gate a release.",
+    "summary": "A shared test harness for MCP servers. The mcp-eval CLI loads a YAML or JSON suite, starts the target server, runs each contract through the official MCP client, compares results with golden fixtures and JSON Schemas, and exits non-zero on any failure. It answers one question: does this server still honour the contract it published? It is not a hosted service and not an LLM judge.",
+    "highlights": [
+      "Checks that expected tools exist and that advertised input schemas match a golden",
+      "Golden comparisons with only_paths and ignore_paths for timestamps and request ids",
+      "Error-path assertions for tool errors and JSON-RPC error codes",
+      "Golden files change only with an explicit --update-goldens flag, never implicitly"
+    ],
+    "limitations": [
+      "Version 0.1.0 on main. Not published to npm and not tagged; install from git.",
+      "v0 covers tool contracts only, and its own tests exercise stdio targets only.",
+      "Prompts and resources contracts, a composite Action and Streamable HTTP tests are in open pull requests and are not on main yet."
+    ],
+    "lang": "TypeScript",
+    "transport": "CLI (stdio or Streamable HTTP targets)",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/mcp-eval-harness",
+    "docs": "https://github.com/SarutobiSasuke8/mcp-eval-harness#readme",
+    "install": null,
+    "tags": [
+      "testing",
+      "contracts",
+      "golden-files",
+      "ci"
+    ],
+    "order": 15
   }
 ]
