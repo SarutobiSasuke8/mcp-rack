@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://mcprack.dev/catalog.schema.json",
-  "title": "MCP Rack catalog v1.1",
+  "title": "MCP Rack catalog v1.2",
   "type": "object",
   "required": [
     "schemaVersion",
@@ -18,7 +18,7 @@
   ],
   "properties": {
     "schemaVersion": {
-      "const": "1.1.0"
+      "const": "1.2.0"
     },
     "generatedAt": {
       "type": "string",
@@ -134,6 +134,9 @@
               "null"
             ],
             "format": "uri"
+          },
+          "hosted": {
+            "$ref": "#/$defs/hosted"
           },
           "status": {
             "enum": [
@@ -390,6 +393,41 @@
             "type": "string",
             "format": "uri"
           }
+        }
+      }
+    },
+    "hosted": {
+      "description": "Hosted endpoint or live demo. Connect only when live is true; live false means coming soon and the site does not link it.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "url",
+        "label",
+        "kind",
+        "live"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "kind": {
+          "enum": [
+            "remote-mcp",
+            "demo"
+          ]
+        },
+        "live": {
+          "type": "boolean"
         }
       }
     }

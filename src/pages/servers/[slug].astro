@@ -4,6 +4,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import PostCard from '~/components/PostCard.astro';
 import { href } from '~/lib/site';
 import { softwareSchema, breadcrumbSchema } from '~/lib/seo';
+import { hostedKindLabel } from '~/lib/hosted';
 
 export async function getStaticPaths() {
   const servers = await getCollection('servers');
@@ -41,6 +42,21 @@ const facts: { k: string; v: string; link?: string }[] = [
 
   <section class="container detail">
     <div class="detail-main">
+      {s.hosted && (
+        <div class:list={['hosted-block', { 'hosted-live': s.hosted.live }]} data-hosted={s.hosted.live ? 'live' : 'soon'}>
+          <p class="kicker" style="margin-bottom: 10px">{s.hosted.live ? 'Use it hosted' : 'Hosted version'}</p>
+          <p class="hosted-title">{s.hosted.label} <span class="t-muted">· {hostedKindLabel[s.hosted.kind]}</span></p>
+          {s.hosted.live ? (
+            <>
+              <p class="t-small t-muted">No install needed. Check the source documentation for access and limits before you connect.</p>
+              <a class="btn btn-primary btn-sm" href={s.hosted.url} target="_blank" rel="noopener">Use it hosted <span aria-hidden="true">↗</span></a>
+            </>
+          ) : (
+            <p class="t-small t-muted"><span class="soon-chip mono">Coming soon</span> The hosted version is not live yet. There is no date or access promise; the self-hosted source is below.</p>
+          )}
+        </div>
+      )}
+
       {s.install && (
         <div class="install-block">
           <p class="kicker" style="margin-bottom: 10px">Install in Claude Code</p>
@@ -115,6 +131,10 @@ const facts: { k: string; v: string; link?: string }[] = [
   .detail { display: grid; gap: 40px; padding-bottom: 40px; }
   @media (min-width: 1024px) { .detail { grid-template-columns: minmax(0, 1.6fr) minmax(300px, 0.8fr); gap: 64px; align-items: start; } .detail-side { position: sticky; top: 92px; } }
   .install-block { margin-bottom: 36px; }
+  .hosted-block { margin-bottom: 36px; padding: 20px 22px; border: 1px dashed var(--line-strong); border-radius: var(--radius); }
+  .hosted-block.hosted-live { border-style: solid; border-color: var(--accent); }
+  .hosted-title { margin: 0 0 8px; font-weight: 560; }
+  .soon-chip { display: inline-block; margin-right: 8px; padding: 2px 8px; border: 1px solid var(--line-strong); border-radius: 999px; font-size: var(--fs-micro); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
   .related { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
   .related-grid { display: grid; gap: 16px; }
   @media (min-width: 640px) { .related-grid { grid-template-columns: 1fr 1fr; } }

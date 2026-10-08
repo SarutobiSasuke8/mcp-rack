@@ -3,6 +3,7 @@ import type { APIContext } from 'astro';
 import { SITE, absolute } from '~/lib/site';
 import { isoDate } from '~/lib/format';
 import { reviewLines } from '~/lib/maturity';
+import { hostedLines } from '~/lib/hosted';
 
 /** llms.txt: a plain-text map of the site for assistants and crawlers. */
 export async function GET(context: APIContext) {
@@ -24,8 +25,18 @@ export async function GET(context: APIContext) {
       const pkg = s.package ? `${s.package.kind}: ${s.package.name}${s.package.version ? ` ${s.package.version}` : ''}` : 'source only';
       const reg = s.registry ? `registry: ${s.registry}` : 'not in the official registry yet';
       const install = s.install ? ` Install: \`${s.install}\`.` : '';
-      return `- [${s.name}](${absolute(`/servers/${s.slug}`, context.site)}): ${s.tagline} ${s.lang}, ${s.transport}, ${s.license}, ${s.status}; ${pkg}; ${reg}.${install} ${reviewLines(s).join(" ")}`;
+      return `- [${s.name}](${absolute(`/servers/${s.slug}`, context.site)}): ${s.tagline} ${s.lang}, ${s.transport}, ${s.license}, ${s.status}; ${pkg}; ${reg}.${install} ${[...hostedLines(s.hosted), ...reviewLines(s)].join(" ")}`;
     }),
+    '',
+    '## Hosted products',
+    '',
+    ...(() => {
+      const hosted = servers.filter(({ data: s }) => s.hosted);
+      return hosted.length
+        ? hosted.map(({ data: s }) => `- [${s.hosted!.label}](${absolute(`/servers/${s.slug}`, context.site)}): ${hostedLines(s.hosted).join(' ')}`)
+        : ['- None yet.'];
+    })(),
+    `Hosted overview: ${absolute('/hosted', context.site)}. Connect only to endpoints marked live.`,
     '',
     '## Servers by other people that the owner runs',
     '',

@@ -16,7 +16,7 @@
     "style": "node scripts/check-style.mjs",
     "fonts": "node scripts/copy-fonts.mjs",
     "og": "node scripts/generate-og.mjs",
-    "test": "node --experimental-strip-types --test scripts/maturity.test.mjs",
+    "test": "node --experimental-strip-types --test scripts/maturity.test.mjs scripts/hosted.test.mjs",
     "verify": "npm test && npm run style && npm run check && npm run build",
     "check:output": "node scripts/check-output.mjs"
   },
