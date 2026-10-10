@@ -109,7 +109,9 @@
     "repo": "https://github.com/SarutobiSasuke8/website-content-mcp",
     "docs": "https://github.com/SarutobiSasuke8/website-content-mcp#readme",
     "install": "claude mcp add website-content --env SITE_BASE_URL=https://example.com -- npx -y --package @sarutobi-sasuke/website-content-mcp website-content-stdio",
-    "limitations": ["Replace https://example.com in the install command with the public site you want to expose. Other clients must also set SITE_BASE_URL in the server environment."],
+    "limitations": [
+      "Replace https://example.com in the install command with the public site you want to expose. Other clients must also set SITE_BASE_URL in the server environment."
+    ],
     "tags": [
       "web",
       "content",
@@ -436,7 +438,50 @@
     "repo": null,
     "docs": "https://mcprack.dev/servers/aseprite-agent-mcp.md",
     "install": null,
-    "tags": ["aseprite", "pixel-art", "animation", "game-dev", "local", "private-alpha"],
+    "tags": [
+      "aseprite",
+      "pixel-art",
+      "animation",
+      "game-dev",
+      "local",
+      "private-alpha"
+    ],
     "order": 12
+  },
+  {
+    "id": "astraeus-postgres-mcp",
+    "slug": "astraeus-postgres-mcp",
+    "name": "astraeus-postgres-mcp",
+    "tagline": "Read-only Postgres for agents, through a policy layer instead of a connection string.",
+    "summary": "A governed, read-only Postgres server. Every query is parsed with a real PostgreSQL parser, checked against table and column allowlists, then regenerated from the validated syntax tree, so the text an agent sends is never executed as written. Each query runs in a read-only transaction with a statement timeout, and every allow and deny is written to an audit log.",
+    "highlights": [
+      "Table and column allowlists, row caps and PII masking",
+      "Named views with typed parameters",
+      "Fails closed without a policy file and a connection string",
+      "Append-only JSONL audit log with rotation"
+    ],
+    "lang": "TypeScript",
+    "transport": "stdio + Streamable HTTP",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/astraeus-postgres-mcp",
+    "docs": null,
+    "install": null,
+    "tags": [
+      "database",
+      "postgres",
+      "security"
+    ],
+    "order": 13,
+    "reviewedAt": "2026-10-10",
+    "review": {
+      "kind": "metadata",
+      "summary": "The source records v1 (0.2.0) with single-table queries, allowlisted joins, named views and an opt-in Streamable HTTP entrypoint. Not published to npm; install from source. This metadata review does not establish security readiness.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/astraeus-postgres-mcp/tree/38ecf01"
+      ]
+    }
   }
 ]
