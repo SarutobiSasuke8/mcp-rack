@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import PostCard from '~/components/PostCard.astro';
 import { href } from '~/lib/site';
+import Logo from '~/components/Logo.astro';
 import { softwareSchema, breadcrumbSchema } from '~/lib/seo';
 import { hostedKindLabel } from '~/lib/hosted';
 
@@ -30,7 +31,7 @@ const facts: { k: string; v: string; link?: string }[] = [
 <BaseLayout title={s.name} description={s.tagline} ogImage={`/og/server-${s.slug}.png`} jsonLd={jsonLd}>
   <section class="container page-head">
     <p class="kicker"><a href={href('/servers')}>Servers</a> / {s.name}</p>
-    <h1 class="t-h1 mono-title">{s.name}</h1>
+    <h1 class="t-h1 mono-title title-row"><Logo slug={s.slug} size={32} />{s.name}</h1>
     <p class="t-lead">{s.tagline}</p>
     <div class="head-meta">
       <span class:list={['chip', `chip-${s.lang.toLowerCase()}`]}>{s.lang}</span>
@@ -124,6 +125,7 @@ const facts: { k: string; v: string; link?: string }[] = [
   @media (min-width: 1024px) { .page-head { padding: 88px 0 32px; } }
   .page-head .kicker a { color: inherit; text-decoration: none; }
   .page-head .kicker a:hover { text-decoration: underline; }
+  .title-row { display: flex; align-items: center; gap: 14px; }
   .mono-title { font-family: var(--font-mono); font-weight: 560; letter-spacing: -0.03em; }
   .page-head .t-lead { margin-top: 18px; max-width: 62ch; }
   .head-meta { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin-top: 22px; }

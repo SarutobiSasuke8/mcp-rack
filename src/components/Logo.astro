@@ -1,0 +1,13 @@
+---
+import { logoFor } from '~/lib/logos';
+interface Props { slug: string; size?: number; }
+const { slug, size = 28 } = Astro.props;
+const src = logoFor(slug);
+---
+
+{src && <span class="logo-tile" style={`--logo: ${size}px`}><img src={src} alt="" width={size} height={size} loading="lazy" decoding="async" /></span>}
+
+<style>
+  .logo-tile { display: inline-grid; place-items: center; flex: none; width: calc(var(--logo) + 16px); height: calc(var(--logo) + 16px); border-radius: 10px; background: #fff; border: 1px solid var(--line); }
+  .logo-tile img { width: var(--logo); height: var(--logo); object-fit: contain; }
+</style>
