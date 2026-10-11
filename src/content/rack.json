@@ -86,5 +86,16 @@
     "url": "https://docs.tinyfish.ai/",
     "useCase": "Current facts and page content before answering",
     "selectionBasis": "Chosen for web research that needs page retrieval and browser interaction."
+  },
+  {
+    "id": "trigr",
+    "slug": "trigr",
+    "name": "Trigr MCP",
+    "by": "Trigr",
+    "kind": "official",
+    "blurb": "Strategy building and backtesting for Hyperliquid perps, reachable from Claude over MCP. The research bench for trading ideas.",
+    "url": "https://trigr.xyz/",
+    "useCase": "Drafting and backtesting a perps strategy from a chat",
+    "selectionBasis": "Chosen for building and backtesting trading strategies from an AI client."
   }
 ]
