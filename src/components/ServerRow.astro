@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { href } from '~/lib/site';
+import Logo from './Logo.astro';
 
 interface Props {
   server: CollectionEntry<'servers'>['data'];
@@ -15,7 +16,7 @@ const search = [s.name, s.tagline, s.status, s.lang, s.transport, s.license, s.p
   <div class="unit-main">
     {typeof index === 'number' && <span class="unit-index mono">{String(index + 1).padStart(2, '0')}</span>}
     <div>
-      <h3 class="unit-name"><a href={href(`/servers/${s.slug}`)}>{s.name}</a></h3>
+      <h3 class="unit-name"><Logo slug={s.slug} size={22} /><a href={href(`/servers/${s.slug}`)}>{s.name}</a></h3>
       <p class="unit-tag">{s.tagline}</p>
     </div>
   </div>
@@ -65,7 +66,7 @@ const search = [s.name, s.tagline, s.status, s.lang, s.transport, s.license, s.p
   }
   .unit-main { display: flex; gap: 16px; min-width: 0; }
   .unit-index { color: var(--ink-4); font-size: var(--fs-micro); padding-top: 6px; width: 22px; flex: none; }
-  .unit-name { margin: 0; font-size: 1.125rem; font-weight: 560; letter-spacing: -0.012em; line-height: 1.3; }
+  .unit-name { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 1.125rem; font-weight: 560; letter-spacing: -0.012em; line-height: 1.3; }
   .unit-name a { text-decoration: none; color: var(--ink); background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 100% / 0 2px; transition: background-size var(--dur) var(--ease); }
   .unit:hover .unit-name a, .unit-name a:focus-visible { background-size: 100% 2px; }
   .unit-tag { margin: 4px 0 0; color: var(--ink-2); font-size: var(--fs-small); max-width: 60ch; text-wrap: pretty; }
