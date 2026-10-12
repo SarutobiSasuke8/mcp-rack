@@ -2,6 +2,7 @@ import {getCollection} from 'astro:content';
 import type {APIContext} from 'astro';
 import {absolute} from '~/lib/site';
 import {reviewLines} from '~/lib/maturity';
+import {hostedLines} from '~/lib/hosted';
 export async function getStaticPaths(){return(await getCollection('servers')).map(({data:s})=>({params:{slug:s.slug},props:{server:s}}));}
 export function GET({props,site}:APIContext){
   const s=props.server;
@@ -14,6 +15,7 @@ export function GET({props,site}:APIContext){
     ...(s.supportedScope?['Supported scope: '+s.supportedScope]:[]),
     ...(s.maturityEvidence?['Promotion evidence: '+s.maturityEvidence]:[]),
     'Package: '+(s.package?s.package.name+' '+(s.package.version??''):s.repo?'Source only':'Not publicly available'),
+    ...(s.hosted?['','## Hosted','',...hostedLines(s.hosted)]:[]),
     ...(s.availability?['','## Availability','',s.availability]:[]),
     '','## Highlights','',...s.highlights.map((h:string)=>'- '+h),
     ...(s.limitations.length?['','## Current limitations','',...s.limitations.map((h:string)=>'- '+h)]:[]),

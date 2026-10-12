@@ -32,7 +32,11 @@ npm run verify     # style gate, type check, build
 
 ### Add a server
 
-Add an object to `src/content/servers.json`. The schema in `src/content.config.ts` is the contract: `slug`, `name`, `tagline` (under 180 characters), `summary`, `highlights`, `lang`, `transport`, `package` (or `null`), `registry` (or `null`), `status`, `license`, `repo`, `docs`, `install` (or `null`), `tags`, `order`. The server page, the board row, the footer link, the OG image, `servers.json` and `llms.txt` all follow from it.
+Add an object to `src/content/servers.json`. The schema in `src/content.config.ts` is the contract: `slug`, `name`, `tagline` (under 180 characters), `summary`, `highlights`, `lang`, `transport`, `package` (or `null`), `registry` (or `null`), `status`, `license`, `repo`, `docs`, `install` (or `null`), `tags`, `order`, and optionally `hosted`. The server page, the board row, the footer link, the OG image, `servers.json` and `llms.txt` all follow from it.
+
+### Hosted endpoints
+
+A listing may carry an optional `hosted` object: `{ "url": "https://...", "label": "...", "kind": "remote-mcp" | "demo", "live": false }`. While `live` is false the server page and `/hosted` say "coming soon" and do not link the URL; `catalog.json`, `servers.json`, `llms.txt` and the Markdown page say the same. Flip `live` to `true` once the endpoint answers and the page shows a "Use it hosted" action. `/hosted` lists hosted products only. There is no checkout or pricing on the site. Catalogue schema 1.2.0 adds `hosted` (null when absent) as an additive field; consumers that pin 1.1.0 must update their validator.
 
 ### Write a release note
 

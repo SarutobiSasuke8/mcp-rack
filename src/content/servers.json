@@ -83,6 +83,12 @@
       "evidence": [
         "https://github.com/SarutobiSasuke8/jobscout-mcp/tree/5941653"
       ]
+    },
+    "hosted": {
+      "url": "https://jobscout.mcprack.dev",
+      "label": "JobScout hosted",
+      "kind": "remote-mcp",
+      "live": false
     }
   },
   {
@@ -161,6 +167,12 @@
       "evidence": [
         "https://github.com/SarutobiSasuke8/agent-handoff-mcp/tree/3156e28"
       ]
+    },
+    "hosted": {
+      "url": "https://handoff.astraeus.ie",
+      "label": "Handoff Board",
+      "kind": "demo",
+      "live": false
     }
   },
   {
@@ -483,5 +495,73 @@
         "https://github.com/SarutobiSasuke8/astraeus-postgres-mcp/tree/38ecf01"
       ]
     }
+  },
+  {
+    "id": "mcp-host-gateway",
+    "slug": "mcp-host-gateway",
+    "name": "mcp-host-gateway",
+    "tagline": "A hosted MCP edge: bearer auth, per-plan tool grants and rate limits in front of Streamable HTTP MCP servers.",
+    "summary": "A gateway in front of Streamable HTTP MCP servers. It verifies bearer tokens, maps callers to plans, checks grants for tools, prompts and resources, applies per-identity rate limits and forwards permitted calls. The current version includes a shared rate store, streaming SSE relay and a single-VPS deployment recipe. It has no product logic of its own and fails closed when auth or upstream configuration is incomplete.",
+    "highlights": [
+      "Bearer JWT verification against the issuer's JWKS, or static tokens for development",
+      "Plan-based grants for tools, prompts and resources, with list responses filtered to the caller's access",
+      "Per-identity rate limits backed by a shared store, with clear 401, 403 and 429 errors",
+      "Streaming SSE relay, a container build and body-free audit records"
+    ],
+    "limitations": [
+      "Version 0.1.0 on main. Deploy-only: not published to npm, not tagged, and no public service has been verified.",
+      "Its deployment recipe targets one VPS. A separate issuer and upstream service are still required."
+    ],
+    "lang": "TypeScript",
+    "transport": "Streamable HTTP",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/mcp-host-gateway",
+    "docs": "https://github.com/SarutobiSasuke8/mcp-host-gateway#readme",
+    "install": null,
+    "tags": [
+      "gateway",
+      "auth",
+      "rate-limits",
+      "hosting",
+      "streamable-http"
+    ],
+    "order": 14
+  },
+  {
+    "id": "mcp-eval-harness",
+    "slug": "mcp-eval-harness",
+    "name": "mcp-eval-harness",
+    "tagline": "Contract tests for MCP servers: expected tools, schema checks and golden fixtures, with CLI exit codes that can gate a release.",
+    "summary": "A shared test harness for MCP servers. The mcp-eval CLI loads a YAML or JSON suite, connects to a stdio or Streamable HTTP target, runs contracts through the official MCP client, compares results with golden fixtures and JSON Schemas, and exits non-zero on a failed contract. It checks the published interface rather than judging answer quality.",
+    "highlights": [
+      "Checks exact tool, prompt and resource lists, plus advertised input schemas",
+      "Golden comparisons with only_paths and ignore_paths for timestamps and request ids",
+      "Error-path assertions for tool errors and JSON-RPC error codes, over stdio or Streamable HTTP",
+      "Golden files change only with an explicit --update-goldens flag, never implicitly"
+    ],
+    "limitations": [
+      "Version 0.1.0 on main. Publish-ready, but not published to npm or tagged; install from git.",
+      "Prompt and resource listing contracts are supported; content goldens for those surfaces are deferred.",
+      "This is not an LLM judge or a hosted service."
+    ],
+    "lang": "TypeScript",
+    "transport": "CLI (stdio or Streamable HTTP targets)",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/mcp-eval-harness",
+    "docs": "https://github.com/SarutobiSasuke8/mcp-eval-harness#readme",
+    "install": null,
+    "tags": [
+      "testing",
+      "contracts",
+      "golden-files",
+      "ci"
+    ],
+    "order": 15
   }
 ]

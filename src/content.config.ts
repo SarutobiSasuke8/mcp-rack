@@ -2,6 +2,7 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { file, glob } from 'astro/loaders';
 import { maturityFields, reviewFields, validateMaturity, validateReview } from './lib/maturity';
+import { hostedSchema } from './lib/hosted';
 
 const packageSchema = z
   .object({
@@ -30,6 +31,7 @@ const servers = defineCollection({
     availability: z.string().optional(),
     limitations: z.array(z.string()).default([]),
     interestUrl: z.url().optional(),
+    hosted: hostedSchema.optional(),
     install: z.string().nullable(),
     tags: z.array(z.string()).default([]),
     order: z.number(),

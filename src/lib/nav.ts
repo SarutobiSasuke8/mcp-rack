@@ -5,6 +5,7 @@ export interface NavItem {
 
 export const PRIMARY_NAV: NavItem[] = [
   { label: 'Servers', href: '/servers' },
+  { label: 'Hosted', href: '/hosted' },
   { label: 'Curated rack', href: '/rack' },
   { label: 'Journal', href: '/blog' },
   { label: 'For agents', href: '/agents' },
@@ -16,6 +17,7 @@ export const FOOTER_GROUPS: { heading: string; links: { label: string; href: str
     heading: 'Site',
     links: [
       { label: 'Servers', href: '/servers' },
+      { label: 'Hosted', href: '/hosted' },
       { label: 'Curated rack', href: '/rack' },
       { label: 'Journal', href: '/blog' },
       { label: 'For agents', href: '/agents' },

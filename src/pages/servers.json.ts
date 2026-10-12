@@ -28,6 +28,7 @@ export async function GET(context: APIContext) {
       availability: s.availability ?? null,
       limitations: s.limitations,
       interestUrl: s.interestUrl ?? null,
+      hosted: s.hosted ?? null,
       license: s.license,
       repo: s.repo,
       install: s.install,
