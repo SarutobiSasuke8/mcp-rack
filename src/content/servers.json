@@ -138,34 +138,42 @@
     "id": "agent-handoff-mcp",
     "slug": "agent-handoff-mcp",
     "name": "agent-handoff-mcp",
-    "tagline": "Local-first, bounded, auditable handoffs between AI agents. A coordination primitive, not a message bus.",
+    "tagline": "Local-first, bounded, auditable handoffs between AI agents. A coordination primitive, not a message bus. 0.1.0 beta.",
     "summary": "A vendor-neutral way for one agent to hand work to another with a record of what was handed over, to whom, and what happened next. Handoffs are bounded messages with lifecycle state; a handoff can reference a repository or vault artefact without gaining any authority to read or change it.",
     "highlights": [
       "Lifecycle state and receipts for every handoff",
       "Works across Claude, Codex and any stdio MCP client",
-      "Content-free evidence path: identities and artefacts are referenced, never copied"
+      "Content-free evidence path: identities and artefacts are referenced, never copied",
+      "Published on npm with signed provenance from GitHub Actions"
     ],
+    "availability": "Published as 0.1.0 on npm with provenance from the tagged release workflow. Not yet listed in the official MCP Registry. The hosted Handoff Board demo is not live.",
     "lang": "TypeScript",
     "transport": "stdio + Streamable HTTP",
-    "package": null,
+    "package": {
+      "kind": "npm",
+      "name": "@sarutobi-sasuke/agent-handoff-mcp",
+      "version": "0.1.0"
+    },
     "registry": null,
-    "status": "alpha",
+    "status": "beta",
     "license": "Apache-2.0",
     "repo": "https://github.com/SarutobiSasuke8/agent-handoff-mcp",
-    "docs": null,
-    "install": null,
+    "docs": "https://github.com/SarutobiSasuke8/agent-handoff-mcp/blob/main/docs/QUICKSTART.md",
+    "install": "claude mcp add handoff --env HANDOFF_AGENT_ID=<agent-id> --env HANDOFF_MCP_REGISTRY=/abs/path/agents.yaml --env HANDOFF_MCP_DB=/abs/path/handoffs.sqlite -- npx -y @sarutobi-sasuke/agent-handoff-mcp stdio",
     "tags": [
       "agents",
       "coordination",
       "handoff"
     ],
     "order": 4,
-    "reviewedAt": "2026-10-01",
+    "reviewedAt": "2026-10-24",
     "review": {
-      "kind": "metadata",
-      "summary": "The source changelog records policy, revocation and packaged-transport fixes. A first tagged package and operational proof are still required for promotion.",
+      "kind": "runtime",
+      "summary": "Cold install of the published 0.1.0 into an empty folder with an empty HOME: registry integrity, provenance attestation and npm audit signatures verified, all 5 bins present, init and validate pass, and the stdio server initialises, lists its 6 tools and answers handoff_whoami.",
       "evidence": [
-        "https://github.com/SarutobiSasuke8/agent-handoff-mcp/tree/3156e28"
+        "https://github.com/SarutobiSasuke8/agent-handoff-mcp/actions/runs/40105322699",
+        "https://www.npmjs.com/package/@sarutobi-sasuke/agent-handoff-mcp/v/0.1.0",
+        "https://github.com/SarutobiSasuke8/agent-handoff-mcp/tree/v0.1.0"
       ]
     },
     "hosted": {
