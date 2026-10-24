@@ -146,7 +146,7 @@
       "Content-free evidence path: identities and artefacts are referenced, never copied",
       "Published on npm with signed provenance from GitHub Actions"
     ],
-    "availability": "Published as 0.1.0 on npm with provenance from the tagged release workflow. Not yet listed in the official MCP Registry. The hosted Handoff Board demo is not live.",
+    "availability": "Published as 0.1.0 on npm with provenance from the tagged release workflow, and listed in the official MCP Registry. The hosted Handoff Board demo is not live.",
     "lang": "TypeScript",
     "transport": "stdio + Streamable HTTP",
     "package": {
@@ -154,7 +154,7 @@
       "name": "@sarutobi-sasuke/agent-handoff-mcp",
       "version": "0.1.0"
     },
-    "registry": null,
+    "registry": "io.github.SarutobiSasuke8/agent-handoff-mcp",
     "status": "beta",
     "license": "Apache-2.0",
     "repo": "https://github.com/SarutobiSasuke8/agent-handoff-mcp",
@@ -230,7 +230,7 @@
       "Works with any Obsidian vault kept in a GitHub repository",
       "Published on npm with signed provenance from GitHub Actions"
     ],
-    "availability": "Published as 0.1.0 on npm with provenance from the release workflow. Self-hosted Streamable HTTP server; there is no hosted endpoint. Not yet listed in the official MCP Registry.",
+    "availability": "Published as 0.1.0 on npm with provenance from the release workflow. Self-hosted Streamable HTTP server; there is no hosted endpoint. Listed in the official MCP Registry.",
     "limitations": [
       "Needs a GitHub App installed on the vault repository (or a fine-grained token for local testing) and operator-written policy and token files.",
       "The release proof replaces GitHub inside the test process. A disposable real-repository proposal run and denied-write evidence are still required before promotion."
@@ -242,7 +242,7 @@
       "name": "@sarutobi-sasuke/obsidian-github-mcp",
       "version": "0.1.0"
     },
-    "registry": null,
+    "registry": "io.github.SarutobiSasuke8/obsidian-github-mcp",
     "status": "alpha",
     "license": "Apache-2.0",
     "repo": "https://github.com/SarutobiSasuke8/obsidian-github-mcp",
