@@ -222,22 +222,32 @@
     "id": "obsidian-github-mcp",
     "slug": "obsidian-github-mcp",
     "name": "obsidian-github-mcp",
-    "tagline": "Permissioned proposal gateway for Obsidian vaults stored on GitHub: agents propose, humans merge.",
+    "tagline": "Permissioned proposal gateway for Obsidian vaults stored on GitHub: agents propose, humans merge. 0.1.0 alpha.",
     "summary": "Agents propose bounded changes on isolated GitHub branches within the paths and rules the operator allows. A human reviews and merges through the repository workflow. The gateway can be configured for different Obsidian vaults kept in GitHub.",
     "highlights": [
       "Proposal branches keep suggested changes separate from the protected vault branch",
       "Path and rule permissions per agent",
-      "Works with any Obsidian vault kept in a GitHub repository"
+      "Works with any Obsidian vault kept in a GitHub repository",
+      "Published on npm with signed provenance from GitHub Actions"
+    ],
+    "availability": "Published as 0.1.0 on npm with provenance from the release workflow. Self-hosted Streamable HTTP server; there is no hosted endpoint. Not yet listed in the official MCP Registry.",
+    "limitations": [
+      "Needs a GitHub App installed on the vault repository (or a fine-grained token for local testing) and operator-written policy and token files.",
+      "The release proof replaces GitHub inside the test process. A disposable real-repository proposal run and denied-write evidence are still required before promotion."
     ],
     "lang": "TypeScript",
     "transport": "Streamable HTTP",
-    "package": null,
+    "package": {
+      "kind": "npm",
+      "name": "@sarutobi-sasuke/obsidian-github-mcp",
+      "version": "0.1.0"
+    },
     "registry": null,
     "status": "alpha",
     "license": "Apache-2.0",
     "repo": "https://github.com/SarutobiSasuke8/obsidian-github-mcp",
-    "docs": null,
-    "install": null,
+    "docs": "https://github.com/SarutobiSasuke8/obsidian-github-mcp#readme",
+    "install": "npm install -g @sarutobi-sasuke/obsidian-github-mcp",
     "tags": [
       "obsidian",
       "github",
@@ -245,12 +255,14 @@
       "vault"
     ],
     "order": 6,
-    "reviewedAt": "2026-10-01",
+    "reviewedAt": "2026-10-24",
     "review": {
-      "kind": "metadata",
-      "summary": "Release preparation is on main, with no first tag recorded at review. A disposable proposal workflow and denied-write evidence remain promotion requirements.",
+      "kind": "runtime",
+      "summary": "Cold install of the published 0.1.0 into an empty folder with an empty HOME: registry integrity, provenance attestation and npm audit signatures verified, the declared bin is present, and the installed server refuses to start without configuration. The release run passed check, the packaged end-to-end proof and a production audit. No live GitHub repository or MCP client session was part of this review.",
       "evidence": [
-        "https://github.com/SarutobiSasuke8/obsidian-github-mcp/tree/b8336f8"
+        "https://github.com/SarutobiSasuke8/obsidian-github-mcp/actions/runs/40108045013",
+        "https://www.npmjs.com/package/@sarutobi-sasuke/obsidian-github-mcp/v/0.1.0",
+        "https://github.com/SarutobiSasuke8/obsidian-github-mcp/releases/tag/v0.1.0"
       ]
     }
   },
