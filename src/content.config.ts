@@ -1,41 +1,12 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { file, glob } from 'astro/loaders';
-import { maturityFields, reviewFields, validateMaturity, validateReview } from './lib/maturity';
-import { hostedSchema } from './lib/hosted';
-
-const packageSchema = z
-  .object({
-    kind: z.enum(['pypi', 'npm']),
-    name: z.string(),
-    version: z.string().nullable().optional(),
-  })
-  .nullable();
+import { reviewFields, validateReview } from './lib/maturity';
+import { serverSchema } from './lib/servers';
 
 const servers = defineCollection({
   loader: file('./src/content/servers.json'),
-  schema: z.object({
-    slug: z.string(),
-    name: z.string(),
-    tagline: z.string().max(180),
-    summary: z.string(),
-    highlights: z.array(z.string()).default([]),
-    lang: z.enum(['Python', 'TypeScript', 'Go']),
-    transport: z.string(),
-    package: packageSchema,
-    registry: z.string().nullable(),
-    ...maturityFields,
-    license: z.string(),
-    repo: z.url().nullable(),
-    docs: z.url().nullable().optional(),
-    availability: z.string().optional(),
-    limitations: z.array(z.string()).default([]),
-    interestUrl: z.url().optional(),
-    hosted: hostedSchema.optional(),
-    install: z.string().nullable(),
-    tags: z.array(z.string()).default([]),
-    order: z.number(),
-  }).superRefine(validateMaturity),
+  schema: serverSchema,
 });
 
 const rack = defineCollection({

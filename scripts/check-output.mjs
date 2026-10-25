@@ -2,6 +2,7 @@ import {readFileSync,readdirSync,existsSync,statSync} from 'node:fs';
 import {join,relative} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
+import {boardRows} from '../src/lib/board.ts';
 const root=fileURLToPath(new URL('../',import.meta.url)),dist=join(root,'dist');
 const origin=new URL(process.env.SITE_URL||'https://mcprack.dev').origin;
 const base=(process.env.SITE_BASE||'/').replace(/\/$/,'');
@@ -68,6 +69,31 @@ for(const item of [...catalog.servers,...catalog.articles]){
  assert(existsSync(resolvePath(new URL(item.markdownUrl).pathname)),'Missing Markdown: '+item.slug);
  assert(!item.draft,'Draft exposed: '+item.slug);
 }
+// The board: rows on /servers/ (all) and the home page (first three) must be exactly what
+// src/lib/board.ts derives from servers.json, in order. The README board uses the same rows.
+const decode=t=>t.replace(/&(amp|lt|gt|quot|#39|#x27);/g,(_,e)=>({amp:'&',lt:'<',gt:'>',quot:'"','#39':"'",'#x27':"'"})[e]);
+const text=(html,re)=>{const m=html.match(re);return m?decode(m[1].replace(/<[^>]+>/g,'').trim()):null;};
+const span=cls=>new RegExp('<span class="'+cls+'"[^>]*>([\\s\\S]*?)</span>');
+const pageRows=html=>[...html.matchAll(/<li class="unit reveal"[\s\S]*?<\/li>/g)].map(([li])=>{
+ const pkgNone=text(li,span('pkg pkg-none[^"]*'));
+ return {
+  position:text(li,span('unit-index[^"]*')),
+  slug:li.match(/<a href="[^"]*\/servers\/([^/"]+)\/"/)?.[1]??null,
+  name:text(li,/<h3 class="unit-name"[^>]*>[\s\S]*?<a [^>]*>([\s\S]*?)<\/a>/),
+  tagline:text(li,/<p class="unit-tag"[^>]*>([\s\S]*?)<\/p>/),
+  lang:text(li,span('chip chip-[a-z]+')),
+  transport:text(li,span('chip')),
+  status:text(li,span('status status-[a-z]+')),
+  registryLabel:text(li,/<\/i>([\s\S]*?)<\/span>/),
+  packageLabel:pkgNone??['kind','name','ver'].map(k=>text(li,span('pkg-'+k))).filter(Boolean).join(' '),
+  hasInstall:li.includes('class="copy-btn"'),
+ };
+});
+const expectedBoard=boardRows(sourceServers).map(r=>({...r}));
+const serversPageRows=pageRows(read(resolvePath(base+'/servers/')));
+assert.deepEqual(serversPageRows,expectedBoard,'/servers/ board rows drift from servers.json');
+const homeRows=pageRows(read(resolvePath(base+'/')));
+assert.deepEqual(homeRows,expectedBoard.slice(0,3),'Home page board rows drift from servers.json');
 let count=0;
 const pages=walk(dist).filter(p=>p.endsWith('.html'));
 for(const file of pages){
@@ -94,4 +120,4 @@ for(const name of ['openai','claude','perplexity','grok']){
  const icon=read(join(dist,'clients',name+'.svg'));
  assert(icon.includes('<svg')&&!/<script|<foreignObject|\bonload=/i.test(icon),'Invalid client logo '+name);
 }
-console.log('output: '+pages.length+' pages, '+count+' internal references, catalog, Markdown, JSON-LD, brand assets and sitemap passed');
+console.log('output: '+pages.length+' pages, '+count+' internal references, board rows ('+serversPageRows.length+' on /servers/, '+homeRows.length+' on home), catalog, Markdown, JSON-LD, brand assets and sitemap passed');
