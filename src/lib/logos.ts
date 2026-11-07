@@ -5,6 +5,7 @@ const FILES: Record<string, string> = {
   canva: 'png', fireflies: 'png', pixellab: 'png', tinyfish: 'png', trigr: 'png',
   'gimp-agent-mcp': 'gimp.svg', 'aseprite-agent-mcp': 'aseprite.svg', 'telegram-personal-proxy': 'telegram.svg',
   'astraeus-postgres-mcp': 'postgresql.svg', 'obsidian-github-mcp': 'obsidian.svg',
+  'credential-broker-mcp': 'credential-broker.svg',
 };
 
 export function logoFor(slug: string): string | null {
