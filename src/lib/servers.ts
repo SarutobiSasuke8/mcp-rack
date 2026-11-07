@@ -37,6 +37,8 @@ export const serverFields = z.object({
   interestUrl: z.url().optional(),
   hosted: hostedSchema.optional(),
   install: z.string().nullable(),
+  installLabel: z.string().optional(),
+  installNote: z.string().optional(),
   tags: z.array(z.string()).default([]),
   order: z.number(),
 });
