@@ -31,11 +31,15 @@ const posts = defineCollection({
     description: z.string().max(200),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    category: z.enum(['Release notes', 'Field notes', 'Build log', 'Guides', 'Perspective']),
+    category: z.enum(['Release notes', 'Field notes', 'Build log', 'Guides', 'Perspective', 'Rack Report']),
     server: z.string().optional(),
     version: z.string().optional(),
     draft: z.boolean().default(false),
     ogImage: z.string().optional(),
+    cover: z.object({
+      src: z.string().regex(/^\/(?!\/)/),
+      alt: z.string().trim().min(1),
+    }).optional(),
   }),
 });
 
