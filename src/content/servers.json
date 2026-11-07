@@ -187,34 +187,43 @@
     "id": "credential-broker-mcp",
     "slug": "credential-broker-mcp",
     "name": "credential-broker-mcp",
-    "tagline": "Agents use gated APIs through scoped, audited requests without ever seeing the secret.",
+    "tagline": "Agents use gated APIs through scoped, audited requests without ever seeing the secret. 0.1.1 on npm.",
     "summary": "A policy-gated broker that lets an agent exercise a credential without holding it. The agent asks for an operation; the broker checks scope and policy, performs the call, logs it, and returns the result. Secrets stay on the operator's side.",
     "highlights": [
-      "Scoped grants per agent and per operation",
-      "Every request audited",
-      "Local-first; no secret ever enters an agent's context"
+      "Keys live in the OS keychain, not in .env files or agent context",
+      "Scoped grants per agent and per operation, with approvals for writes",
+      "Responses redacted and every request audited without content",
+      "Local key manager page with a pause-all button",
+      "Published on npm with signed provenance from GitHub Actions"
     ],
+    "availability": "Published as 0.1.1 on npm with provenance from the release workflow, and listed in the official MCP Registry. Early release: the policy format may change before 1.0.",
     "lang": "TypeScript",
     "transport": "stdio",
-    "package": null,
-    "registry": null,
+    "package": {
+      "kind": "npm",
+      "name": "@sarutobi-sasuke/credential-broker-mcp",
+      "version": "0.1.1"
+    },
+    "registry": "io.github.SarutobiSasuke8/credential-broker-mcp",
     "status": "alpha",
     "license": "Apache-2.0",
     "repo": "https://github.com/SarutobiSasuke8/credential-broker-mcp",
-    "docs": null,
-    "install": null,
+    "docs": "https://github.com/SarutobiSasuke8/credential-broker-mcp#five-minute-quickstart",
+    "install": "npx -y -p @sarutobi-sasuke/credential-broker-mcp credential-broker-keys",
     "tags": [
       "security",
       "secrets",
       "credentials"
     ],
     "order": 5,
-    "reviewedAt": "2026-10-01",
+    "reviewedAt": "2026-11-07",
     "review": {
-      "kind": "metadata",
-      "summary": "The source records policy v2 and secret-handling fixes plus a Windows key manager. This metadata review does not establish security readiness or a published release.",
+      "kind": "runtime",
+      "summary": "Cold install of the published 0.1.1 into an empty folder on Windows: npm audit found 0 vulnerabilities and verified the provenance attestations, all 3 bins present, and the stdio server initialises, lists its 5 tools, allows a granted GET and refuses an ungranted DELETE under the example policy. Not a security audit.",
       "evidence": [
-        "https://github.com/SarutobiSasuke8/credential-broker-mcp/tree/b903c1f"
+        "https://github.com/SarutobiSasuke8/credential-broker-mcp/actions/runs/42385569437",
+        "https://www.npmjs.com/package/@sarutobi-sasuke/credential-broker-mcp/v/0.1.1",
+        "https://github.com/SarutobiSasuke8/credential-broker-mcp/tree/v0.1.1"
       ]
     }
   },
