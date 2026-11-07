@@ -66,6 +66,12 @@ const jsonLd = [
           </aside>
         )}
 
+        <aside class="card post-cta" aria-label="Work with Astraeus">
+          <p class="kicker" style="margin-bottom: 8px">Need this built for your business?</p>
+          <p class="t-small">{SITE.company.pitch}</p>
+          <p class="t-small" style="margin: 14px 0 0"><a href={SITE.company.url} rel="noopener" target="_blank">Talk to {SITE.company.name}</a></p>
+        </aside>
+
         <nav class="post-nav" aria-label="Neighbouring posts">
           {prev ? (
             <a class="post-nav-link" href={href(`/blog/${prev.id}`)}><span class="mono">Newer</span><span>{prev.data.title}</span></a>
@@ -89,6 +95,7 @@ const jsonLd = [
   .post-foot { display: grid; gap: 32px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
   .post-server-card h2 { margin: 0 0 6px; }
   .post-server-card p { margin: 0; }
+  .post-cta p { margin: 0; }
   .post-nav { display: grid; gap: 12px; }
   @media (min-width: 640px) { .post-nav { grid-template-columns: 1fr 1fr; } }
   .post-nav-link { display: grid; gap: 6px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--ink); font-size: var(--fs-small); font-weight: 540; transition: border-color var(--dur) var(--ease); }
