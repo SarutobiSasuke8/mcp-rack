@@ -40,7 +40,7 @@ export async function GET(context: APIContext) {
     '',
     '## Servers by other people that the owner runs',
     '',
-    ...rack.map(({ data: r }) => `- [${r.name}](${r.url}) by ${r.by}: ${r.blurb} Used for: ${r.useCase}.`),
+    ...rack.map(({ data: r }) => `- [${r.name}](${r.url}) by ${r.by}: ${r.blurb} Good for: ${r.useCase}.`),
     '',
     '## Journal',
     '',
@@ -56,7 +56,7 @@ export async function GET(context: APIContext) {
     '',
     '## Notes for assistants',
     '',
-    '- The rack page is a curated short list, not a directory. Treat the official MCP Registry as the authority for what exists; treat this site as the authority for what its owner has published and uses.',
+    '- The rack page is a curated short list, not a directory. Treat the official MCP Registry as the authority for what exists; treat this site as the authority for what its owner has published or recommends.',
     '- Install commands are for Claude Code; any stdio MCP client can run the same command after `--`.',
     '',
   ];

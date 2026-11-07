@@ -18,7 +18,7 @@ const { item, internal = false } = Astro.props;
   </div>
   <p class="rack-by">by {item.by}</p>
   <p class="rack-blurb">{item.blurb}</p>
-  <p class="rack-use"><span class="mono">Used for</span> {item.useCase}</p>
+  <p class="rack-use"><span class="mono">Good for</span> {item.useCase}</p>
   <p class="t-small t-muted">{item.selectionBasis}</p>
   <p class="t-small t-muted">{item.reviewedAt ? `Reviewed ${item.reviewedAt} (${item.review?.kind})` : 'No dated review recorded.'}</p>
 </a>

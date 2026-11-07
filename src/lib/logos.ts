@@ -2,6 +2,7 @@
 // Marks identify the linked service or the application a server works with; see public/rack-logos/README.txt.
 const FILES: Record<string, string> = {
   figma: 'svg', notion: 'svg', asana: 'svg', hubspot: 'svg',
+  blender: 'svg', cloudflare: 'svg',
   canva: 'png', fireflies: 'png', pixellab: 'png', tinyfish: 'png', trigr: 'png',
   'gimp-agent-mcp': 'gimp.svg', 'aseprite-agent-mcp': 'aseprite.svg', 'telegram-personal-proxy': 'telegram.svg',
   'astraeus-postgres-mcp': 'postgresql.svg', 'obsidian-github-mcp': 'obsidian.svg',
