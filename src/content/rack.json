@@ -22,6 +22,28 @@
     "selectionBasis": "Chosen for keeping shared notes and databases accessible to agents."
   },
   {
+    "id": "blender",
+    "slug": "blender",
+    "name": "Blender Lab MCP",
+    "by": "Blender Lab",
+    "kind": "official",
+    "blurb": "Inspect a running Blender scene and work with its Python API through a local add-on. It can execute generated Python, so try it in an isolated environment.",
+    "url": "https://www.blender.org/lab/mcp-server/",
+    "useCase": "Inspecting scene structure and spotting heavy geometry before editing",
+    "selectionBasis": "Useful for scene analysis inside Blender, with direct access to the open file and the Python API."
+  },
+  {
+    "id": "cloudflare",
+    "slug": "cloudflare",
+    "name": "Cloudflare API MCP",
+    "by": "Cloudflare",
+    "kind": "official",
+    "blurb": "Search Cloudflare docs and use its API for DNS, Workers and R2 through a single remote MCP server.",
+    "url": "https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server",
+    "useCase": "Checking DNS records or Workers configuration before making a change",
+    "selectionBasis": "Combines documentation and live account inspection. Start with read-only permissions."
+  },
+  {
     "id": "canva",
     "slug": "canva",
     "name": "Canva MCP",

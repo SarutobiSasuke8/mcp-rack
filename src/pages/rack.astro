@@ -7,11 +7,11 @@ import { breadcrumbSchema } from '~/lib/seo';
 const rack = await getCollection('rack');
 ---
 
-<BaseLayout title="The rack" description="The MCP servers built by other people that Alexei Udall runs alongside his own: one card per server actually wired into his tools, with what each one is used for." jsonLd={breadcrumbSchema([{ name: 'Rack', path: '/rack' }], Astro.site)}>
+<BaseLayout title="The rack" description="A shortlist of MCP servers Alexei Udall uses or recommends, with setup links and a practical starting point for each." jsonLd={breadcrumbSchema([{ name: 'Rack', path: '/rack' }], Astro.site)}>
   <section class="container page-head">
     <p class="kicker">Also on the rack</p>
-    <h1 class="t-h1">Servers by other people that I run alongside mine</h1>
-    <p class="t-lead">One card per server actually wired into my tools, with what I use it for. This is not a directory. The official MCP Registry and the aggregators that read it do that job; this page is the short list I would give a colleague.</p>
+    <h1 class="t-h1">MCP servers I use or recommend</h1>
+    <p class="t-lead">A shortlist of tools from other makers, with what each is good for and a link to the maker’s setup guide.</p>
   </section>
   <section class="container">
     <div class="rack-grid stagger">
