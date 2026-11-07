@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import ShareLinks from '~/components/ShareLinks.astro';
+import PostCover from '~/components/PostCover.astro';
 import { SITE, href, absolute } from '~/lib/site';
 import { formatDate, isoDate, readingTime } from '~/lib/format';
 import { articleSchema, breadcrumbSchema } from '~/lib/seo';
@@ -18,7 +19,7 @@ const url = absolute(`/blog/${post.id}`, Astro.site);
 const ogImage = data.ogImage ?? `/og/post-${post.id}.png`;
 const jsonLd = [
   articleSchema({ slug: post.id, title: data.title, description: data.description, pubDate: data.pubDate, updatedDate: data.updatedDate, image: ogImage }, Astro.site),
-  breadcrumbSchema([{ name: 'Release notes', path: '/blog' }, { name: data.title, path: `/blog/${post.id}` }], Astro.site),
+  breadcrumbSchema([{ name: 'Journal', path: '/blog' }, { name: data.title, path: `/blog/${post.id}` }], Astro.site),
 ];
 ---
 
@@ -37,6 +38,7 @@ const jsonLd = [
           <span aria-hidden="true">&middot;</span>
           <span>{readingTime(post.body)}</span>
         </p>
+        <div class="post-cover-wrap"><PostCover post={post} priority /></div>
       </div>
     </header>
 
@@ -84,6 +86,7 @@ const jsonLd = [
   @media (min-width: 1024px) { .post-header { padding: 88px 0 56px; } }
   .post-header .t-lead { margin-top: 18px; }
   .post-meta { margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 10px; font-size: var(--fs-micro); color: var(--ink-3); }
+  .post-cover-wrap { margin-top: 28px; }
   .post-meta a { color: var(--ink-2); }
   .post-body { padding-bottom: 8px; }
   .post-foot { display: grid; gap: 32px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
