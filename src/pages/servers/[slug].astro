@@ -60,12 +60,12 @@ const facts: { k: string; v: string; link?: string }[] = [
 
       {s.install && (
         <div class="install-block">
-          <p class="kicker" style="margin-bottom: 10px">Install in Claude Code</p>
+          <p class="kicker" style="margin-bottom: 10px">{s.installLabel ?? 'Install in Claude Code'}</p>
           <div class="install">
             <code>{s.install}</code>
             <button class="copy-btn" type="button" data-copy={s.install} aria-label={`Copy install command for ${s.name}`}><span data-copy-label>Copy</span></button>
           </div>
-          <p class="t-small t-muted" style="margin: 10px 0 0">For other stdio clients, use the process and arguments after --. Follow the source documentation for runtimes, credentials and application setup.</p>
+          <p class="t-small t-muted" style="margin: 10px 0 0">{s.installNote ?? 'For other stdio clients, use the process and arguments after --. Follow the source documentation for runtimes, credentials and application setup.'}</p>
         </div>
       )}
 

@@ -210,6 +210,8 @@
     "repo": "https://github.com/SarutobiSasuke8/credential-broker-mcp",
     "docs": "https://github.com/SarutobiSasuke8/credential-broker-mcp#five-minute-quickstart",
     "install": "npx -y -p @sarutobi-sasuke/credential-broker-mcp credential-broker-keys",
+    "installLabel": "Start with the key manager",
+    "installNote": "It opens a local page where you add keys and choose which agents may use them. Then use Connect to Claude Code (or the Codex block) on that page to register the server; the generated command holds no secrets.",
     "tags": [
       "security",
       "secrets",
