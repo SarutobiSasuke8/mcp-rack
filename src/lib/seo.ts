@@ -103,3 +103,83 @@ export function breadcrumbSchema(items: { name: string; path: string }[], siteUr
     })),
   };
 }
+
+/**
+ * FAQPage for a page that genuinely answers these questions in its visible copy.
+ * Google requires the question and answer text to appear on the page itself, so every
+ * entry here must track the rendered content. Rich results for FAQPage are now limited
+ * to a narrow set of sites, but the markup still gives assistants and answer engines a
+ * clean, unambiguous read of the policy.
+ */
+export function faqSchema(entries: { question: string; answer: string }[], siteUrl: URL | undefined, path: string): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    url: absolute(path, siteUrl),
+    mainEntity: entries.map((entry) => ({
+      '@type': 'Question',
+      name: entry.question,
+      acceptedAnswer: { '@type': 'Answer', text: entry.answer },
+    })),
+  };
+}
+
+/** The maturity vocabulary, so an agent can resolve a status label without scraping prose. */
+export function definedTermSetSchema(
+  terms: { name: string; description: string; id: string }[],
+  siteUrl: URL | undefined,
+  path: string,
+): Json {
+  const setUrl = absolute(path, siteUrl);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    name: `${SITE.name} maturity labels`,
+    url: setUrl,
+    hasDefinedTerm: terms.map((term) => ({
+      '@type': 'DefinedTerm',
+      name: term.name,
+      description: term.description,
+      url: `${setUrl}#${term.id}`,
+      inDefinedTermSet: setUrl,
+    })),
+  };
+}
+
+export function blogSchema(
+  posts: { slug: string; title: string; description: string; pubDate: Date }[],
+  siteUrl: URL | undefined,
+): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: `${SITE.name} · Journal`,
+    url: absolute('/blog', siteUrl),
+    description: 'Practical MCP guides, field notes and release notes.',
+    inLanguage: SITE.language,
+    author: { '@type': 'Person', name: SITE.owner.name, url: SITE.owner.url },
+    blogPost: posts.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.description,
+      datePublished: post.pubDate.toISOString(),
+      url: absolute(`/blog/${post.slug}`, siteUrl),
+    })),
+  };
+}
+
+/** A plain WebPage node for pages that are not an article, a server or a listing. */
+export function webPageSchema(
+  page: { name: string; description: string; path: string },
+  siteUrl: URL | undefined,
+): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: page.name,
+    description: page.description,
+    url: absolute(page.path, siteUrl),
+    inLanguage: SITE.language,
+    isPartOf: { '@type': 'WebSite', name: SITE.name, url: absolute('/', siteUrl) },
+  };
+}

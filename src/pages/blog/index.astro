@@ -4,10 +4,12 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import PostCard from '~/components/PostCard.astro';
 import ShareLinks from '~/components/ShareLinks.astro';
 import { absolute, href } from '~/lib/site';
+import { blogSchema, breadcrumbSchema } from '~/lib/seo';
 const posts=(await getCollection('posts',({data})=>!data.draft)).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
 const categories=[...new Set(posts.map(p=>p.data.category))];
+const jsonLd=[blogSchema(posts.map(p=>({slug:p.id,title:p.data.title,description:p.data.description,pubDate:p.data.pubDate})),Astro.site),breadcrumbSchema([{name:'Journal',path:'/blog'}],Astro.site)];
 ---
-<BaseLayout title="Journal" description="Practical MCP guides, field notes and release notes. How to choose servers, connect them and understand their limits.">
+<BaseLayout title="Journal" description="Practical MCP guides, field notes and release notes. How to choose servers, connect them and understand their limits." jsonLd={jsonLd}>
 <section class="container page-head"><p class="kicker">The MCP Rack journal</p><h1 class="t-h1">Useful notes.<br />From the workbench.</h1><p class="t-lead">Guides for getting started, perspectives on choosing well, and release notes from the tools taking shape here.</p><a class="text-link" href={href('/rss.xml')}>Follow via RSS ↗</a>
   <div class="journal-share"><ShareLinks url={absolute('/blog', Astro.site)} title="MCP Rack Journal" /></div>
 </section>
