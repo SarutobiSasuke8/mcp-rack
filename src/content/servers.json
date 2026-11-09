@@ -187,7 +187,7 @@
     "id": "credential-broker-mcp",
     "slug": "credential-broker-mcp",
     "name": "credential-broker-mcp",
-    "tagline": "Agents use gated APIs through scoped, audited requests without ever seeing the secret. 0.1.1 on npm.",
+    "tagline": "Agents use gated APIs through scoped, audited requests without ever seeing the secret. 0.1.2 on npm.",
     "summary": "A policy-gated broker that lets an agent exercise a credential without holding it. The agent asks for an operation; the broker checks scope and policy, performs the call, logs it, and returns the result. Secrets stay on the operator's side.",
     "highlights": [
       "Keys live in the OS keychain, not in .env files or agent context",
@@ -196,13 +196,13 @@
       "Local key manager page with a pause-all button",
       "Published on npm with signed provenance from GitHub Actions"
     ],
-    "availability": "Published as 0.1.1 on npm with provenance from the release workflow, and listed in the official MCP Registry. Early release: the policy format may change before 1.0.",
+    "availability": "Published as 0.1.2 on npm with provenance from the release workflow, and listed in the official MCP Registry. Early release: the policy format may change before 1.0.",
     "lang": "TypeScript",
     "transport": "stdio",
     "package": {
       "kind": "npm",
       "name": "@sarutobi-sasuke/credential-broker-mcp",
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     "registry": "io.github.SarutobiSasuke8/credential-broker-mcp",
     "status": "alpha",
@@ -218,14 +218,14 @@
       "credentials"
     ],
     "order": 5,
-    "reviewedAt": "2026-11-07",
+    "reviewedAt": "2026-11-09",
     "review": {
       "kind": "runtime",
-      "summary": "Cold install of the published 0.1.1 into an empty folder on Windows: npm audit found 0 vulnerabilities and verified the provenance attestations, all 3 bins present, and the stdio server initialises, lists its 5 tools, allows a granted GET and refuses an ungranted DELETE under the example policy. Not a security audit.",
+      "summary": "Cold install of the published 0.1.2 into an empty folder on Windows: npm audit found 0 vulnerabilities and verified the provenance attestations, all 3 bins present, and the stdio server initialises, lists its 5 tools, allows a granted GET and refuses an ungranted DELETE under the example policy. A local upstream that echoed the key in 401, 403, 429 and 500 responses and redirected with it in Location did not get it back to the agent in raw, hex, uppercase, Base64 or percent-encoded form. A partial echo of a key is not redacted, as SECURITY.md states. Not a security audit.",
       "evidence": [
-        "https://github.com/SarutobiSasuke8/credential-broker-mcp/actions/runs/42385569437",
-        "https://www.npmjs.com/package/@sarutobi-sasuke/credential-broker-mcp/v/0.1.1",
-        "https://github.com/SarutobiSasuke8/credential-broker-mcp/tree/v0.1.1"
+        "https://github.com/SarutobiSasuke8/credential-broker-mcp/actions/runs/42599346242",
+        "https://www.npmjs.com/package/@sarutobi-sasuke/credential-broker-mcp/v/0.1.2",
+        "https://github.com/SarutobiSasuke8/credential-broker-mcp/tree/v0.1.2"
       ]
     }
   },
