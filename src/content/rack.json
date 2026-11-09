@@ -77,6 +77,17 @@
     "selectionBasis": "Chosen for answering pipeline questions against CRM records."
   },
   {
+    "id": "apollo",
+    "slug": "apollo",
+    "name": "Apollo MCP",
+    "by": "Apollo.io",
+    "kind": "official",
+    "blurb": "People and company search, enrichment and sequences as tools, over remote HTTP with OAuth. People search costs no credits and enrichment does, so keep approval on for anything that spends.",
+    "url": "https://docs.apollo.io/docs/apollo-mcp",
+    "useCase": "Finding the buyer at a target company and enriching only the people worth contacting",
+    "selectionBasis": "Chosen for buyer discovery and selective contact enrichment ahead of a CRM."
+  },
+  {
     "id": "asana",
     "slug": "asana",
     "name": "Asana MCP",

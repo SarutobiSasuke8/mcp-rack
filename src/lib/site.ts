@@ -8,6 +8,7 @@ export const SITE = {
     name: 'Alexei Udall',
     handle: 'SarutobiSasuke8',
     url: 'https://alexeiudall.com',
+    company: { name: 'Astraeus Business Solutions', url: 'https://astraeus.ie/' },
     github: 'https://github.com/SarutobiSasuke8',
     x: 'https://x.com/Sarut0biSasuke',
     xHandle: '@Sarut0biSasuke',
