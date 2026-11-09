@@ -16,6 +16,11 @@ export const SITE = {
     npm: 'https://www.npmjs.com/search?q=%40sarutobi-sasuke',
     registry: 'https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.SarutobiSasuke8',
   },
+  company: {
+    name: 'Astraeus Business Solutions',
+    url: 'https://astraeus.ie/',
+    pitch: 'Astraeus helps businesses implement AI, including custom MCP servers and agent integrations built around your own systems.',
+  },
   repo: 'https://github.com/SarutobiSasuke8/mcp-rack',
   locale: 'en_IE',
   language: 'en-IE',

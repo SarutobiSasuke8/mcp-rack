@@ -24,6 +24,7 @@ const elsewhere = [
   { label: 'X', icon: 'twitter-x', href: SITE.owner.x },
   { label: 'LinkedIn', icon: 'linkedin', href: SITE.owner.linkedin },
   { label: 'alexeiudall.com', icon: 'globe', href: SITE.owner.url },
+  { label: SITE.company.name, icon: 'globe', href: SITE.company.url },
 ];
 ---
 
@@ -36,6 +37,9 @@ const elsewhere = [
         <p class="footer-by">
           Built and maintained by <a href={SITE.owner.url} rel="me">{SITE.owner.name}</a>. Source on
           <a href={SITE.repo} rel="noopener" target="_blank">GitHub</a>, MIT licensed.
+        </p>
+        <p class="footer-by">
+          Need a custom MCP server? <a href={SITE.company.url} rel="noopener" target="_blank">{SITE.company.name}</a> builds them for businesses.
         </p>
       </div>
 
