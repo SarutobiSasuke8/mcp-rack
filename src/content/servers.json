@@ -609,11 +609,14 @@
       "Applies compatible factory presets, routes tracks to mixer buses and automates track volume and filter cutoff",
       "Moves, duplicates and renames instrument clips and edits track effects",
       "Exports instrument and Beat/Bassline MIDI, aligned WAV stems and measured WAV loops",
-      "Creates live tracks, loads presets and samples, and edits automation through the optional LMMS Agent Bridge"
+      "Creates live tracks, loads presets and samples, and edits automation through the optional LMMS Agent Bridge",
+      "Discovers installed stock instruments and batch-exports game sound effects",
+      "Renders piano-roll notes through a local Fathom Synth worklet with filter automation"
     ],
     "limitations": [
       "The alpha covers saved 4/4 sessions and compatible factory XML presets.",
-      "Install LMMS separately. Tested with LMMS 1.2.2 x64 and Node.js 22 on Windows."
+      "Install LMMS separately. Tested with LMMS 1.2.2 x64 and Node.js 22 on Windows.",
+      "Fathom rendering requires a local Fathom Atelier checkout."
     ],
     "lang": "JavaScript",
     "transport": "stdio",
@@ -622,8 +625,8 @@
     "status": "alpha",
     "license": "MIT",
     "repo": "https://github.com/SarutobiSasuke8/lmms-mcp",
-    "docs": "https://github.com/SarutobiSasuke8/lmms-mcp/tree/v0.4.0#readme",
-    "install": "claude mcp add lmms -- npx -y https://github.com/SarutobiSasuke8/lmms-mcp/archive/refs/tags/v0.4.0.tar.gz",
+    "docs": "https://github.com/SarutobiSasuke8/lmms-mcp/tree/v0.5.0#readme",
+    "install": "claude mcp add lmms -- npx -y https://github.com/SarutobiSasuke8/lmms-mcp/archive/refs/tags/v0.5.0.tar.gz",
     "installNote": "Set LMMS_WORKSPACE in your MCP client to a directory for trusted projects and renders. See the README for Windows setup.",
     "tags": ["music", "audio", "lmms", "game-audio", "windows"],
     "order": 16
