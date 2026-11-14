@@ -611,7 +611,8 @@
       "Exports instrument and Beat/Bassline MIDI, aligned WAV stems and measured WAV loops",
       "Creates live tracks, loads presets and samples, and edits automation through the optional LMMS Agent Bridge",
       "Discovers installed stock instruments and batch-exports game sound effects",
-      "Renders piano-roll notes through a local Fathom Synth worklet with filter automation"
+      "Renders piano-roll notes through a local Fathom Synth worklet with filter automation",
+      "Searches and previews factory presets and Fathom patches, edits saved sample clips, and discovers live parameters through the optional bridge"
     ],
     "limitations": [
       "The alpha covers saved 4/4 sessions and compatible factory XML presets.",
@@ -625,8 +626,8 @@
     "status": "alpha",
     "license": "MIT",
     "repo": "https://github.com/SarutobiSasuke8/lmms-mcp",
-    "docs": "https://github.com/SarutobiSasuke8/lmms-mcp/tree/v0.5.0#readme",
-    "install": "claude mcp add lmms -- npx -y https://github.com/SarutobiSasuke8/lmms-mcp/archive/refs/tags/v0.5.0.tar.gz",
+    "docs": "https://github.com/SarutobiSasuke8/lmms-mcp/tree/v0.6.0#readme",
+    "install": "claude mcp add lmms -- npx -y https://github.com/SarutobiSasuke8/lmms-mcp/archive/refs/tags/v0.6.0.tar.gz",
     "installNote": "Set LMMS_WORKSPACE in your MCP client to a directory for trusted projects and renders. See the README for Windows setup.",
     "tags": ["music", "audio", "lmms", "game-audio", "windows"],
     "order": 16
