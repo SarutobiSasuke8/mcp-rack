@@ -597,5 +597,33 @@
       "ci"
     ],
     "order": 15
+  },
+  {
+    "id": "lmms-mcp",
+    "slug": "lmms-mcp",
+    "name": "lmms-mcp",
+    "tagline": "Make editable LMMS projects, revise individual patterns and render local game music loops.",
+    "summary": "Create a song with separate synth and drum tracks, change a single pattern and render a WAV through LMMS. You can open the same project in LMMS to edit it yourself. The server measures the render so you can check levels and inspect the jump at the loop point before auditioning it.",
+    "highlights": [
+      "Reads and writes native MMP and MMPZ project files",
+      "Applies compatible factory presets, routes tracks to mixer buses and automates track volume and filter cutoff",
+      "Renders 48 kHz WAV loops and reports duration, peak, RMS and the jump at the loop point"
+    ],
+    "limitations": [
+      "The alpha covers saved 4/4 sessions and compatible factory XML presets.",
+      "Install LMMS separately. Tested with LMMS 1.2.2 x64 and Node.js 22 on Windows."
+    ],
+    "lang": "JavaScript",
+    "transport": "stdio",
+    "package": null,
+    "registry": null,
+    "status": "alpha",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/lmms-mcp",
+    "docs": "https://github.com/SarutobiSasuke8/lmms-mcp/tree/v0.2.0#readme",
+    "install": "claude mcp add lmms -- npx -y https://github.com/SarutobiSasuke8/lmms-mcp/archive/refs/tags/v0.2.0.tar.gz",
+    "installNote": "Set LMMS_WORKSPACE in your MCP client to a directory for trusted projects and renders. See the README for Windows setup.",
+    "tags": ["music", "audio", "lmms", "game-audio", "windows"],
+    "order": 16
   }
 ]

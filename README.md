@@ -29,6 +29,7 @@ Every listing on https://mcprack.dev/servers/, in board order. This table is gen
 | 13 | [astraeus-postgres-mcp](https://mcprack.dev/servers/astraeus-postgres-mcp/) | Read-only Postgres for agents, through a policy layer instead of a connection string. | TypeScript | stdio + Streamable HTTP | alpha | Not listed yet | source only |
 | 14 | [mcp-host-gateway](https://mcprack.dev/servers/mcp-host-gateway/) | A hosted MCP edge: bearer auth, per-plan tool grants and rate limits in front of Streamable HTTP MCP servers. | TypeScript | Streamable HTTP | alpha | Not listed yet | source only |
 | 15 | [mcp-eval-harness](https://mcprack.dev/servers/mcp-eval-harness/) | Contract tests for MCP servers: expected tools, schema checks and golden fixtures, with CLI exit codes that can gate a release. | TypeScript | CLI (stdio or Streamable HTTP targets) | alpha | Not listed yet | source only |
+| 16 | [lmms-mcp](https://mcprack.dev/servers/lmms-mcp/) | Make editable LMMS projects, revise individual patterns and render local game music loops. | JavaScript | stdio | alpha | Not listed yet | source only |
 
 <!-- board:end -->
 

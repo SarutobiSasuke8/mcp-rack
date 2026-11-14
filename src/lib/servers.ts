@@ -8,7 +8,7 @@ import { hostedSchema } from './hosted.ts';
  * scripts/validate-servers.mjs uses the same schema in CI, so the two can
  * never disagree about what a valid listing is.
  */
-export const languages = ['Python', 'TypeScript', 'Go'] as const;
+export const languages = ['Python', 'JavaScript', 'TypeScript', 'Go'] as const;
 
 export const packageSchema = z
   .object({
