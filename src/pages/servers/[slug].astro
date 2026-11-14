@@ -43,6 +43,9 @@ const facts: { k: string; v: string; link?: string }[] = [
 
   <section class="container detail">
     <div class="detail-main">
+      {s.slug === 'lmms-mcp' && (
+        <img class="project-banner" src={href('/art/lmms-mcp.webp')} width="1200" height="800" alt="LMMS MCP above a graphite step sequencer with amber and teal pads" decoding="async" />
+      )}
       {s.hosted && (
         <div class:list={['hosted-block', { 'hosted-live': s.hosted.live }]} data-hosted={s.hosted.live ? 'live' : 'soon'}>
           <p class="kicker" style="margin-bottom: 10px">{s.hosted.live ? 'Use it hosted' : 'Hosted version'}</p>
@@ -119,6 +122,10 @@ const facts: { k: string; v: string; link?: string }[] = [
     </aside>
   </section>
 </BaseLayout>
+
+<style>
+  .project-banner { display: block; width: 100%; height: auto; margin-bottom: 24px; border-radius: 12px; }
+</style>
 
 <style>
   .page-head { padding: 56px 0 24px; }

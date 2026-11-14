@@ -7,6 +7,7 @@ const FILES: Record<string, string> = {
   'gimp-agent-mcp': 'gimp.svg', 'aseprite-agent-mcp': 'aseprite.svg', 'telegram-personal-proxy': 'telegram.svg',
   'astraeus-postgres-mcp': 'postgresql.svg', 'obsidian-github-mcp': 'obsidian.svg',
   'credential-broker-mcp': 'credential-broker.svg',
+  'lmms-mcp': 'svg',
 };
 
 export function logoFor(slug: string): string | null {
