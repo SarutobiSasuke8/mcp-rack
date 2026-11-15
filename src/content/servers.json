@@ -475,14 +475,24 @@
     ],
     "lang": "Python",
     "transport": "local stdio",
-    "package": { "kind": "pypi", "name": "aseprite-agent-mcp", "version": "0.3.0" },
+    "package": {
+      "kind": "pypi",
+      "name": "aseprite-agent-mcp",
+      "version": "0.3.0"
+    },
     "registry": "io.github.SarutobiSasuke8/aseprite-agent-mcp",
     "status": "alpha",
     "license": "MIT",
     "repo": "https://github.com/SarutobiSasuke8/aseprite-agent-mcp",
     "docs": "https://github.com/SarutobiSasuke8/aseprite-agent-mcp#readme",
     "install": "claude mcp add aseprite -- uvx aseprite-agent-mcp",
-    "tags": ["aseprite", "pixel-art", "animation", "game-dev", "local"],
+    "tags": [
+      "aseprite",
+      "pixel-art",
+      "animation",
+      "game-dev",
+      "local"
+    ],
     "order": 12,
     "reviewedAt": "2026-10-16",
     "review": {
@@ -602,36 +612,58 @@
     "id": "lmms-mcp",
     "slug": "lmms-mcp",
     "name": "lmms-mcp",
-    "tagline": "Make editable LMMS projects, revise individual patterns and render local game music loops.",
-    "summary": "Create a song with separate synth and drum tracks, change a single pattern and render a WAV through LMMS. You can open the same project in LMMS to edit it yourself. The server measures the render so you can check levels and inspect the jump at the loop point before auditioning it.",
+    "tagline": "Compose, mix, measure and render game music with stock LMMS, from chords, melodies or a MIDI score. 0.9.1 on npm.",
+    "summary": "An agent writes an editable LMMS project, renders it through the installed LMMS and measures the result, so it can check levels, loudness and loop seams it cannot hear. You can open the same project in LMMS and keep editing. Scores come in as MIDI and can be shaped to sound played, rendered on a sampled piano and mastered to a loudness target. Exports cover WAV and OGG loops, stems, intros, adaptive layers and stingers with a manifest.",
     "highlights": [
-      "Reads and writes native MMP and MMPZ project files",
-      "Applies compatible factory presets, routes tracks to mixer buses and automates track volume and filter cutoff",
-      "Moves, duplicates and renames instrument clips and edits track effects",
-      "Exports instrument and Beat/Bassline MIDI, aligned WAV stems and measured WAV loops",
-      "Creates live tracks, loads presets and samples, and edits automation through the optional LMMS Agent Bridge",
-      "Discovers installed stock instruments and batch-exports game sound effects",
-      "Renders piano-roll notes through a local Fathom Synth worklet with filter automation",
-      "Searches and previews factory presets and Fathom patches, edits saved sample clips, and discovers live parameters through the optional bridge",
-      "Turns composer studies, chord progressions and drum grids into editable arrangements",
-      "Measures loudness and loop seams and exports adaptive layers, intros and stingers with a manifest"
+      "Reads and writes native MMP and MMPZ projects; you can keep editing them in LMMS",
+      "Composes from chord progressions, melody lines, drum grids, blueprints, a 68-phrase library and whole-piece styles",
+      "Imports MIDI scores, unfolds repeats and shapes phrase dynamics, voicing, rubato and pedal",
+      "Masters any workspace WAV to a loudness target with trim and fade",
+      "Renders sampled instruments through Decent Sampler and Surge XT VST3 stems with per-track width, EQ and reverb",
+      "Converts open SFZ libraries such as the Salamander Grand into Decent Sampler presets",
+      "Measures loudness, peaks and loop seams, and balances a mix by measurement",
+      "Exports loops that join cleanly, intros, adaptive layers, stingers and one-shots with a manifest",
+      "Builds a sound library page with tags and filters, and a timeline page of a song as stem lanes",
+      "Optional live LMMS Agent Bridge for tracks, presets and parameters in an open project"
     ],
+    "availability": "Published as 0.9.1 on npm with provenance from the release workflow. Not in the official MCP Registry yet. Pre-1.0: tool arguments can still change; the changelog lists every change that can affect a saved workflow.",
     "limitations": [
-      "The alpha covers saved 4/4 sessions and compatible factory XML presets.",
-      "Install LMMS separately. Tested with LMMS 1.2.2 x64 and Node.js 22 on Windows.",
-      "Fathom rendering requires a local Fathom Atelier checkout."
+      "Install LMMS separately. Tested with stock LMMS 1.2.2 on Windows x64; CI also renders on Linux with the LMMS AppImage.",
+      "Requires Node.js 20 or newer. CI runs Node.js 22.",
+      "The VST3 and sampler route is tested on Windows x64 only, with Decent Sampler 1.42.1 and Python 3.12. No samples ship in the package.",
+      "macOS is not tested."
     ],
     "lang": "JavaScript",
     "transport": "stdio",
-    "package": null,
+    "package": {
+      "kind": "npm",
+      "name": "@sarutobi-sasuke/lmms-mcp",
+      "version": "0.9.1"
+    },
     "registry": null,
     "status": "alpha",
     "license": "MIT",
     "repo": "https://github.com/SarutobiSasuke8/lmms-mcp",
-    "docs": "https://github.com/SarutobiSasuke8/lmms-mcp/tree/v0.7.0#readme",
-    "install": "claude mcp add lmms -- npx -y https://github.com/SarutobiSasuke8/lmms-mcp/archive/refs/tags/v0.7.0.tar.gz",
-    "installNote": "Set LMMS_WORKSPACE in your MCP client to a directory for trusted projects and renders. See the README for Windows setup.",
-    "tags": ["music", "audio", "lmms", "game-audio", "windows"],
-    "order": 16
+    "docs": "https://github.com/SarutobiSasuke8/lmms-mcp/tree/v0.9.1#readme",
+    "install": "claude mcp add lmms -e LMMS_WORKSPACE=/path/to/workspace -- npx -y @sarutobi-sasuke/lmms-mcp",
+    "installNote": "Set LMMS_WORKSPACE to an existing folder for projects and renders, and give your client a tool timeout of at least 5 minutes for long renders. See the README for Windows setup and the optional VST3 and sampler route.",
+    "tags": [
+      "music",
+      "audio",
+      "lmms",
+      "game-audio",
+      "windows"
+    ],
+    "order": 16,
+    "reviewedAt": "2026-11-15",
+    "review": {
+      "kind": "metadata",
+      "summary": "Checked on 2026-11-15 against the v0.9.1 tag and its release run: the tag matches the package version, 226 unit tests passed, the server started and listed 82 tools, the package check found no audio, tests or private files, and npm publish signed a provenance statement. The npm registry lists 0.9.1 as latest. Not in the official MCP Registry: a search for lmms returned no servers and the repo has no server.json. Not an install test on a clean machine.",
+      "evidence": [
+        "https://github.com/SarutobiSasuke8/lmms-mcp/actions/runs/43668057596",
+        "https://www.npmjs.com/package/@sarutobi-sasuke/lmms-mcp/v/0.9.1",
+        "https://github.com/SarutobiSasuke8/lmms-mcp/tree/v0.9.1"
+      ]
+    }
   }
 ]
