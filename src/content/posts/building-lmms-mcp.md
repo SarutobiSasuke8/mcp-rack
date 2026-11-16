@@ -8,7 +8,7 @@ server: lmms-mcp
 
 I like Suno. But my plan has a monthly download cap, and game music needs a lot of finished files: loops, variations, layers that fade in and out, short stingers for a win or a death. That adds up fast.
 
-So I built LMMS MCP with Claude and Codex. It is a free, MIT-licensed MCP server that lets an AI agent write music in [LMMS](https://lmms.io), a free music studio, and render it on your own machine. Everything renders locally, so there are no credits and no download cap. The first commit was on 14 November 2026. By 16 November the repo had 118 commits and 47 merged pull requests, and 0.9.1 was on npm with 82 tools.
+So I built LMMS MCP with Claude and Codex. It is a free, MIT-licensed MCP server that lets an AI agent write music in [LMMS](https://lmms.io), a free music studio, and render it on your own machine. Everything renders locally, so there are no credits and no download cap. The first commit was on 14 November 2026. By 16 November the repo had 118 commits and 47 merged pull requests, and 0.9.1 was on [npm](https://www.npmjs.com/package/@sarutobi-sasuke/lmms-mcp) with 82 tools.
 
 This post is about what was built and why each part is there. The [release notes](https://github.com/SarutobiSasuke8/lmms-mcp/blob/main/CHANGELOG.md) list every change.
 
@@ -169,4 +169,5 @@ Install LMMS separately, set `LMMS_WORKSPACE` to a folder for projects and rende
 claude mcp add lmms -e LMMS_WORKSPACE=/path/to/workspace -- npx -y @sarutobi-sasuke/lmms-mcp
 ```
 
-The repo, setup guide and docs for every tool group are at [github.com/SarutobiSasuke8/lmms-mcp](https://github.com/SarutobiSasuke8/lmms-mcp).
+- **Package:** [@sarutobi-sasuke/lmms-mcp on npm](https://www.npmjs.com/package/@sarutobi-sasuke/lmms-mcp), published from GitHub Actions with provenance.
+- **Source and docs:** the repo, setup guide and docs for every tool group are at [github.com/SarutobiSasuke8/lmms-mcp](https://github.com/SarutobiSasuke8/lmms-mcp).
