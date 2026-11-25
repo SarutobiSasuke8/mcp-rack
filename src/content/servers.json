@@ -633,5 +633,43 @@
     "installNote": "Set LMMS_WORKSPACE in your MCP client to a directory for trusted projects and renders. See the README for Windows setup.",
     "tags": ["music", "audio", "lmms", "game-audio", "windows"],
     "order": 16
+  },
+  {
+    "id": "reaper-mcp",
+    "slug": "reaper-mcp",
+    "name": "reaper-mcp",
+    "tagline": "Compose and revise MIDI performances in REAPER and render them to WAV.",
+    "summary": "A local MCP server for REAPER on Windows. Create MIDI tracks, insert configured instruments, edit notes and controller data, and render a selected beat range to compare revisions. Offline tools can read and write a limited subset of REAPER projects and measure WAV renders.",
+    "highlights": [
+      "Live MIDI composition and editing, including controller ramps and named keyswitch articulations",
+      "Native project save and reopen, plus isolated mix and beat-range renders",
+      "Offline MIDI and WAV import, mix, stem and region renders, and WAV measurements"
+    ],
+    "limitations": [
+      "The Windows alpha requires a separate REAPER installation.",
+      "Live stem rendering and general automation are still on the roadmap."
+    ],
+    "lang": "TypeScript",
+    "transport": "stdio",
+    "package": {
+      "kind": "npm",
+      "name": "@sarutobi-sasuke/reaper-mcp",
+      "version": "0.1.0-alpha.6"
+    },
+    "registry": "io.github.SarutobiSasuke8/reaper-mcp",
+    "status": "alpha",
+    "license": "MIT",
+    "repo": "https://github.com/SarutobiSasuke8/reaper-mcp",
+    "docs": "https://github.com/SarutobiSasuke8/reaper-mcp/blob/main/docs/install-windows.md",
+    "install": "claude mcp add reaper -e \"REAPER_MCP_WORKSPACE=C:/path/to/reaper-workspace\" -- npx -y @sarutobi-sasuke/reaper-mcp@0.1.0-alpha.6",
+    "installNote": "Replace the example with an existing Windows folder. The server starts in read-only mode unless you enable writes.",
+    "tags": [
+      "music",
+      "audio",
+      "reaper",
+      "midi",
+      "windows"
+    ],
+    "order": 17
   }
 ]
